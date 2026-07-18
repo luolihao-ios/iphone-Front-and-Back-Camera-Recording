@@ -25,6 +25,7 @@ targets:
         INFOPLIST_KEY_NSMicrophoneUsageDescription: 用于为录制的视频采集音频。
         INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription: 用于将录制的视频保存到照片图库。
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         TARGETED_DEVICE_FAMILY: "1"
         SUPPORTS_MACCATALYST: NO
     scheme:

@@ -1,8 +1,6 @@
 import AVFoundation
 import SwiftUI
 
-enum CameraSide { case front, rear }
-
 final class CameraManager: NSObject, ObservableObject {
     let session = AVCaptureMultiCamSession()
     @Published private(set) var isSupported = false
@@ -69,7 +67,7 @@ final class CameraManager: NSObject, ObservableObject {
         }
     }
 
-    func stopRecording(layout: CaptureLayout) async -> RecordingFiles? {
+    func stopRecording(layout: CaptureLayout, primarySide: CameraSide) async -> RecordingFiles? {
         guard isRecording, let frontRecorder, let rearRecorder else { return nil }
         isRecording = false
         isProcessing = true
@@ -85,7 +83,7 @@ final class CameraManager: NSObject, ObservableObject {
             return nil
         }
         do {
-            let composite = try await VideoComposer.makeComposite(front: frontURL, rear: rearURL, layout: layout)
+            let composite = try await VideoComposer.makeComposite(front: frontURL, rear: rearURL, layout: layout, primarySide: primarySide)
             isProcessing = false
             statusMessage = "录制完成：请选择要保存的文件。"
             return RecordingFiles(front: frontURL, rear: rearURL, composite: composite)
@@ -151,6 +149,9 @@ final class CameraManager: NSObject, ObservableObject {
     private func connect(input: AVCaptureDeviceInput, mediaType: AVMediaType, output: AVCaptureOutput) throws {
         guard let port = input.ports.first(where: { $0.mediaType == mediaType }) else { throw CaptureError.unsupportedCombination }
         let connection = AVCaptureConnection(inputPorts: [port], output: output)
+        if mediaType == .video, connection.isVideoOrientationSupported {
+            connection.videoOrientation = .portrait
+        }
         guard session.canAddConnection(connection) else { throw CaptureError.unsupportedCombination }
         session.addConnection(connection)
     }

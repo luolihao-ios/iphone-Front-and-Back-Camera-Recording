@@ -1,7 +1,7 @@
 import AVFoundation
 
 enum VideoComposer {
-    static func makeComposite(front: URL, rear: URL, layout: CaptureLayout) async throws -> URL {
+    static func makeComposite(front: URL, rear: URL, layout: CaptureLayout, primarySide: CameraSide) async throws -> URL {
         let frontAsset = AVURLAsset(url: front)
         let rearAsset = AVURLAsset(url: rear)
         guard let frontVideo = try await frontAsset.loadTracks(withMediaType: .video).first,
@@ -23,24 +23,28 @@ enum VideoComposer {
         instruction.timeRange = range
         let rearLayer = AVMutableVideoCompositionLayerInstruction(assetTrack: rearTrack)
         let frontLayer = AVMutableVideoCompositionLayerInstruction(assetTrack: frontTrack)
+        let primaryVideo = primarySide == .front ? frontVideo : rearVideo
+        let secondaryVideo = primarySide == .front ? rearVideo : frontVideo
+        let primaryLayer = primarySide == .front ? frontLayer : rearLayer
+        let secondaryLayer = primarySide == .front ? rearLayer : frontLayer
         switch layout {
         case .pictureInPicture:
-            rearLayer.setTransform(transform(for: rearVideo, in: CGRect(origin: .zero, size: renderSize), fill: true), at: .zero)
+            primaryLayer.setTransform(transform(for: primaryVideo, in: CGRect(origin: .zero, size: renderSize), fill: true), at: .zero)
             let inset = CGRect(x: 54, y: 110, width: 360, height: 480)
-            frontLayer.setTransform(transform(for: frontVideo, in: inset, fill: true), at: .zero)
-            instruction.layerInstructions = [frontLayer, rearLayer]
+            secondaryLayer.setTransform(transform(for: secondaryVideo, in: inset, fill: true), at: .zero)
+            instruction.layerInstructions = [secondaryLayer, primaryLayer]
         case .split:
             let left = CGRect(x: 0, y: 0, width: renderSize.width / 2, height: renderSize.height)
             let right = CGRect(x: renderSize.width / 2, y: 0, width: renderSize.width / 2, height: renderSize.height)
-            rearLayer.setTransform(transform(for: rearVideo, in: left, fill: true), at: .zero)
-            frontLayer.setTransform(transform(for: frontVideo, in: right, fill: true), at: .zero)
-            instruction.layerInstructions = [frontLayer, rearLayer]
+            primaryLayer.setTransform(transform(for: primaryVideo, in: left, fill: true), at: .zero)
+            secondaryLayer.setTransform(transform(for: secondaryVideo, in: right, fill: true), at: .zero)
+            instruction.layerInstructions = [secondaryLayer, primaryLayer]
         }
         let videoComposition = AVMutableVideoComposition()
         videoComposition.renderSize = renderSize
         videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
         videoComposition.instructions = [instruction]
-        let destination = front.deletingLastPathComponent().appendingPathComponent("composite-\(layout.rawValue).mov")
+        let destination = front.deletingLastPathComponent().appendingPathComponent("composite-\(layout.rawValue)-\(primarySide == .front ? "front" : "rear").mov")
         try? FileManager.default.removeItem(at: destination)
         guard let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality) else { throw ComposerError.cannotExport }
         exporter.outputURL = destination

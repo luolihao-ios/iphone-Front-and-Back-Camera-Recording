@@ -1,11 +1,25 @@
 import Foundation
 
+enum CameraSide: Equatable {
+    case front
+    case rear
+
+    var secondary: CameraSide { self == .front ? .rear : .front }
+}
+
 enum CaptureLayout: String, CaseIterable, Identifiable {
     case pictureInPicture
     case split
 
     var id: String { rawValue }
     var title: String { self == .pictureInPicture ? "画中画" : "分屏" }
+}
+
+struct CaptureComposition: Equatable {
+    let layout: CaptureLayout
+    let primarySide: CameraSide
+
+    var secondarySide: CameraSide { primarySide.secondary }
 }
 
 struct RecordingFiles {
