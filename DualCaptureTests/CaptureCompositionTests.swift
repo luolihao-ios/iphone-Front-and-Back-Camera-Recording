@@ -13,4 +13,10 @@ final class CaptureCompositionTests: XCTestCase {
 
         XCTAssertEqual(composition.previewLayerOrder, [CameraSide.front, CameraSide.rear])
     }
+
+    func testTapChecksSecondaryCameraBeforeFullScreenPrimaryCamera() {
+        let composition = CaptureComposition(layout: .pictureInPicture, primarySide: .front)
+
+        XCTAssertEqual(composition.tapHitTestOrder, [CameraSide.rear, CameraSide.front])
+    }
 }
