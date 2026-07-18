@@ -2,6 +2,8 @@
 
 DualCapture 是一个原生 iOS 示例项目：在**硬件支持多摄会话**的旧款 iPhone 上，同时采集前、后摄像头视频，并提供画中画或分屏的合成成片。
 
+首次迭代的实现、构建、签名、真机验证和问题修复记录见 [迭代总结](docs/iteration-summary-2026-07-18.md)。
+
 项目不依赖 iPhone 17 专属的系统相机入口；它使用 Apple AVFoundation 的 `AVCaptureMultiCamSession`。因此，能否真同步双摄由实际机型的多摄能力决定，应用会在运行时检测，不会以快速切换摄像头冒充同步录制。
 
 ## 当前功能
