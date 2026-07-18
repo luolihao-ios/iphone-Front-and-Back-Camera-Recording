@@ -18,7 +18,10 @@ final class CameraManager: NSObject, ObservableObject {
     private var frontOutput: AVCaptureVideoDataOutput?
     private var rearOutput: AVCaptureVideoDataOutput?
     private var audioOutput: AVCaptureAudioDataOutput?
+    private let delegateRegistry = CaptureDelegateRegistry()
     private var recordingStartTime: CMTime?
+    private var receivedFrontFrame = false
+    private var receivedRearFrame = false
 
     func prepare() async {
         guard AVCaptureMultiCamSession.isMultiCamSupported else {
@@ -33,10 +36,15 @@ final class CameraManager: NSObject, ObservableObject {
             try configureSession()
             DispatchQueue.main.async {
                 self.isSupported = true
-                self.isReady = true
-                self.statusMessage = nil
+                self.statusMessage = "正在启动双摄会话…"
             }
-            sampleQueue.async { self.session.startRunning() }
+            sampleQueue.async {
+                self.session.startRunning()
+                DispatchQueue.main.async {
+                    self.isReady = self.session.isRunning
+                    self.statusMessage = self.session.isRunning ? "等待前后摄像头画面…" : "双摄会话未能启动。"
+                }
+            }
         } catch {
             setStatus("无法配置双摄会话：\(error.localizedDescription)")
         }
@@ -116,7 +124,9 @@ final class CameraManager: NSObject, ObservableObject {
         let frontOutput = makeVideoOutput(side: .front)
         let rearOutput = makeVideoOutput(side: .rear)
         let audioOutput = AVCaptureAudioDataOutput()
-        audioOutput.setSampleBufferDelegate(SampleDelegate { [weak self] sample in self?.appendAudio(sample) }, queue: sampleQueue)
+        let audioDelegate = SampleDelegate { [weak self] sample in self?.appendAudio(sample) }
+        delegateRegistry.retain(audioDelegate)
+        audioOutput.setSampleBufferDelegate(audioDelegate, queue: sampleQueue)
         for output in [frontOutput, rearOutput] { guard session.canAddOutput(output) else { throw CaptureError.unsupportedCombination }; session.addOutputWithNoConnections(output) }
         guard session.canAddOutput(audioOutput) else { throw CaptureError.unsupportedCombination }
         session.addOutputWithNoConnections(audioOutput)
@@ -132,7 +142,9 @@ final class CameraManager: NSObject, ObservableObject {
         let output = AVCaptureVideoDataOutput()
         output.alwaysDiscardsLateVideoFrames = true
         output.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange]
-        output.setSampleBufferDelegate(SampleDelegate { [weak self] sample in self?.appendVideo(sample, side: side) }, queue: sampleQueue)
+        let delegate = SampleDelegate { [weak self] sample in self?.appendVideo(sample, side: side) }
+        delegateRegistry.retain(delegate)
+        output.setSampleBufferDelegate(delegate, queue: sampleQueue)
         return output
     }
 
@@ -145,6 +157,7 @@ final class CameraManager: NSObject, ObservableObject {
 
     private func appendVideo(_ sample: CMSampleBuffer, side: CameraSide) {
         previewSink?(side, sample)
+        reportFirstFrame(for: side)
         guard isRecording else { return }
         let startTime = recordingStartTime ?? CMSampleBufferGetPresentationTimeStamp(sample)
         recordingStartTime = startTime
@@ -165,6 +178,22 @@ final class CameraManager: NSObject, ObservableObject {
 
     private func setStatus(_ message: String) {
         DispatchQueue.main.async { self.statusMessage = message }
+    }
+
+    private func reportFirstFrame(for side: CameraSide) {
+        switch side {
+        case .front: receivedFrontFrame = true
+        case .rear: receivedRearFrame = true
+        }
+        guard receivedFrontFrame || receivedRearFrame else { return }
+        let text: String
+        switch (receivedRearFrame, receivedFrontFrame) {
+        case (true, true): text = "已接收前后摄像头画面。"
+        case (true, false): text = "已接收后摄画面，等待前摄画面…"
+        case (false, true): text = "已接收前摄画面，等待后摄画面…"
+        case (false, false): return
+        }
+        DispatchQueue.main.async { self.statusMessage = text }
     }
 }
 
