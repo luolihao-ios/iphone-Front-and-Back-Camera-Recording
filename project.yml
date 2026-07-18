@@ -6,6 +6,7 @@ options:
 settings:
   base:
     SWIFT_VERSION: 5.0
+    GENERATE_INFOPLIST_FILE: YES
     PRODUCT_BUNDLE_IDENTIFIER: com.example.dualcapture
     DEVELOPMENT_TEAM: ""
     CODE_SIGN_STYLE: Automatic
