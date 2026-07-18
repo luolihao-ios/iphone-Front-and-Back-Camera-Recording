@@ -33,7 +33,7 @@ jobs:
           mkdir -p ipa/Payload
           cp -R build/Build/Products/Release-iphoneos/DualCapture.app ipa/Payload/
           cd ipa
-          ditto -c -k --sequesterRsrc --keepParent Payload ../DualCapture-unsigned.ipa
+          /usr/bin/zip -qry ../DualCapture-unsigned.ipa Payload
       - name: Upload unsigned IPA
         uses: actions/upload-artifact@v4
         with:
