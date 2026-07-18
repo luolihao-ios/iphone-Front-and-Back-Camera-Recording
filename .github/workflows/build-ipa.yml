@@ -28,6 +28,13 @@ jobs:
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
             build
+      - name: Run unit tests
+        run: |
+          xcodebuild \
+            -project DualCapture.xcodeproj \
+            -scheme DualCapture \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            test
       - name: Package IPA
         run: |
           mkdir -p ipa/Payload

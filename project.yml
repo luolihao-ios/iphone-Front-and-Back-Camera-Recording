@@ -28,4 +28,12 @@ targets:
         TARGETED_DEVICE_FAMILY: "1"
         SUPPORTS_MACCATALYST: NO
     scheme:
-      testTargets: []
+      testTargets:
+        - DualCaptureTests
+  DualCaptureTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: DualCaptureTests
+    dependencies:
+      - target: DualCapture
