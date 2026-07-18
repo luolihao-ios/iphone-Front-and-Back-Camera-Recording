@@ -1,0 +1,41 @@
+name: Build unsigned IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: macos-15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Build device app without signing
+        run: |
+          xcodebuild \
+            -project DualCapture.xcodeproj \
+            -scheme DualCapture \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            build
+      - name: Package IPA
+        run: |
+          mkdir -p ipa/Payload
+          cp -R build/Build/Products/Release-iphoneos/DualCapture.app ipa/Payload/
+          ditto -c -k --sequesterRsrc --keepParent ipa DualCapture-unsigned.ipa
+      - name: Upload unsigned IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: DualCapture-unsigned-ipa
+          path: DualCapture-unsigned.ipa
+          if-no-files-found: error
