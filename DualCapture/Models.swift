@@ -20,6 +20,8 @@ struct CaptureComposition: Equatable {
     let primarySide: CameraSide
 
     var secondarySide: CameraSide { primarySide.secondary }
+    /// Core Animation sublayer order from back to front.
+    var previewLayerOrder: [CameraSide] { [primarySide, secondarySide] }
 }
 
 struct RecordingFiles {

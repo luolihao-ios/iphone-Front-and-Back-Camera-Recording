@@ -45,15 +45,19 @@ final class PreviewView: UIView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        let mainLayer = layer(for: primarySide)
+        let secondaryLayer = layer(for: primarySide.secondary)
+        layer.insertSublayer(mainLayer, at: 0)
+        layer.insertSublayer(secondaryLayer, above: mainLayer)
         switch layout {
         case .pictureInPicture:
-            layer(for: primarySide).frame = bounds
+            mainLayer.frame = bounds
             let size = CGSize(width: bounds.width * 0.34, height: bounds.height * 0.25)
-            layer(for: primarySide.secondary).frame = CGRect(x: bounds.maxX - size.width - 18, y: bounds.minY + 58, width: size.width, height: size.height)
+            secondaryLayer.frame = CGRect(x: bounds.maxX - size.width - 18, y: bounds.minY + 58, width: size.width, height: size.height)
         case .split:
             let width = bounds.width / 2
-            layer(for: primarySide).frame = CGRect(x: 0, y: 0, width: width, height: bounds.height)
-            layer(for: primarySide.secondary).frame = CGRect(x: width, y: 0, width: width, height: bounds.height)
+            mainLayer.frame = CGRect(x: 0, y: 0, width: width, height: bounds.height)
+            secondaryLayer.frame = CGRect(x: width, y: 0, width: width, height: bounds.height)
         }
     }
 

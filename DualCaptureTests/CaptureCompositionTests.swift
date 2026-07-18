@@ -11,6 +11,6 @@ final class CaptureCompositionTests: XCTestCase {
     func testPreviewPlacesSecondaryCameraAbovePrimaryCamera() {
         let composition = CaptureComposition(layout: .pictureInPicture, primarySide: .front)
 
-        XCTAssertEqual(composition.previewLayerOrder, [.front, .rear])
+        XCTAssertEqual(composition.previewLayerOrder, [CameraSide.front, CameraSide.rear])
     }
 }
