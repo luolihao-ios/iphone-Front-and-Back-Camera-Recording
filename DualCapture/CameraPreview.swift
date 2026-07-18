@@ -55,9 +55,9 @@ final class PreviewView: UIView {
             let size = CGSize(width: bounds.width * 0.34, height: bounds.height * 0.25)
             secondaryLayer.frame = CGRect(x: bounds.maxX - size.width - 18, y: bounds.minY + 58, width: size.width, height: size.height)
         case .split:
-            let width = bounds.width / 2
-            mainLayer.frame = CGRect(x: 0, y: 0, width: width, height: bounds.height)
-            secondaryLayer.frame = CGRect(x: width, y: 0, width: width, height: bounds.height)
+            let height = bounds.height / 2
+            mainLayer.frame = CGRect(x: 0, y: 0, width: bounds.width, height: height)
+            secondaryLayer.frame = CGRect(x: 0, y: height, width: bounds.width, height: height)
         }
     }
 
@@ -69,8 +69,11 @@ final class PreviewView: UIView {
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let location = touches.first?.location(in: self) else { return }
-        if frontLayer.frame.contains(location) { onTapSide?(.front) }
-        else if rearLayer.frame.contains(location) { onTapSide?(.rear) }
+        let composition = CaptureComposition(layout: layout, primarySide: primarySide)
+        for side in composition.tapHitTestOrder where layer(for: side).frame.contains(location) {
+            onTapSide?(side)
+            return
+        }
     }
 
     private func layer(for side: CameraSide) -> AVSampleBufferDisplayLayer {

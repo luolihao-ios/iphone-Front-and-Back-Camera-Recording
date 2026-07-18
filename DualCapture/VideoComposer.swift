@@ -34,10 +34,10 @@ enum VideoComposer {
             secondaryLayer.setTransform(transform(for: secondaryVideo, in: inset, fill: true), at: .zero)
             instruction.layerInstructions = [secondaryLayer, primaryLayer]
         case .split:
-            let left = CGRect(x: 0, y: 0, width: renderSize.width / 2, height: renderSize.height)
-            let right = CGRect(x: renderSize.width / 2, y: 0, width: renderSize.width / 2, height: renderSize.height)
-            primaryLayer.setTransform(transform(for: primaryVideo, in: left, fill: true), at: .zero)
-            secondaryLayer.setTransform(transform(for: secondaryVideo, in: right, fill: true), at: .zero)
+            let top = CGRect(x: 0, y: 0, width: renderSize.width, height: renderSize.height / 2)
+            let bottom = CGRect(x: 0, y: renderSize.height / 2, width: renderSize.width, height: renderSize.height / 2)
+            primaryLayer.setTransform(transform(for: primaryVideo, in: top, fill: true), at: .zero)
+            secondaryLayer.setTransform(transform(for: secondaryVideo, in: bottom, fill: true), at: .zero)
             instruction.layerInstructions = [secondaryLayer, primaryLayer]
         }
         let videoComposition = AVMutableVideoComposition()

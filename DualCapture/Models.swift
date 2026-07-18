@@ -22,6 +22,8 @@ struct CaptureComposition: Equatable {
     var secondarySide: CameraSide { primarySide.secondary }
     /// Core Animation sublayer order from back to front.
     var previewLayerOrder: [CameraSide] { [primarySide, secondarySide] }
+    /// Hit testing checks the visible overlay before the full-screen layer beneath it.
+    var tapHitTestOrder: [CameraSide] { [secondarySide, primarySide] }
 }
 
 struct RecordingFiles {
