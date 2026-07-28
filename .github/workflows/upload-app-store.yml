@@ -12,7 +12,7 @@ on:
 jobs:
   upload:
     if: inputs.confirm_upload == true
-    runs-on: macos-15
+    runs-on: macos-26
     permissions:
       contents: read
     env:
