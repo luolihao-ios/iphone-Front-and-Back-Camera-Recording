@@ -20,6 +20,8 @@ targets:
       - path: DualCapture
     settings:
       base:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        INFOPLIST_KEY_ITSAppUsesNonExemptEncryption: NO
         INFOPLIST_KEY_CFBundleDisplayName: 双摄录制
         INFOPLIST_KEY_NSCameraUsageDescription: 用于同时录制前后摄像头视频。
         INFOPLIST_KEY_NSMicrophoneUsageDescription: 用于为录制的视频采集音频。
