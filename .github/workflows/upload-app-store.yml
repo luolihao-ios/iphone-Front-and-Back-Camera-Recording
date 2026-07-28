@@ -1,0 +1,90 @@
+name: Upload signed build to App Store Connect
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_upload:
+        description: Set to true only when the App Store Connect app record is ready
+        required: true
+        default: false
+        type: boolean
+
+jobs:
+  upload:
+    if: inputs.confirm_upload == true
+    runs-on: macos-15
+    permissions:
+      contents: read
+    env:
+      KEYCHAIN_PASSWORD: ${{ secrets.KEYCHAIN_PASSWORD }}
+      CERTIFICATE_BASE64: ${{ secrets.APPLE_DISTRIBUTION_CERTIFICATE_BASE64 }}
+      CERTIFICATE_PASSWORD: ${{ secrets.APPLE_DISTRIBUTION_CERTIFICATE_PASSWORD }}
+      PROFILE_BASE64: ${{ secrets.APP_STORE_PROVISIONING_PROFILE_BASE64 }}
+      ASC_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      ASC_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Install signing assets
+        run: |
+          certificate_path="$RUNNER_TEMP/distribution.p12"
+          profile_path="$RUNNER_TEMP/app-store.mobileprovision"
+          keychain_path="$RUNNER_TEMP/app-store-signing.keychain-db"
+          profile_plist="$RUNNER_TEMP/profile.plist"
+          echo "$CERTIFICATE_BASE64" | base64 --decode > "$certificate_path"
+          echo "$PROFILE_BASE64" | base64 --decode > "$profile_path"
+          security create-keychain -p "$KEYCHAIN_PASSWORD" "$keychain_path"
+          security set-keychain-settings -lut 21600 "$keychain_path"
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$keychain_path"
+          security import "$certificate_path" -P "$CERTIFICATE_PASSWORD" -A -t cert -f pkcs12 -k "$keychain_path"
+          security list-keychain -d user -s "$keychain_path"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$KEYCHAIN_PASSWORD" "$keychain_path"
+          security cms -D -i "$profile_path" > "$profile_plist"
+          profile_uuid=$(/usr/libexec/PlistBuddy -c 'Print :UUID' "$profile_plist")
+          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+          cp "$profile_path" "$HOME/Library/MobileDevice/Provisioning Profiles/$profile_uuid.mobileprovision"
+          echo "PROFILE_UUID=$profile_uuid" >> "$GITHUB_ENV"
+      - name: Archive signed app
+        run: |
+          xcodebuild archive \
+            -project DualCapture.xcodeproj \
+            -scheme DualCapture \
+            -configuration Release \
+            -sdk iphoneos \
+            -archivePath "$RUNNER_TEMP/DualCapture.xcarchive" \
+            CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
+            PROVISIONING_PROFILE="$PROFILE_UUID"
+      - name: Export App Store IPA
+        run: |
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>signingStyle</key><string>manual</string>
+            <key>teamID</key><string>5J4K4PZHCV</string>
+            <key>signingCertificate</key><string>Apple Distribution</string>
+            <key>provisioningProfiles</key><dict>
+              <key>com.luolihao.dualcapture</key><string>$PROFILE_UUID</string>
+            </dict>
+          </dict></plist>
+          EOF
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/DualCapture.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export"
+      - name: Upload to App Store Connect
+        run: |
+          key_path="$HOME/.appstoreconnect/private_keys/AuthKey_$ASC_KEY_ID.p8"
+          mkdir -p "$(dirname "$key_path")"
+          echo "$ASC_KEY_BASE64" | base64 --decode > "$key_path"
+          xcrun altool --upload-app \
+            --type ios \
+            --file "$RUNNER_TEMP/export/DualCapture.ipa" \
+            --apiKey "$ASC_KEY_ID" \
+            --apiIssuer "$ASC_ISSUER_ID"
