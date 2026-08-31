@@ -46,6 +46,10 @@ enum VideoComposer {
                 height: insetHeight
             )
             secondaryLayer.setTransform(transform(for: secondaryVideo, in: pipFrame, fill: true), at: .zero)
+            // The scaled source can extend beyond the target rect. Crop it so
+            // the visible PIP content ends exactly at the same rectangle that
+            // the rounded border encloses.
+            secondaryLayer.setCropRectangle(pipFrame, at: .zero)
             instruction.layerInstructions = [secondaryLayer, primaryLayer]
         case .split:
             let top = CGRect(x: 0, y: 0, width: renderSize.width, height: renderSize.height / 2)
