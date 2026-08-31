@@ -46,10 +46,6 @@ enum VideoComposer {
                 height: insetHeight
             )
             secondaryLayer.setTransform(transform(for: secondaryVideo, in: pipFrame, fill: true), at: .zero)
-            // The scaled source can extend beyond the target rect. Crop it so
-            // the visible PIP content ends exactly at the same rectangle that
-            // the rounded border encloses.
-            secondaryLayer.setCropRectangle(pipFrame, at: .zero)
             instruction.layerInstructions = [secondaryLayer, primaryLayer]
         case .split:
             let top = CGRect(x: 0, y: 0, width: renderSize.width, height: renderSize.height / 2)
@@ -105,14 +101,20 @@ enum VideoComposer {
 
     private static func transform(for track: AVAssetTrack, in target: CGRect, fill: Bool) -> CGAffineTransform {
         let preferred = track.preferredTransform
-        let source = track.naturalSize.applying(preferred)
-        let width = abs(source.width), height = abs(source.height)
+        let sourceRect = CGRect(origin: .zero, size: track.naturalSize)
+        let orientedRect = sourceRect.applying(preferred)
+        let width = abs(orientedRect.width), height = abs(orientedRect.height)
         guard width > 0, height > 0 else { return preferred }
         let scale = fill ? max(target.width / width, target.height / height) : min(target.width / width, target.height / height)
-        let scaledWidth = width * scale, scaledHeight = height * scale
-        let x = target.minX + (target.width - scaledWidth) / 2
-        let y = target.minY + (target.height - scaledHeight) / 2
-        return preferred.concatenating(CGAffineTransform(scaleX: scale, y: scale)).concatenating(CGAffineTransform(translationX: x, y: y))
+        var result = preferred.concatenating(CGAffineTransform(scaleX: scale, y: scale))
+        // Normalize the rotated/scaled source into the target rect. Without
+        // this step, portrait tracks with a negative rotated origin spill out
+        // of the PIP area and no border can match their visible bounds.
+        let scaledRect = sourceRect.applying(result)
+        let dx = target.midX - scaledRect.midX
+        let dy = target.midY - scaledRect.midY
+        result = result.concatenating(CGAffineTransform(translationX: dx, y: dy))
+        return result
     }
 }
 
