@@ -63,7 +63,12 @@ enum VideoComposer {
             let videoLayer = CALayer()
             videoLayer.frame = parentLayer.bounds
             let borderLayer = CAShapeLayer()
-            borderLayer.frame = pipFrame
+            borderLayer.frame = CGRect(
+                x: pipFrame.minX,
+                y: renderSize.height - pipFrame.maxY,
+                width: pipFrame.width,
+                height: pipFrame.height
+            )
             borderLayer.cornerRadius = 24
             borderLayer.borderWidth = 5
             borderLayer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
