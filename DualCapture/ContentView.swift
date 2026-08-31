@@ -50,32 +50,26 @@ struct ContentView: View {
                         .background(.black.opacity(0.65)).clipShape(RoundedRectangle(cornerRadius: 12))
                 }
                 Spacer()
-                HStack(spacing: 18) {
-                    AlbumThumbnailButton(thumbnail: latestThumbnail) { showPlayer = latestVideoURL != nil }
+                if camera.isRecording {
+                    recordButton()
+                } else {
+                    HStack(spacing: 18) {
+                        AlbumThumbnailButton(thumbnail: latestThumbnail) { showPlayer = latestVideoURL != nil }
                         Button(action: switchCamera) {
-                        Image(systemName: "camera.rotate").font(.title2)
-                            .frame(width: 54, height: 54)
-                            .background(.black.opacity(0.55)).clipShape(Circle())
+                            Image(systemName: "camera.rotate").font(.title2)
+                                .frame(width: 54, height: 54)
+                                .background(.black.opacity(0.55)).clipShape(Circle())
                         }
-                        Button(action: toggleRecording) {
-                        ZStack {
-                            Circle().fill(.black.opacity(0.35)).frame(width: 72, height: 72)
-                                .overlay(Circle().stroke(.white, lineWidth: 4).padding(-6))
-                            if camera.isRecording {
-                                RoundedRectangle(cornerRadius: 6).fill(.red).frame(width: 30, height: 30)
-                            } else {
-                                Circle().fill(.red).frame(width: 58, height: 58)
-                            }
-                        }
-                        }
+                        recordButton()
                         Button { showSettings = true } label: {
-                        Image(systemName: "slider.horizontal.3").font(.title2)
-                            .frame(width: 54, height: 54)
-                            .background(.black.opacity(0.55)).clipShape(Circle())
+                            Image(systemName: "slider.horizontal.3").font(.title2)
+                                .frame(width: 54, height: 54)
+                                .background(.black.opacity(0.55)).clipShape(Circle())
                         }
                     }
-                .frame(maxWidth: .infinity)
-                .offset(x: 32)
+                    .frame(maxWidth: .infinity)
+                    .offset(x: 32)
+                }
                 .disabled(camera.isProcessing)
                 .padding(.bottom, 34)
             }
@@ -121,6 +115,20 @@ struct ContentView: View {
     private func switchCamera() {
         guard !camera.isRecording && !camera.isProcessing else { return }
         primaryCamera = primaryCamera == "front" ? "rear" : "front"
+    }
+
+    private func recordButton() -> some View {
+        Button(action: toggleRecording) {
+            ZStack {
+                Circle().fill(.black.opacity(0.35)).frame(width: 72, height: 72)
+                if camera.isRecording {
+                    RoundedRectangle(cornerRadius: 6).fill(.red).frame(width: 30, height: 30)
+                } else {
+                    Circle().fill(.red).frame(width: 58, height: 58)
+                }
+            }
+        }
+        .disabled(!camera.isReady || camera.isProcessing)
     }
 
     private static func makeThumbnail(for url: URL) async -> UIImage? {

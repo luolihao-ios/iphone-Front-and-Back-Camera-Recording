@@ -127,6 +127,9 @@ final class CameraManager: NSObject, ObservableObject {
         session.addOutputWithNoConnections(audioOutput)
         try connect(input: frontInput, mediaType: .video, output: frontOutput)
         try connect(input: rearInput, mediaType: .video, output: rearOutput)
+        if let connection = frontOutput.connection(with: .video), connection.isVideoMirroringSupported {
+            connection.isVideoMirrored = true
+        }
         try connect(input: audioInput, mediaType: .audio, output: audioOutput)
         self.frontOutput = frontOutput
         self.rearOutput = rearOutput
