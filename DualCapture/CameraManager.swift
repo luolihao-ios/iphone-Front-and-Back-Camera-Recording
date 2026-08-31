@@ -1,5 +1,6 @@
 import AVFoundation
 import SwiftUI
+import AudioToolbox
 
 final class CameraManager: NSObject, ObservableObject {
     let session = AVCaptureMultiCamSession()
@@ -58,6 +59,7 @@ final class CameraManager: NSObject, ObservableObject {
             rearRecorder = try MovieRecorder(url: folder.appendingPathComponent("rear.mov"), videoSettings: rearSettings)
             isRecording = true
             statusMessage = nil
+            AudioServicesPlaySystemSound(1117)
         } catch {
             setStatus("无法创建录制文件：\(error.localizedDescription)")
         }
@@ -65,6 +67,7 @@ final class CameraManager: NSObject, ObservableObject {
 
     func stopRecording(layout: CaptureLayout, primarySide: CameraSide) async -> RecordingFiles? {
         guard isRecording, let frontRecorder, let rearRecorder else { return nil }
+        AudioServicesPlaySystemSound(1118)
         isRecording = false
         isProcessing = true
         statusMessage = "正在生成视频…"
