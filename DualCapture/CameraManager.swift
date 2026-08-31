@@ -40,7 +40,7 @@ final class CameraManager: NSObject, ObservableObject {
                 self.session.startRunning()
                 DispatchQueue.main.async {
                     self.isReady = self.session.isRunning
-                    self.statusMessage = self.session.isRunning ? "等待前后摄像头画面…" : "双摄会话未能启动。"
+                    self.statusMessage = self.session.isRunning ? nil : "双摄会话未能启动。"
                 }
             }
         } catch {
