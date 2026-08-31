@@ -106,15 +106,17 @@ enum VideoComposer {
         let width = abs(orientedRect.width), height = abs(orientedRect.height)
         guard width > 0, height > 0 else { return preferred }
         let scale = fill ? max(target.width / width, target.height / height) : min(target.width / width, target.height / height)
-        var result = preferred.concatenating(CGAffineTransform(scaleX: scale, y: scale))
-        // Normalize the rotated/scaled source into the target rect. Without
-        // this step, portrait tracks with a negative rotated origin spill out
-        // of the PIP area and no border can match their visible bounds.
-        let scaledRect = sourceRect.applying(result)
-        let dx = target.midX - scaledRect.midX
-        let dy = target.midY - scaledRect.midY
-        result = result.concatenating(CGAffineTransform(translationX: dx, y: dy))
-        return result
+        let scaledWidth = width * scale
+        let scaledHeight = height * scale
+        let x = target.minX + (target.width - scaledWidth) / 2
+        let y = target.minY + (target.height - scaledHeight) / 2
+        // Apply the track's camera rotation first, then scale, then place the
+        // resulting oriented image in the target rect. Keeping translation as
+        // the outer transform avoids rotated portrait tracks shifting outside
+        // the PIP bounds.
+        return CGAffineTransform(translationX: x, y: y)
+            .concatenating(CGAffineTransform(scaleX: scale, y: scale))
+            .concatenating(preferred)
     }
 }
 
