@@ -1,4 +1,6 @@
 import SwiftUI
+import UIKit
+import Photos
 
 struct ContentView: View {
     @StateObject private var camera = CameraManager()
@@ -26,14 +28,6 @@ struct ContentView: View {
                 .ignoresSafeArea()
             }
             VStack {
-                HStack {
-                    Spacer()
-                    Button { showSettings = true } label: {
-                        Image(systemName: "gearshape.fill").font(.title2).padding(12)
-                    }
-                    .disabled(camera.isRecording || camera.isProcessing)
-                }
-                .padding(.top, 10).padding(.horizontal)
                 if camera.isRecording, let recordingStartedAt {
                     TimelineView(.periodic(from: recordingStartedAt, by: 1)) { context in
                         let elapsed = max(0, Int(context.date.timeIntervalSince(recordingStartedAt)))
@@ -51,15 +45,25 @@ struct ContentView: View {
                         .background(.black.opacity(0.65)).clipShape(RoundedRectangle(cornerRadius: 12))
                 }
                 Spacer()
-                if !camera.isRecording && !camera.isProcessing {
-                    Text("点击画面可交换主次").foregroundStyle(.white.opacity(0.8))
+                HStack(spacing: 22) {
+                    AlbumThumbnailButton(action: openAlbum)
+                    Button(action: switchCamera) {
+                        Image(systemName: "camera.rotate").font(.title2)
+                            .frame(width: 54, height: 54)
+                            .background(.black.opacity(0.55)).clipShape(Circle())
+                    }
+                    Button(action: toggleRecording) {
+                        let shape = RoundedRectangle(cornerRadius: camera.isRecording ? 14 : 36)
+                        shape.fill(camera.isRecording ? .red : .white).frame(width: 72, height: 72)
+                            .overlay(shape.stroke(.white, lineWidth: 4).padding(-6))
+                    }
+                    Button { showSettings = true } label: {
+                        Image(systemName: "slider.horizontal.3").font(.title2)
+                            .frame(width: 54, height: 54)
+                            .background(.black.opacity(0.55)).clipShape(Circle())
+                    }
                 }
-                Button(action: toggleRecording) {
-                    let shape = RoundedRectangle(cornerRadius: camera.isRecording ? 14 : 36)
-                    shape.fill(camera.isRecording ? .red : .white).frame(width: 72, height: 72)
-                        .overlay(shape.stroke(.white, lineWidth: 4).padding(-6))
-                }
-                .disabled(!camera.isReady || camera.isProcessing)
+                .disabled(camera.isProcessing)
                 .padding(.bottom, 34)
             }
         }
@@ -85,6 +89,48 @@ struct ContentView: View {
             recordingComposition = CaptureComposition(layout: layout, primarySide: primarySide)
             recordingStartedAt = Date()
             camera.startRecording()
+        }
+    }
+
+    private func switchCamera() {
+        guard !camera.isRecording && !camera.isProcessing else { return }
+        primaryCamera = primaryCamera == "front" ? "rear" : "front"
+    }
+
+    private func openAlbum() {
+        guard let url = URL(string: "photos-redirect://") else { return }
+        UIApplication.shared.open(url)
+    }
+}
+
+private struct AlbumThumbnailButton: View {
+    let action: () -> Void
+    @State private var thumbnail: UIImage?
+
+    var body: some View {
+        Button(action: action) {
+            Group {
+                if let thumbnail { Image(uiImage: thumbnail).resizable().scaledToFill() }
+                else { Image(systemName: "photo.on.rectangle").font(.title2) }
+            }
+            .frame(width: 54, height: 54)
+            .background(.black.opacity(0.55)).clipShape(RoundedRectangle(cornerRadius: 14))
+            .overlay(RoundedRectangle(cornerRadius: 14).stroke(.white.opacity(0.6), lineWidth: 1))
+        }
+        .task { thumbnail = await Self.loadLatestVideoThumbnail() }
+    }
+
+    private static func loadLatestVideoThumbnail() async -> UIImage? {
+        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        guard status == .authorized || status == .limited else { return nil }
+        let options = PHFetchOptions()
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        options.fetchLimit = 1
+        guard let asset = PHAsset.fetchAssets(with: .video, options: options).firstObject else { return nil }
+        return await withCheckedContinuation { continuation in
+            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 120, height: 120), contentMode: .aspectFill, options: nil) { image, _ in
+                continuation.resume(returning: image)
+            }
         }
     }
 }

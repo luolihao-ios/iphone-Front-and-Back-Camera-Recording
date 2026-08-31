@@ -18,8 +18,6 @@ final class CameraManager: NSObject, ObservableObject {
     private var audioOutput: AVCaptureAudioDataOutput?
     private let delegateRegistry = CaptureDelegateRegistry()
     private var recordingStartTime: CMTime?
-    private var receivedFrontFrame = false
-    private var receivedRearFrame = false
 
     func prepare() async {
         guard AVCaptureMultiCamSession.isMultiCamSupported else {
@@ -61,7 +59,7 @@ final class CameraManager: NSObject, ObservableObject {
             rearRecorder = try MovieRecorder(url: folder.appendingPathComponent("rear.mov"), videoSettings: rearSettings)
             recordingStartTime = nil
             isRecording = true
-            statusMessage = "正在同步录制"
+            statusMessage = nil
         } catch {
             setStatus("无法创建录制文件：\(error.localizedDescription)")
         }
@@ -75,8 +73,7 @@ final class CameraManager: NSObject, ObservableObject {
         self.frontRecorder = nil
         self.rearRecorder = nil
         recordingStartTime = nil
-        let frontURL = await frontRecorder.finish()
-        let rearURL = await rearRecorder.finish()
+        let (frontURL, rearURL) = await finishRecorders(frontRecorder: frontRecorder, rearRecorder: rearRecorder)
         guard let frontURL, let rearURL else {
             isProcessing = false
             setStatus("视频写入失败，请重试。")
@@ -85,7 +82,7 @@ final class CameraManager: NSObject, ObservableObject {
         do {
             let composite = try await VideoComposer.makeComposite(front: frontURL, rear: rearURL, layout: layout, primarySide: primarySide)
             isProcessing = false
-            statusMessage = "录制完成：请选择要保存的文件。"
+            statusMessage = nil
             return RecordingFiles(front: frontURL, rear: rearURL, composite: composite)
         } catch {
             isProcessing = false
@@ -161,7 +158,6 @@ final class CameraManager: NSObject, ObservableObject {
 
     private func appendVideo(_ sample: CMSampleBuffer, side: CameraSide) {
         previewSink?(side, sample)
-        reportFirstFrame(for: side)
         guard isRecording else { return }
         let startTime = recordingStartTime ?? CMSampleBufferGetPresentationTimeStamp(sample)
         recordingStartTime = startTime
@@ -184,20 +180,16 @@ final class CameraManager: NSObject, ObservableObject {
         DispatchQueue.main.async { self.statusMessage = message }
     }
 
-    private func reportFirstFrame(for side: CameraSide) {
-        switch side {
-        case .front: receivedFrontFrame = true
-        case .rear: receivedRearFrame = true
+    private func finishRecorders(frontRecorder: MovieRecorder, rearRecorder: MovieRecorder) async -> (URL?, URL?) {
+        await withCheckedContinuation { continuation in
+            sampleQueue.async {
+                Task {
+                    async let frontURL = frontRecorder.finish()
+                    async let rearURL = rearRecorder.finish()
+                    continuation.resume(returning: (await frontURL, await rearURL))
+                }
+            }
         }
-        guard receivedFrontFrame || receivedRearFrame else { return }
-        let text: String
-        switch (receivedRearFrame, receivedFrontFrame) {
-        case (true, true): text = "已接收前后摄像头画面。"
-        case (true, false): text = "已接收后摄画面，等待前摄画面…"
-        case (false, true): text = "已接收前摄画面，等待后摄画面…"
-        case (false, false): return
-        }
-        DispatchQueue.main.async { self.statusMessage = text }
     }
 }
 
