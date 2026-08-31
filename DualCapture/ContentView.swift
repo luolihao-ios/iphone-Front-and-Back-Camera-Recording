@@ -36,12 +36,13 @@ struct ContentView: View {
                     TimelineView(.periodic(from: recordingStartedAt, by: 1)) { context in
                         let elapsed = max(0, Int(context.date.timeIntervalSince(recordingStartedAt)))
                         HStack(spacing: 7) {
-                            Circle().fill(.red).frame(width: 9, height: 9)
+                            Circle().fill(.white).frame(width: 9, height: 9)
                             Text(String(format: "%02d:%02d:%02d", elapsed / 3600, (elapsed / 60) % 60, elapsed % 60))
                         }
+                        .foregroundStyle(.white)
                         .font(.system(.headline, design: .monospaced))
                         .padding(.horizontal, 14).padding(.vertical, 8)
-                        .background(.black.opacity(0.7)).clipShape(Capsule())
+                        .background(.red).clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                 } else if camera.isProcessing {
                     ProgressView("正在处理录制…")
