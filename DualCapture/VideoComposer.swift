@@ -1,4 +1,5 @@
 import AVFoundation
+import UIKit
 
 enum VideoComposer {
     static func makeComposite(front: URL, rear: URL, layout: CaptureLayout, primarySide: CameraSide) async throws -> URL {
@@ -63,19 +64,23 @@ enum VideoComposer {
             let videoLayer = CALayer()
             videoLayer.frame = parentLayer.bounds
             let borderLayer = CAShapeLayer()
-            // CAShapeLayer draws its border inward from its bounds. Expand the
-            // bounds by the stroke width so the visible outer edge encloses the
-            // complete PIP rectangle, matching the preview's original frame.
+            // Draw the outline using an explicit path. This keeps the visible
+            // outer edge aligned with the complete PIP rectangle instead of
+            // relying on CAShapeLayer's inward border rendering.
             let borderWidth: CGFloat = 5
-            borderLayer.frame = CGRect(
+            let borderFrame = CGRect(
                 x: pipFrame.minX,
                 y: renderSize.height - pipFrame.maxY,
                 width: pipFrame.width,
                 height: pipFrame.height
-            ).insetBy(dx: -borderWidth, dy: -borderWidth)
-            borderLayer.cornerRadius = 24 + borderWidth
-            borderLayer.borderWidth = borderWidth
-            borderLayer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
+            ).insetBy(dx: -borderWidth / 2, dy: -borderWidth / 2)
+            borderLayer.frame = borderFrame
+            borderLayer.path = UIBezierPath(
+                roundedRect: borderLayer.bounds.insetBy(dx: borderWidth / 2, dy: borderWidth / 2),
+                cornerRadius: 24
+            ).cgPath
+            borderLayer.lineWidth = borderWidth
+            borderLayer.strokeColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
             borderLayer.fillColor = nil
             parentLayer.addSublayer(videoLayer)
             parentLayer.addSublayer(borderLayer)
