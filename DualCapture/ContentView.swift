@@ -8,8 +8,9 @@ struct ContentView: View {
     @AppStorage("captureLayout") private var captureLayout = CaptureLayout.pictureInPicture.rawValue
     @AppStorage("primaryCamera") private var primaryCamera = "rear"
     @AppStorage("saveComposite") private var saveComposite = true
-    @AppStorage("saveFront") private var saveFront = true
-    @AppStorage("saveRear") private var saveRear = true
+    @AppStorage("saveFront") private var saveFront = false
+    @AppStorage("saveRear") private var saveRear = false
+    @AppStorage("saveSettingsInitialized") private var saveSettingsInitialized = false
     @State private var recordingComposition: CaptureComposition?
     @State private var showSettings = false
     @State private var showPlayer = false
@@ -83,6 +84,12 @@ struct ContentView: View {
             }
         }
         .task {
+            if !saveSettingsInitialized {
+                saveComposite = true
+                saveFront = false
+                saveRear = false
+                saveSettingsInitialized = true
+            }
             await camera.prepare()
             let latest = await Self.loadLatestVideo()
             latestThumbnail = latest.thumbnail
@@ -191,8 +198,8 @@ private struct SettingsView: View {
     @AppStorage("captureLayout") private var captureLayout = CaptureLayout.pictureInPicture.rawValue
     @AppStorage("primaryCamera") private var primaryCamera = "rear"
     @AppStorage("saveComposite") private var saveComposite = true
-    @AppStorage("saveFront") private var saveFront = true
-    @AppStorage("saveRear") private var saveRear = true
+    @AppStorage("saveFront") private var saveFront = false
+    @AppStorage("saveRear") private var saveRear = false
 
     var body: some View {
         NavigationStack {
