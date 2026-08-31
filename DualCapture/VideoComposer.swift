@@ -35,7 +35,14 @@ enum VideoComposer {
         switch layout {
         case .pictureInPicture:
             primaryLayer.setTransform(transform(for: primaryVideo, in: CGRect(origin: .zero, size: renderSize), fill: true), at: .zero)
-            let inset = CGRect(x: 738, y: 92, width: 324, height: 461)
+            let insetWidth = renderSize.width * PictureInPictureMetrics.widthRatio
+            let insetHeight = renderSize.height * PictureInPictureMetrics.heightRatio
+            let inset = CGRect(
+                x: renderSize.width - insetWidth - renderSize.width * PictureInPictureMetrics.rightMarginRatio,
+                y: renderSize.height * PictureInPictureMetrics.topMarginRatio,
+                width: insetWidth,
+                height: insetHeight
+            )
             secondaryLayer.setTransform(transform(for: secondaryVideo, in: inset, fill: true), at: .zero)
             instruction.layerInstructions = [secondaryLayer, primaryLayer]
         case .split:

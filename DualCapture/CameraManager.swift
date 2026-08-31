@@ -57,9 +57,9 @@ final class CameraManager: NSObject, ObservableObject {
             }
             frontRecorder = try MovieRecorder(url: folder.appendingPathComponent("front.mov"), videoSettings: frontSettings)
             rearRecorder = try MovieRecorder(url: folder.appendingPathComponent("rear.mov"), videoSettings: rearSettings)
+            AudioServicesPlaySystemSound(1117)
             isRecording = true
             statusMessage = nil
-            AudioServicesPlaySystemSound(1117)
         } catch {
             setStatus("无法创建录制文件：\(error.localizedDescription)")
         }
@@ -67,8 +67,8 @@ final class CameraManager: NSObject, ObservableObject {
 
     func stopRecording(layout: CaptureLayout, primarySide: CameraSide) async -> RecordingFiles? {
         guard isRecording, let frontRecorder, let rearRecorder else { return nil }
-        AudioServicesPlaySystemSound(1118)
         isRecording = false
+        AudioServicesPlaySystemSound(1118)
         isProcessing = true
         statusMessage = "正在生成视频…"
         self.frontRecorder = nil

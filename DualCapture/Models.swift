@@ -1,5 +1,12 @@
 import Foundation
 
+enum PictureInPictureMetrics {
+    static let widthRatio: CGFloat = 0.30
+    static let heightRatio: CGFloat = 0.24
+    static let rightMarginRatio: CGFloat = 0.05
+    static let topMarginRatio: CGFloat = 0.048
+}
+
 enum CameraSide: Equatable {
     case front
     case rear

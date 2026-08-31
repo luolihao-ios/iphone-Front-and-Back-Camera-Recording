@@ -54,8 +54,10 @@ final class PreviewView: UIView {
         switch layout {
         case .pictureInPicture:
             mainLayer.frame = bounds
-            let size = CGSize(width: bounds.width * 0.30, height: bounds.height * 0.24)
-            secondaryLayer.frame = CGRect(x: bounds.maxX - size.width - 18, y: bounds.minY + 92, width: size.width, height: size.height)
+            let size = CGSize(width: bounds.width * PictureInPictureMetrics.widthRatio, height: bounds.height * PictureInPictureMetrics.heightRatio)
+            let rightMargin = bounds.width * PictureInPictureMetrics.rightMarginRatio
+            let topMargin = bounds.height * PictureInPictureMetrics.topMarginRatio
+            secondaryLayer.frame = CGRect(x: bounds.maxX - size.width - rightMargin, y: bounds.minY + topMargin, width: size.width, height: size.height)
         case .split:
             let height = bounds.height / 2
             mainLayer.frame = CGRect(x: 0, y: 0, width: bounds.width, height: height)
