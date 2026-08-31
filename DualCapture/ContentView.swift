@@ -52,6 +52,8 @@ struct ContentView: View {
                 Spacer()
                 if camera.isRecording {
                     recordButton()
+                        .disabled(camera.isProcessing)
+                        .padding(.bottom, 34)
                 } else {
                     HStack(spacing: 18) {
                         AlbumThumbnailButton(thumbnail: latestThumbnail) { showPlayer = latestVideoURL != nil }
@@ -69,9 +71,9 @@ struct ContentView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .offset(x: 32)
+                    .disabled(camera.isProcessing)
+                    .padding(.bottom, 34)
                 }
-                .disabled(camera.isProcessing)
-                .padding(.bottom, 34)
             }
         }
         .task {
