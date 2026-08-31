@@ -9,13 +9,18 @@ enum VideoComposer {
         let composition = AVMutableComposition()
         guard let frontTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid),
               let rearTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid) else { throw ComposerError.missingTrack }
-        let duration = min(try await frontAsset.load(.duration), try await rearAsset.load(.duration))
+        let frontTimeRange = try await frontVideo.load(.timeRange)
+        let rearTimeRange = try await rearVideo.load(.timeRange)
+        let duration = min(frontTimeRange.duration, rearTimeRange.duration)
         let range = CMTimeRange(start: .zero, duration: duration)
-        try frontTrack.insertTimeRange(range, of: frontVideo, at: .zero)
-        try rearTrack.insertTimeRange(range, of: rearVideo, at: .zero)
+        let frontSourceRange = CMTimeRange(start: frontTimeRange.start, duration: duration)
+        let rearSourceRange = CMTimeRange(start: rearTimeRange.start, duration: duration)
+        try frontTrack.insertTimeRange(frontSourceRange, of: frontVideo, at: .zero)
+        try rearTrack.insertTimeRange(rearSourceRange, of: rearVideo, at: .zero)
         if let rearAudio = try await rearAsset.loadTracks(withMediaType: .audio).first,
            let audioTrack = composition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid) {
-            try audioTrack.insertTimeRange(range, of: rearAudio, at: .zero)
+            let audioRange = CMTimeRange(start: rearAudio.timeRange.start, duration: min(rearAudio.timeRange.duration, duration))
+            try audioTrack.insertTimeRange(audioRange, of: rearAudio, at: .zero)
         }
 
         let renderSize = CGSize(width: 1080, height: 1920)

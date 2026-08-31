@@ -94,13 +94,16 @@ final class CameraManager: NSObject, ObservableObject {
         }
     }
 
-    func save(files: RecordingFiles, selection: SaveSelection) async {
+    @discardableResult
+    func save(files: RecordingFiles, selection: SaveSelection) async -> Bool {
         let urls = [selection.composite ? files.composite : nil, selection.front ? files.front : nil, selection.rear ? files.rear : nil].compactMap { $0 }
         do {
             try await PhotoLibrarySaver.save(urls)
             statusMessage = "已保存到照片图库。"
+            return true
         } catch {
             setStatus("保存失败：\(error.localizedDescription)")
+            return false
         }
     }
 
