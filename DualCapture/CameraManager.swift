@@ -18,6 +18,7 @@ final class CameraManager: NSObject, ObservableObject {
     private var rearOutput: AVCaptureVideoDataOutput?
     private var audioOutput: AVCaptureAudioDataOutput?
     private let delegateRegistry = CaptureDelegateRegistry()
+    private var audioRecordingEnabled = false
 
     func prepare() async {
         guard AVCaptureMultiCamSession.isMultiCamSupported else {
@@ -57,8 +58,12 @@ final class CameraManager: NSObject, ObservableObject {
             }
             frontRecorder = try MovieRecorder(url: folder.appendingPathComponent("front.mov"), videoSettings: frontSettings)
             rearRecorder = try MovieRecorder(url: folder.appendingPathComponent("rear.mov"), videoSettings: rearSettings)
-            AudioServicesPlaySystemSound(1117)
             isRecording = true
+            audioRecordingEnabled = false
+            AudioServicesPlaySystemSound(1117)
+            sampleQueue.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+                self?.audioRecordingEnabled = true
+            }
             statusMessage = nil
         } catch {
             setStatus("无法创建录制文件：\(error.localizedDescription)")
@@ -68,6 +73,7 @@ final class CameraManager: NSObject, ObservableObject {
     func stopRecording(layout: CaptureLayout, primarySide: CameraSide) async -> RecordingFiles? {
         guard isRecording, let frontRecorder, let rearRecorder else { return nil }
         isRecording = false
+        audioRecordingEnabled = false
         AudioServicesPlaySystemSound(1118)
         isProcessing = true
         statusMessage = "正在生成视频…"
@@ -167,7 +173,7 @@ final class CameraManager: NSObject, ObservableObject {
     }
 
     private func appendAudio(_ sample: CMSampleBuffer) {
-        guard isRecording else { return }
+        guard isRecording, audioRecordingEnabled else { return }
         frontRecorder?.appendAudio(sample)
         rearRecorder?.appendAudio(sample)
     }

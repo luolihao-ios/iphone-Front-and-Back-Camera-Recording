@@ -243,8 +243,18 @@ private struct SettingsView: View {
                         Text("至少选择一种视频").font(.footnote).foregroundStyle(.red)
                     }
                 }
+                Section("关于") {
+                    LabeledContent("版本", value: appVersion)
+                }
             }
             .navigationTitle("设置")
         }
+    }
+
+    private var appVersion: String {
+        let info = Bundle.main.infoDictionary
+        let version = info?["CFBundleShortVersionString"] as? String ?? "未知"
+        let build = info?["CFBundleVersion"] as? String
+        return build.map { "\(version) (\($0))" } ?? version
     }
 }
