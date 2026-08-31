@@ -74,7 +74,6 @@ struct ContentView: View {
                             .background(.black.opacity(0.55)).clipShape(Circle())
                         }
                     }
-                }
                 .frame(maxWidth: .infinity)
                 .offset(x: 32)
                 .disabled(camera.isProcessing)
