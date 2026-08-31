@@ -61,7 +61,7 @@ final class CameraManager: NSObject, ObservableObject {
             isRecording = true
             audioRecordingEnabled = false
             AudioServicesPlaySystemSound(1117)
-            sampleQueue.asyncAfter(deadline: .now() + 0.35) { [weak self] in
+            sampleQueue.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 self?.audioRecordingEnabled = true
             }
             statusMessage = nil

@@ -56,6 +56,21 @@ enum VideoComposer {
         videoComposition.renderSize = renderSize
         videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
         videoComposition.instructions = [instruction]
+        if layout == .pictureInPicture {
+            let parentLayer = CALayer()
+            parentLayer.frame = CGRect(origin: .zero, size: renderSize)
+            let videoLayer = CALayer()
+            videoLayer.frame = parentLayer.bounds
+            let borderLayer = CAShapeLayer()
+            borderLayer.frame = inset
+            borderLayer.cornerRadius = 24
+            borderLayer.borderWidth = 5
+            borderLayer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
+            borderLayer.fillColor = nil
+            parentLayer.addSublayer(videoLayer)
+            parentLayer.addSublayer(borderLayer)
+            videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, in: parentLayer)
+        }
         let destination = front.deletingLastPathComponent().appendingPathComponent("composite-\(layout.rawValue)-\(primarySide == .front ? "front" : "rear").mov")
         try? FileManager.default.removeItem(at: destination)
         guard let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality) else { throw ComposerError.cannotExport }
