@@ -32,18 +32,19 @@ enum VideoComposer {
         let secondaryVideo = primarySide == .front ? rearVideo : frontVideo
         let primaryLayer = primarySide == .front ? frontLayer : rearLayer
         let secondaryLayer = primarySide == .front ? rearLayer : frontLayer
+        var pipFrame = CGRect.zero
         switch layout {
         case .pictureInPicture:
             primaryLayer.setTransform(transform(for: primaryVideo, in: CGRect(origin: .zero, size: renderSize), fill: true), at: .zero)
             let insetWidth = renderSize.width * PictureInPictureMetrics.widthRatio
             let insetHeight = renderSize.height * PictureInPictureMetrics.heightRatio
-            let inset = CGRect(
+            pipFrame = CGRect(
                 x: renderSize.width - insetWidth - renderSize.width * PictureInPictureMetrics.rightMarginRatio,
                 y: renderSize.height * PictureInPictureMetrics.topMarginRatio,
                 width: insetWidth,
                 height: insetHeight
             )
-            secondaryLayer.setTransform(transform(for: secondaryVideo, in: inset, fill: true), at: .zero)
+            secondaryLayer.setTransform(transform(for: secondaryVideo, in: pipFrame, fill: true), at: .zero)
             instruction.layerInstructions = [secondaryLayer, primaryLayer]
         case .split:
             let top = CGRect(x: 0, y: 0, width: renderSize.width, height: renderSize.height / 2)
@@ -62,7 +63,7 @@ enum VideoComposer {
             let videoLayer = CALayer()
             videoLayer.frame = parentLayer.bounds
             let borderLayer = CAShapeLayer()
-            borderLayer.frame = inset
+            borderLayer.frame = pipFrame
             borderLayer.cornerRadius = 24
             borderLayer.borderWidth = 5
             borderLayer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
