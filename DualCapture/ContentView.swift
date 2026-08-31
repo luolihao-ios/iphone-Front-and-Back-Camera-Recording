@@ -1,6 +1,7 @@
 import SwiftUI
 import UIKit
 import AVKit
+import Photos
 
 struct ContentView: View {
     @StateObject private var camera = CameraManager()
@@ -35,7 +36,7 @@ struct ContentView: View {
                         let elapsed = max(0, Int(context.date.timeIntervalSince(recordingStartedAt)))
                         HStack(spacing: 7) {
                             Circle().fill(.red).frame(width: 9, height: 9)
-                            Text(String(format: "%02d:%02d", elapsed / 60, elapsed % 60))
+                            Text(String(format: "%02d:%02d:%02d", elapsed / 3600, (elapsed / 60) % 60, elapsed % 60))
                         }
                         .font(.system(.headline, design: .monospaced))
                         .padding(.horizontal, 14).padding(.vertical, 8)
@@ -47,16 +48,16 @@ struct ContentView: View {
                         .background(.black.opacity(0.65)).clipShape(RoundedRectangle(cornerRadius: 12))
                 }
                 Spacer()
-                HStack(spacing: 22) {
-                    AlbumThumbnailButton(thumbnail: latestThumbnail) { showPlayer = latestVideoURL != nil }
-                    Button(action: switchCamera) {
+                ZStack {
+                    HStack(spacing: 22) {
+                        Button(action: switchCamera) {
                         Image(systemName: "camera.rotate").font(.title2)
                             .frame(width: 54, height: 54)
                             .background(.black.opacity(0.55)).clipShape(Circle())
-                    }
-                    Button(action: toggleRecording) {
+                        }
+                        Button(action: toggleRecording) {
                         ZStack {
-                            Circle().fill(.white).frame(width: 72, height: 72)
+                            Circle().fill(.black.opacity(0.35)).frame(width: 72, height: 72)
                                 .overlay(Circle().stroke(.white, lineWidth: 4).padding(-6))
                             if camera.isRecording {
                                 RoundedRectangle(cornerRadius: 6).fill(.red).frame(width: 30, height: 30)
@@ -64,18 +65,29 @@ struct ContentView: View {
                                 Circle().fill(.red).frame(width: 58, height: 58)
                             }
                         }
-                    }
-                    Button { showSettings = true } label: {
+                        }
+                        Button { showSettings = true } label: {
                         Image(systemName: "slider.horizontal.3").font(.title2)
                             .frame(width: 54, height: 54)
                             .background(.black.opacity(0.55)).clipShape(Circle())
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    HStack {
+                        AlbumThumbnailButton(thumbnail: latestThumbnail) { showPlayer = latestVideoURL != nil }
+                        Spacer()
                     }
                 }
                 .disabled(camera.isProcessing)
                 .padding(.bottom, 34)
             }
         }
-        .task { await camera.prepare() }
+        .task {
+            await camera.prepare()
+            let latest = await Self.loadLatestVideo()
+            latestThumbnail = latest.thumbnail
+            latestVideoURL = latest.url
+        }
         .sheet(isPresented: $showSettings) { SettingsView() }
         .sheet(isPresented: $showPlayer) {
             if let latestVideoURL { VideoPlayerView(url: latestVideoURL) }
@@ -115,6 +127,31 @@ struct ContentView: View {
                 continuation.resume(returning: image.map(UIImage.init(cgImage:)))
             }
         }
+    }
+
+    private static func loadLatestVideo() async -> (thumbnail: UIImage?, url: URL?) {
+        var status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        if status == .notDetermined {
+            status = await withCheckedContinuation { continuation in
+                PHPhotoLibrary.requestAuthorization(for: .readWrite) { continuation.resume(returning: $0) }
+            }
+        }
+        guard status == .authorized || status == .limited else { return (nil, nil) }
+        let options = PHFetchOptions()
+        options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+        options.fetchLimit = 1
+        guard let asset = PHAsset.fetchAssets(with: .video, options: options).firstObject else { return (nil, nil) }
+        let thumbnail = await withCheckedContinuation { (continuation: CheckedContinuation<UIImage?, Never>) in
+            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 120, height: 120), contentMode: .aspectFill, options: nil) { image, _ in
+                continuation.resume(returning: image)
+            }
+        }
+        let url = await withCheckedContinuation { (continuation: CheckedContinuation<URL?, Never>) in
+            PHImageManager.default().requestAVAsset(forVideo: asset, options: nil) { avAsset, _, _ in
+                continuation.resume(returning: (avAsset as? AVURLAsset)?.url)
+            }
+        }
+        return (thumbnail, url)
     }
 }
 

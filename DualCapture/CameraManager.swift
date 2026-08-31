@@ -17,7 +17,6 @@ final class CameraManager: NSObject, ObservableObject {
     private var rearOutput: AVCaptureVideoDataOutput?
     private var audioOutput: AVCaptureAudioDataOutput?
     private let delegateRegistry = CaptureDelegateRegistry()
-    private var recordingStartTime: CMTime?
 
     func prepare() async {
         guard AVCaptureMultiCamSession.isMultiCamSupported else {
@@ -57,7 +56,6 @@ final class CameraManager: NSObject, ObservableObject {
             }
             frontRecorder = try MovieRecorder(url: folder.appendingPathComponent("front.mov"), videoSettings: frontSettings)
             rearRecorder = try MovieRecorder(url: folder.appendingPathComponent("rear.mov"), videoSettings: rearSettings)
-            recordingStartTime = nil
             isRecording = true
             statusMessage = nil
         } catch {
@@ -72,7 +70,6 @@ final class CameraManager: NSObject, ObservableObject {
         statusMessage = "正在生成视频…"
         self.frontRecorder = nil
         self.rearRecorder = nil
-        recordingStartTime = nil
         let (frontURL, rearURL) = await finishRecorders(frontRecorder: frontRecorder, rearRecorder: rearRecorder)
         guard let frontURL, let rearURL else {
             isProcessing = false
@@ -159,8 +156,7 @@ final class CameraManager: NSObject, ObservableObject {
     private func appendVideo(_ sample: CMSampleBuffer, side: CameraSide) {
         previewSink?(side, sample)
         guard isRecording else { return }
-        let startTime = recordingStartTime ?? CMSampleBufferGetPresentationTimeStamp(sample)
-        recordingStartTime = startTime
+        let startTime = CMSampleBufferGetPresentationTimeStamp(sample)
         switch side { case .front: frontRecorder?.appendVideo(sample, sessionStartTime: startTime); case .rear: rearRecorder?.appendVideo(sample, sessionStartTime: startTime) }
     }
 
