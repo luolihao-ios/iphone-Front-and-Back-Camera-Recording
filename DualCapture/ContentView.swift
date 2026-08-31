@@ -55,8 +55,8 @@ struct ContentView: View {
                         .disabled(camera.isProcessing)
                         .padding(.bottom, 34)
                 } else {
-                    HStack(spacing: 18) {
-                        AlbumThumbnailButton(thumbnail: latestThumbnail) { showPlayer = latestVideoURL != nil }
+                    ZStack {
+                        HStack(spacing: 22) {
                         Button(action: switchCamera) {
                             Image(systemName: "camera.rotate").font(.title2)
                                 .frame(width: 54, height: 54)
@@ -68,9 +68,11 @@ struct ContentView: View {
                                 .frame(width: 54, height: 54)
                                 .background(.black.opacity(0.55)).clipShape(Circle())
                         }
+                        }
+                        .frame(maxWidth: .infinity)
+                        AlbumThumbnailButton(thumbnail: latestThumbnail) { showPlayer = latestVideoURL != nil }
+                            .offset(x: -153)
                     }
-                    .frame(maxWidth: .infinity)
-                    .offset(x: 32)
                     .disabled(camera.isProcessing)
                     .padding(.bottom, 34)
                 }

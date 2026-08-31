@@ -37,6 +37,8 @@ final class PreviewView: UIView {
         frontLayer.videoGravity = .resizeAspectFill
         frontLayer.borderColor = UIColor.white.cgColor
         frontLayer.borderWidth = 2
+        frontLayer.cornerRadius = 16
+        frontLayer.masksToBounds = true
         layer.addSublayer(rearLayer)
         layer.addSublayer(frontLayer)
     }
