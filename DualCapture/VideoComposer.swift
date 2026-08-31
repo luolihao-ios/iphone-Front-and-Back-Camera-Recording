@@ -57,39 +57,27 @@ enum VideoComposer {
         let videoComposition = AVMutableVideoComposition()
         videoComposition.renderSize = renderSize
         videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
-        videoComposition.instructions = [instruction]
         if layout == .pictureInPicture {
-            let parentLayer = CALayer()
-            parentLayer.frame = CGRect(origin: .zero, size: renderSize)
-            let videoLayer = CALayer()
-            videoLayer.frame = parentLayer.bounds
-            let borderLayer = CAShapeLayer()
-            // Draw the outline using an explicit path. This keeps the visible
-            // outer edge aligned with the complete PIP rectangle instead of
-            // relying on CAShapeLayer's inward border rendering.
-            let borderWidth: CGFloat = 5
-            // The preview uses aspect-fill. For portrait camera media this
-            // means the visible source height is taller than the nominal PIP
-            // rect, so size the exported outline to that same filled bounds.
-            let visibleHeight = pipFrame.width * 16.0 / 9.0
-            let visibleFrame = CGRect(
+            // Core Image's origin is at the lower-left; convert the shared
+            // preview frame from top-right display coordinates once here.
+            let compositorPIPFrame = CGRect(
                 x: pipFrame.minX,
-                y: renderSize.height - (pipFrame.midY + visibleHeight / 2),
+                y: renderSize.height - pipFrame.maxY,
                 width: pipFrame.width,
-                height: visibleHeight
+                height: pipFrame.height
             )
-            let borderFrame = visibleFrame.insetBy(dx: -borderWidth / 2, dy: -borderWidth / 2)
-            borderLayer.frame = borderFrame
-            borderLayer.path = UIBezierPath(
-                roundedRect: borderLayer.bounds.insetBy(dx: borderWidth / 2, dy: borderWidth / 2),
-                cornerRadius: 24
-            ).cgPath
-            borderLayer.lineWidth = borderWidth
-            borderLayer.strokeColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
-            borderLayer.fillColor = nil
-            parentLayer.addSublayer(videoLayer)
-            parentLayer.addSublayer(borderLayer)
-            videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, in: parentLayer)
+            let roundedInstruction = RoundedPIPInstruction(
+                timeRange: range,
+                primaryTrackID: primaryLayer.trackID,
+                secondaryTrackID: secondaryLayer.trackID,
+                primaryTransform: transform(for: primaryVideo, in: CGRect(origin: .zero, size: renderSize), fill: true),
+                secondaryTransform: transform(for: secondaryVideo, in: pipFrame, fill: true),
+                pipFrame: compositorPIPFrame
+            )
+            videoComposition.customVideoCompositorClass = RoundedPIPCompositor.self
+            videoComposition.instructions = [roundedInstruction]
+        } else {
+            videoComposition.instructions = [instruction]
         }
         let destination = front.deletingLastPathComponent().appendingPathComponent("composite-\(layout.rawValue)-\(primarySide == .front ? "front" : "rear").mov")
         try? FileManager.default.removeItem(at: destination)
