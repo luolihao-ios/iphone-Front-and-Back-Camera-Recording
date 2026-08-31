@@ -50,8 +50,8 @@ struct ContentView: View {
                         .background(.black.opacity(0.65)).clipShape(RoundedRectangle(cornerRadius: 12))
                 }
                 Spacer()
-                ZStack {
-                    HStack(spacing: 22) {
+                HStack(spacing: 18) {
+                    AlbumThumbnailButton(thumbnail: latestThumbnail) { showPlayer = latestVideoURL != nil }
                         Button(action: switchCamera) {
                         Image(systemName: "camera.rotate").font(.title2)
                             .frame(width: 54, height: 54)
@@ -74,12 +74,9 @@ struct ContentView: View {
                             .background(.black.opacity(0.55)).clipShape(Circle())
                         }
                     }
-                    .frame(maxWidth: .infinity)
-                    HStack {
-                        AlbumThumbnailButton(thumbnail: latestThumbnail) { showPlayer = latestVideoURL != nil }
-                        Spacer()
-                    }
                 }
+                .frame(maxWidth: .infinity)
+                .offset(x: 32)
                 .disabled(camera.isProcessing)
                 .padding(.bottom, 34)
             }
@@ -97,7 +94,7 @@ struct ContentView: View {
             latestVideoURL = latest.url
         }
         .sheet(isPresented: $showSettings) { SettingsView() }
-        .sheet(isPresented: $showPlayer) {
+        .fullScreenCover(isPresented: $showPlayer) {
             if let latestVideoURL { VideoPlayerView(url: latestVideoURL) }
         }
     }
@@ -150,7 +147,10 @@ struct ContentView: View {
         options.fetchLimit = 1
         guard let asset = PHAsset.fetchAssets(with: .video, options: options).firstObject else { return (nil, nil) }
         let thumbnail = await withCheckedContinuation { (continuation: CheckedContinuation<UIImage?, Never>) in
-            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 120, height: 120), contentMode: .aspectFill, options: nil) { image, _ in
+            let imageOptions = PHImageRequestOptions()
+            imageOptions.isSynchronous = true
+            imageOptions.deliveryMode = .highQualityFormat
+            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 120, height: 120), contentMode: .aspectFill, options: imageOptions) { image, _ in
                 continuation.resume(returning: image)
             }
         }
@@ -173,9 +173,9 @@ private struct AlbumThumbnailButton: View {
                 if let thumbnail { Image(uiImage: thumbnail).resizable().scaledToFill() }
                 else { Image(systemName: "photo.on.rectangle").font(.title2) }
             }
-            .frame(width: 54, height: 54)
-            .background(.black.opacity(0.55)).clipShape(RoundedRectangle(cornerRadius: 14))
-            .overlay(RoundedRectangle(cornerRadius: 14).stroke(.white.opacity(0.6), lineWidth: 1))
+            .frame(width: 46, height: 46)
+            .background(.black.opacity(0.55)).clipShape(Circle())
+            .overlay(Circle().stroke(.white.opacity(0.7), lineWidth: 1))
         }
     }
 }
@@ -183,14 +183,24 @@ private struct AlbumThumbnailButton: View {
 private struct VideoPlayerView: View {
     let url: URL
     @Environment(\.dismiss) private var dismiss
+    @State private var offset: CGFloat = 0
 
     var body: some View {
-        NavigationStack {
+        ZStack(alignment: .topTrailing) {
+            Color.black.ignoresSafeArea()
             VideoPlayer(player: AVPlayer(url: url))
-                .ignoresSafeArea(edges: .bottom)
-                .navigationTitle("最近录制")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar { Button("完成") { dismiss() } }
+                .ignoresSafeArea()
+                .offset(y: offset)
+                .gesture(DragGesture().onChanged { value in
+                    if value.translation.height > 0 { offset = value.translation.height }
+                }.onEnded { value in
+                    if value.translation.height > 120 { dismiss() }
+                    else { withAnimation(.spring()) { offset = 0 } }
+                })
+            Button { dismiss() } label: {
+                Image(systemName: "xmark.circle.fill").font(.title).foregroundStyle(.white.opacity(0.85))
+            }
+            .padding(.top, 18).padding(.trailing, 18)
         }
     }
 }
