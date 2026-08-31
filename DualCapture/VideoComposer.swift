@@ -63,14 +63,18 @@ enum VideoComposer {
             let videoLayer = CALayer()
             videoLayer.frame = parentLayer.bounds
             let borderLayer = CAShapeLayer()
+            // CAShapeLayer draws its border inward from its bounds. Expand the
+            // bounds by the stroke width so the visible outer edge encloses the
+            // complete PIP rectangle, matching the preview's original frame.
+            let borderWidth: CGFloat = 5
             borderLayer.frame = CGRect(
                 x: pipFrame.minX,
                 y: renderSize.height - pipFrame.maxY,
                 width: pipFrame.width,
                 height: pipFrame.height
-            )
-            borderLayer.cornerRadius = 24
-            borderLayer.borderWidth = 5
+            ).insetBy(dx: -borderWidth, dy: -borderWidth)
+            borderLayer.cornerRadius = 24 + borderWidth
+            borderLayer.borderWidth = borderWidth
             borderLayer.borderColor = CGColor(red: 1, green: 1, blue: 1, alpha: 1)
             borderLayer.fillColor = nil
             parentLayer.addSublayer(videoLayer)
