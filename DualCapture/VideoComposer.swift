@@ -68,12 +68,17 @@ enum VideoComposer {
             // outer edge aligned with the complete PIP rectangle instead of
             // relying on CAShapeLayer's inward border rendering.
             let borderWidth: CGFloat = 5
-            let borderFrame = CGRect(
+            // The preview uses aspect-fill. For portrait camera media this
+            // means the visible source height is taller than the nominal PIP
+            // rect, so size the exported outline to that same filled bounds.
+            let visibleHeight = pipFrame.width * 16.0 / 9.0
+            let visibleFrame = CGRect(
                 x: pipFrame.minX,
-                y: renderSize.height - pipFrame.maxY,
+                y: renderSize.height - (pipFrame.midY + visibleHeight / 2),
                 width: pipFrame.width,
-                height: pipFrame.height
-            ).insetBy(dx: -borderWidth / 2, dy: -borderWidth / 2)
+                height: visibleHeight
+            )
+            let borderFrame = visibleFrame.insetBy(dx: -borderWidth / 2, dy: -borderWidth / 2)
             borderLayer.frame = borderFrame
             borderLayer.path = UIBezierPath(
                 roundedRect: borderLayer.bounds.insetBy(dx: borderWidth / 2, dy: borderWidth / 2),
@@ -106,17 +111,14 @@ enum VideoComposer {
         let width = abs(orientedRect.width), height = abs(orientedRect.height)
         guard width > 0, height > 0 else { return preferred }
         let scale = fill ? max(target.width / width, target.height / height) : min(target.width / width, target.height / height)
-        let scaledWidth = width * scale
-        let scaledHeight = height * scale
+        let scaledWidth = width * scale, scaledHeight = height * scale
         let x = target.minX + (target.width - scaledWidth) / 2
         let y = target.minY + (target.height - scaledHeight) / 2
-        // Apply the track's camera rotation first, then scale, then place the
-        // resulting oriented image in the target rect. Keeping translation as
-        // the outer transform avoids rotated portrait tracks shifting outside
-        // the PIP bounds.
-        return CGAffineTransform(translationX: x, y: y)
+        // Keep the track transform first; this is the order that preserves the
+        // camera's portrait orientation and places the PIP on the right side.
+        return preferred
             .concatenating(CGAffineTransform(scaleX: scale, y: scale))
-            .concatenating(preferred)
+            .concatenating(CGAffineTransform(translationX: x, y: y))
     }
 }
 
