@@ -46,8 +46,10 @@ struct ContentView: View {
                     }
                 } else if camera.isProcessing {
                     ProgressView("正在处理录制…")
+                        .tint(.black)
+                        .foregroundStyle(.black)
                         .padding(.horizontal, 16).padding(.vertical, 10)
-                        .background(.black.opacity(0.65)).clipShape(RoundedRectangle(cornerRadius: 12))
+                        .background(.white.opacity(0.95)).clipShape(RoundedRectangle(cornerRadius: 12))
                 }
                 Spacer()
                 if camera.isRecording {

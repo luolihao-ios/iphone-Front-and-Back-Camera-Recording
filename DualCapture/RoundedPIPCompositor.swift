@@ -28,7 +28,10 @@ final class RoundedPIPInstruction: NSObject, AVVideoCompositionInstructionProtoc
 
 final class RoundedPIPCompositor: NSObject, AVVideoCompositing {
     private let renderingQueue = DispatchQueue(label: "com.luolihao.dualcapture.rounded-pip")
-    private let ciContext = CIContext(options: nil)
+    // Long recordings produce many intermediate Core Image objects. Disable
+    // intermediate caching and scope each rendered frame in an autorelease
+    // pool so exporting does not grow memory usage with recording duration.
+    private let ciContext = CIContext(options: [.cacheIntermediates: false])
     private var renderContext: AVVideoCompositionRenderContext?
 
     var sourcePixelBufferAttributes: [String: Any]? {
@@ -45,27 +48,29 @@ final class RoundedPIPCompositor: NSObject, AVVideoCompositing {
 
     func startRequest(_ asyncVideoCompositionRequest: AVAsynchronousVideoCompositionRequest) {
         renderingQueue.async { [weak self] in
-            guard let self,
-                  let instruction = asyncVideoCompositionRequest.videoCompositionInstruction as? RoundedPIPInstruction,
-                  let primaryBuffer = asyncVideoCompositionRequest.sourceFrame(byTrackID: instruction.primaryTrackID),
-                  let secondaryBuffer = asyncVideoCompositionRequest.sourceFrame(byTrackID: instruction.secondaryTrackID),
-                  let outputBuffer = self.renderContext?.newPixelBuffer() else {
-                asyncVideoCompositionRequest.finish(with: NSError(domain: "DualCapture", code: -1))
-                return
-            }
+            autoreleasepool {
+                guard let self,
+                      let instruction = asyncVideoCompositionRequest.videoCompositionInstruction as? RoundedPIPInstruction,
+                      let primaryBuffer = asyncVideoCompositionRequest.sourceFrame(byTrackID: instruction.primaryTrackID),
+                      let secondaryBuffer = asyncVideoCompositionRequest.sourceFrame(byTrackID: instruction.secondaryTrackID),
+                      let outputBuffer = self.renderContext?.newPixelBuffer() else {
+                    asyncVideoCompositionRequest.finish(with: NSError(domain: "DualCapture", code: -1))
+                    return
+                }
 
-            let renderSize = self.renderContext?.size ?? .zero
-            let renderRect = CGRect(origin: .zero, size: renderSize)
-            let primary = self.image(CIImage(cvPixelBuffer: primaryBuffer), transformedBy: instruction.primaryTransform, in: renderRect)
-            let secondary = self.image(CIImage(cvPixelBuffer: secondaryBuffer), transformedBy: instruction.secondaryTransform, in: instruction.pipFrame)
-            let cornerRadius: CGFloat = 24
-            let borderWidth: CGFloat = 5
-            let mask = self.roundedMask(for: instruction.pipFrame, radius: cornerRadius)
-            let clippedSecondary = self.masked(secondary, by: mask)
-            let border = self.roundedBorder(for: instruction.pipFrame, radius: cornerRadius, width: borderWidth)
-            let output = border.composited(over: clippedSecondary.composited(over: primary))
-            self.ciContext.render(output, to: outputBuffer, bounds: renderRect, colorSpace: CGColorSpaceCreateDeviceRGB())
-            asyncVideoCompositionRequest.finish(withComposedVideoFrame: outputBuffer)
+                let renderSize = self.renderContext?.size ?? .zero
+                let renderRect = CGRect(origin: .zero, size: renderSize)
+                let primary = self.image(CIImage(cvPixelBuffer: primaryBuffer), transformedBy: instruction.primaryTransform, in: renderRect)
+                let secondary = self.image(CIImage(cvPixelBuffer: secondaryBuffer), transformedBy: instruction.secondaryTransform, in: instruction.pipFrame)
+                let cornerRadius: CGFloat = 24
+                let borderWidth: CGFloat = 5
+                let mask = self.roundedMask(for: instruction.pipFrame, radius: cornerRadius)
+                let clippedSecondary = self.masked(secondary, by: mask)
+                let border = self.roundedBorder(for: instruction.pipFrame, radius: cornerRadius, width: borderWidth)
+                let output = border.composited(over: clippedSecondary.composited(over: primary)).cropped(to: renderRect)
+                self.ciContext.render(output, to: outputBuffer, bounds: renderRect, colorSpace: CGColorSpaceCreateDeviceRGB())
+                asyncVideoCompositionRequest.finish(withComposedVideoFrame: outputBuffer)
+            }
         }
     }
 

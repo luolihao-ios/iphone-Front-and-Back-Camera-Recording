@@ -7,6 +7,16 @@ enum PictureInPictureMetrics {
     static let topMarginRatio: CGFloat = 0.10
 }
 
+enum VideoLayoutFrames {
+    static func splitFrames(in renderSize: CGSize) -> (top: CGRect, bottom: CGRect) {
+        let halfHeight = renderSize.height / 2
+        return (
+            top: CGRect(x: 0, y: 0, width: renderSize.width, height: halfHeight),
+            bottom: CGRect(x: 0, y: halfHeight, width: renderSize.width, height: halfHeight)
+        )
+    }
+}
+
 enum CameraSide: Equatable {
     case front
     case rear

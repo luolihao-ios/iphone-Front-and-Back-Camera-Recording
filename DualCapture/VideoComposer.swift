@@ -48,10 +48,12 @@ enum VideoComposer {
             secondaryLayer.setTransform(transform(for: secondaryVideo, in: pipFrame, fill: true), at: .zero)
             instruction.layerInstructions = [secondaryLayer, primaryLayer]
         case .split:
-            let top = CGRect(x: 0, y: 0, width: renderSize.width, height: renderSize.height / 2)
-            let bottom = CGRect(x: 0, y: renderSize.height / 2, width: renderSize.width, height: renderSize.height / 2)
-            primaryLayer.setTransform(transform(for: primaryVideo, in: top, fill: true), at: .zero)
-            secondaryLayer.setTransform(transform(for: secondaryVideo, in: bottom, fill: true), at: .zero)
+            let frames = VideoLayoutFrames.splitFrames(in: renderSize)
+            // A composition layer cannot clip aspect-fill video to its half.
+            // Fit each stream inside its own equal frame so neither can spill
+            // into the other half of the saved video.
+            primaryLayer.setTransform(transform(for: primaryVideo, in: frames.top, fill: false), at: .zero)
+            secondaryLayer.setTransform(transform(for: secondaryVideo, in: frames.bottom, fill: false), at: .zero)
             instruction.layerInstructions = [secondaryLayer, primaryLayer]
         }
         let videoComposition = AVMutableVideoComposition()
