@@ -101,6 +101,44 @@ enum RealtimeVideoLayout {
     }
 }
 
+enum FramePairingPolicy {
+    /// A secondary image may only be combined with a primary frame when it was captured
+    /// at the same instant or earlier. This prevents the final file from showing time
+    /// moving backwards in one camera.
+    static func shouldWrite(primaryTime: Double, secondaryTime: Double?) -> Bool {
+        guard let secondaryTime else { return false }
+        return secondaryTime <= primaryTime
+    }
+}
+
+enum RealtimeRecordingState: Equatable {
+    case idle
+    case recording
+    case finishing
+    case finished
+}
+
+struct RealtimeRecordingStateMachine: Equatable {
+    private(set) var state: RealtimeRecordingState = .idle
+
+    var acceptsSamples: Bool { state == .recording }
+
+    mutating func start() {
+        guard state == .idle || state == .finished else { return }
+        state = .recording
+    }
+
+    mutating func beginFinishing() {
+        guard state == .recording else { return }
+        state = .finishing
+    }
+
+    mutating func finish() {
+        guard state == .finishing else { return }
+        state = .finished
+    }
+}
+
 struct RecordingFiles {
     let front: URL
     let rear: URL
