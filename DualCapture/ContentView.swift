@@ -5,18 +5,23 @@ import Photos
 
 struct ContentView: View {
     @StateObject private var camera = CameraManager()
+    @Environment(\.openURL) private var openURL
+    @Environment(\.requestReview) private var requestReview
     @AppStorage("captureLayout") private var captureLayout = CaptureLayout.pictureInPicture.rawValue
     @AppStorage("primaryCamera") private var primaryCamera = "rear"
     @AppStorage("saveComposite") private var saveComposite = true
     @AppStorage("saveFront") private var saveFront = false
     @AppStorage("saveRear") private var saveRear = false
     @AppStorage("saveSettingsInitialized") private var saveSettingsInitialized = false
+    @AppStorage("successfulSaveCount") private var successfulSaveCount = 0
+    @AppStorage("lastReviewPromptedVersion") private var lastReviewPromptedVersion = ""
     @State private var recordingComposition: CaptureComposition?
     @State private var showSettings = false
     @State private var showPlayer = false
     @State private var recordingStartedAt: Date?
     @State private var latestVideoURL: URL?
     @State private var latestThumbnail: UIImage?
+    @State private var availableUpdate: AppStoreUpdate?
 
     private var layout: CaptureLayout { CaptureLayout(rawValue: captureLayout) ?? .pictureInPicture }
     private var primarySide: CameraSide { primaryCamera == "front" ? .front : .rear }
@@ -91,6 +96,20 @@ struct ContentView: View {
             let latest = await Self.loadLatestVideo()
             latestThumbnail = latest.thumbnail
             latestVideoURL = latest.url
+            if let update = await AppStoreUpdateChecker.fetchAvailableUpdate(installedVersion: AppVersion.current) {
+                availableUpdate = update
+            } else {
+                try? await Task.sleep(for: .seconds(2))
+                requestReviewIfAppropriate()
+            }
+        }
+        .alert(item: $availableUpdate) { update in
+            Alert(
+                title: Text("发现新版本"),
+                message: Text("“同框之外”已有 \(update.version) 版本可更新。"),
+                primaryButton: .default(Text("前往更新")) { openURL(update.storeURL) },
+                secondaryButton: .cancel(Text("暂不"))
+            )
         }
         .sheet(isPresented: $showSettings) { SettingsView() }
         .fullScreenCover(isPresented: $showPlayer) {
@@ -109,6 +128,7 @@ struct ContentView: View {
                     let savedURL = selection.composite ? files.composite : (selection.front ? files.front : files.rear)
                     latestVideoURL = savedURL
                     latestThumbnail = await Self.makeThumbnail(for: savedURL)
+                    successfulSaveCount += 1
                 }
             }
         } else {
@@ -135,6 +155,16 @@ struct ContentView: View {
             }
         }
         .disabled(!camera.isReady || camera.isProcessing)
+    }
+
+    private func requestReviewIfAppropriate() {
+        guard ReviewPromptPolicy.shouldRequest(
+            successfulSaveCount: successfulSaveCount,
+            lastPromptedVersion: lastReviewPromptedVersion.isEmpty ? nil : lastReviewPromptedVersion,
+            currentVersion: AppVersion.current
+        ) else { return }
+        lastReviewPromptedVersion = AppVersion.current
+        requestReview()
     }
 
     private static func makeThumbnail(for url: URL) async -> UIImage? {
@@ -247,6 +277,7 @@ private struct SettingsView: View {
                 }
                 Section("关于") {
                     LabeledContent("版本", value: appVersion)
+                    Link("去 App Store 评分", destination: AppStoreUpdateChecker.writeReviewURL)
                 }
             }
             .navigationTitle("设置")

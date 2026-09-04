@@ -15,4 +15,10 @@ final class AppStoreUpdateCheckerTests: XCTestCase {
         XCTAssertTrue(AppStoreUpdateChecker.isStoreVersion("1.1", newerThan: "1.0.99"))
         XCTAssertFalse(AppStoreUpdateChecker.isStoreVersion("1.0", newerThan: "1.0.0"))
     }
+
+    func testReviewPromptWaitsForThreeSuccessfulSavesAndOnlyOncePerVersion() {
+        XCTAssertFalse(ReviewPromptPolicy.shouldRequest(successfulSaveCount: 2, lastPromptedVersion: nil, currentVersion: "1.0.11"))
+        XCTAssertTrue(ReviewPromptPolicy.shouldRequest(successfulSaveCount: 3, lastPromptedVersion: nil, currentVersion: "1.0.11"))
+        XCTAssertFalse(ReviewPromptPolicy.shouldRequest(successfulSaveCount: 3, lastPromptedVersion: "1.0.11", currentVersion: "1.0.11"))
+    }
 }
