@@ -10,8 +10,8 @@ DualCapture 是一个原生 iOS 示例项目：在**硬件支持多摄会话**�
 
 - 前后摄像头同步录制，使用一个系统麦克风音轨。
 - 录制前切换“画中画”或“分屏”布局。
-- 生成前摄独立视频、后摄独立视频和合成视频。
-- 录制结束后由用户选择保存哪些文件到系统照片图库。
+- 录制期间实时合成前后摄画面，并直接写入一份最终视频。
+- 停止录制后仅完成该文件写入并自动保存到照片图库；不会再进行整段视频二次合成，也不提供独立前后摄文件。
 - 不支持双摄会话、相机/麦克风未授权或资源不足时显示提示。
 
 ## 环境与设备要求
@@ -56,7 +56,7 @@ open DualCapture.xcodeproj
 2. 在 Windows 安装并打开爱思助手，使用数据线连接 iPhone，并按爱思助手的提示安装其移动端/驱动组件。
 3. 在爱思助手的 IPA 签名或安装入口选择 `DualCapture-unsigned.ipa`，登录你自己的 Apple ID，并使用**免费开发者签名**。
 4. 将已签名 IPA 安装到手机。若 iOS 提示不受信任，请在“设置 → 通用 → VPN 与设备管理”中信任对应开发者。
-5. 打开应用，授予相机、麦克风和照片权限；在支持的 iPhone 上点击录制并验证三种视频能按选择保存。
+5. 打开应用，授予相机、麦克风和照片权限；在支持的 iPhone 上点击录制并确认最终合成视频会自动保存。
 
 ### 免费签名限制
 
@@ -68,11 +68,11 @@ open DualCapture.xcodeproj
 
 ```text
 DualCapture/
-  ContentView.swift        主界面与保存选择
+  ContentView.swift        主界面与自动保存
   CameraManager.swift      多摄会话、权限与录制协调
-  MovieRecorder.swift      单路视频/音频写入
+  RealtimeCompositeRecorder.swift  实时合成并写入最终视频
   CameraPreview.swift      相机预览
-  Models.swift             布局及文件模型
+  Models.swift             布局、帧配对和录制状态模型
 project.yml                XcodeGen 工程定义
 .github/workflows/         GitHub Actions 构建流程
 ```
@@ -82,5 +82,6 @@ project.yml                XcodeGen 工程定义
 - GitHub Actions 成功生成并上传 `DualCapture-unsigned.ipa`。
 - 爱思助手能选择该 IPA 并用本地免费 Apple ID 完成签名和安装。
 - 在支持设备上授权后，前后摄可以同时录制。
-- 停止录制后，可以选择保存合成、前摄、后摄视频中的任意组合。
+- 停止录制后，合成视频会快速完成写入并自动保存；不应出现整段导出等待。
+- 分别录制 10 秒、1 分钟和 2 分钟的画中画与分屏视频，检查停止速度、画中画的圆角及右上位置、前置画面镜像、音频和预览/成片的一致性。
 - 在不支持设备上，不会开始伪同步录制，而是显示明确提示。
