@@ -2,11 +2,11 @@ import SwiftUI
 import UIKit
 import AVKit
 import Photos
+import StoreKit
 
 struct ContentView: View {
     @StateObject private var camera = CameraManager()
     @Environment(\.openURL) private var openURL
-    @Environment(\.requestReview) private var requestReview
     @AppStorage("captureLayout") private var captureLayout = CaptureLayout.pictureInPicture.rawValue
     @AppStorage("primaryCamera") private var primaryCamera = "rear"
     @AppStorage("saveComposite") private var saveComposite = true
@@ -162,9 +162,9 @@ struct ContentView: View {
             successfulSaveCount: successfulSaveCount,
             lastPromptedVersion: lastReviewPromptedVersion.isEmpty ? nil : lastReviewPromptedVersion,
             currentVersion: AppVersion.current
-        ) else { return }
+        ), let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
         lastReviewPromptedVersion = AppVersion.current
-        requestReview()
+        SKStoreReviewController.requestReview(in: scene)
     }
 
     private static func makeThumbnail(for url: URL) async -> UIImage? {
