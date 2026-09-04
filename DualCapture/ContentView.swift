@@ -9,13 +9,8 @@ struct ContentView: View {
     @Environment(\.openURL) private var openURL
     @AppStorage("captureLayout") private var captureLayout = CaptureLayout.pictureInPicture.rawValue
     @AppStorage("primaryCamera") private var primaryCamera = "rear"
-    @AppStorage("saveComposite") private var saveComposite = true
-    @AppStorage("saveFront") private var saveFront = false
-    @AppStorage("saveRear") private var saveRear = false
-    @AppStorage("saveSettingsInitialized") private var saveSettingsInitialized = false
     @AppStorage("successfulSaveCount") private var successfulSaveCount = 0
     @AppStorage("lastReviewPromptedVersion") private var lastReviewPromptedVersion = ""
-    @State private var recordingComposition: CaptureComposition?
     @State private var showSettings = false
     @State private var showPlayer = false
     @State private var recordingStartedAt: Date?
@@ -50,7 +45,7 @@ struct ContentView: View {
                         .background(.red).clipShape(RoundedRectangle(cornerRadius: 8))
                     }
                 } else if camera.isProcessing {
-                    ProgressView("正在处理录制…")
+                    ProgressView("正在完成录制…")
                         .tint(.black)
                         .foregroundStyle(.black)
                         .padding(.horizontal, 16).padding(.vertical, 10)
@@ -86,12 +81,6 @@ struct ContentView: View {
             }
         }
         .task {
-            if !saveSettingsInitialized {
-                saveComposite = true
-                saveFront = false
-                saveRear = false
-                saveSettingsInitialized = true
-            }
             await camera.prepare()
             let latest = await Self.loadLatestVideo()
             latestThumbnail = latest.thumbnail
@@ -120,21 +109,17 @@ struct ContentView: View {
     private func toggleRecording() {
         if camera.isRecording {
             Task {
-                guard let composition = recordingComposition else { return }
                 recordingStartedAt = nil
-                guard let files = await camera.stopRecording(layout: composition.layout, primarySide: composition.primarySide) else { return }
-                let selection = SaveSelection(composite: saveComposite, front: saveFront, rear: saveRear)
-                if await camera.save(files: files, selection: selection) {
-                    let savedURL = selection.composite ? files.composite : (selection.front ? files.front : files.rear)
-                    latestVideoURL = savedURL
-                    latestThumbnail = await Self.makeThumbnail(for: savedURL)
+                guard let videoURL = await camera.stopRecording() else { return }
+                if await camera.save(videoURL: videoURL) {
+                    latestVideoURL = videoURL
+                    latestThumbnail = await Self.makeThumbnail(for: videoURL)
                     successfulSaveCount += 1
                 }
             }
         } else {
-            recordingComposition = CaptureComposition(layout: layout, primarySide: primarySide)
             recordingStartedAt = Date()
-            camera.startRecording()
+            camera.startRecording(layout: layout, primarySide: primarySide)
         }
     }
 
@@ -251,9 +236,6 @@ private struct VideoPlayerView: View {
 private struct SettingsView: View {
     @AppStorage("captureLayout") private var captureLayout = CaptureLayout.pictureInPicture.rawValue
     @AppStorage("primaryCamera") private var primaryCamera = "rear"
-    @AppStorage("saveComposite") private var saveComposite = true
-    @AppStorage("saveFront") private var saveFront = false
-    @AppStorage("saveRear") private var saveRear = false
 
     var body: some View {
         NavigationStack {
@@ -267,13 +249,9 @@ private struct SettingsView: View {
                         Text("前置").tag("front")
                     }
                 }
-                Section("保存到照片图库") {
-                    Toggle("合成视频", isOn: $saveComposite)
-                    Toggle("前摄独立视频", isOn: $saveFront)
-                    Toggle("后摄独立视频", isOn: $saveRear)
-                    if !saveComposite && !saveFront && !saveRear {
-                        Text("至少选择一种视频").font(.footnote).foregroundStyle(.red)
-                    }
+                Section("保存") {
+                    Text("录制完成后自动保存合成视频到照片图库")
+                        .foregroundStyle(.secondary)
                 }
                 Section("关于") {
                     LabeledContent("版本", value: appVersion)

@@ -139,14 +139,14 @@ struct RealtimeRecordingStateMachine: Equatable {
     }
 }
 
-struct RecordingFiles {
-    let front: URL
-    let rear: URL
-    let composite: URL
-}
+struct RecordingPipelinePlan: Equatable {
+    let outputFileCount: Int
+    let requiresPostProcessing: Bool
+    let supportsIndependentCameraFiles: Bool
 
-struct SaveSelection {
-    var composite = true
-    var front = true
-    var rear = true
+    static let realtimeComposite = RecordingPipelinePlan(
+        outputFileCount: 1,
+        requiresPostProcessing: false,
+        supportsIndependentCameraFiles: false
+    )
 }

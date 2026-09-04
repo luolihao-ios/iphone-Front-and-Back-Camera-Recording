@@ -12,8 +12,7 @@ final class CameraManager: NSObject, ObservableObject {
 
     var previewSink: ((CameraSide, CMSampleBuffer) -> Void)?
     private let sampleQueue = DispatchQueue(label: "com.dualcapture.samples")
-    private var frontRecorder: MovieRecorder?
-    private var rearRecorder: MovieRecorder?
+    private var realtimeRecorder: RealtimeCompositeRecorder?
     private var frontOutput: AVCaptureVideoDataOutput?
     private var rearOutput: AVCaptureVideoDataOutput?
     private var audioOutput: AVCaptureAudioDataOutput?
@@ -47,17 +46,18 @@ final class CameraManager: NSObject, ObservableObject {
         }
     }
 
-    func startRecording() {
+    func startRecording(layout: CaptureLayout, primarySide: CameraSide) {
         guard isReady, !isRecording else { return }
         do {
             let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
             try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-            guard let frontSettings = frontOutput?.recommendedVideoSettingsForAssetWriter(writingTo: .mov),
-                  let rearSettings = rearOutput?.recommendedVideoSettingsForAssetWriter(writingTo: .mov) else {
-                throw CaptureError.unsupportedCombination
-            }
-            frontRecorder = try MovieRecorder(url: folder.appendingPathComponent("front.mov"), videoSettings: frontSettings)
-            rearRecorder = try MovieRecorder(url: folder.appendingPathComponent("rear.mov"), videoSettings: rearSettings)
+            let configuration = RealtimeRecordingConfiguration(layout: layout, primarySide: primarySide)
+            let recorder = try RealtimeCompositeRecorder(
+                url: folder.appendingPathComponent("final.mov"),
+                configuration: configuration
+            )
+            recorder.start()
+            realtimeRecorder = recorder
             isRecording = true
             audioRecordingEnabled = false
             AudioServicesPlaySystemSound(1117)
@@ -70,38 +70,28 @@ final class CameraManager: NSObject, ObservableObject {
         }
     }
 
-    func stopRecording(layout: CaptureLayout, primarySide: CameraSide) async -> RecordingFiles? {
-        guard isRecording, let frontRecorder, let rearRecorder else { return nil }
+    func stopRecording() async -> URL? {
+        guard isRecording, let realtimeRecorder else { return nil }
         isRecording = false
         audioRecordingEnabled = false
         AudioServicesPlaySystemSound(1118)
         isProcessing = true
-        statusMessage = "正在生成视频…"
-        self.frontRecorder = nil
-        self.rearRecorder = nil
-        let (frontURL, rearURL) = await finishRecorders(frontRecorder: frontRecorder, rearRecorder: rearRecorder)
-        guard let frontURL, let rearURL else {
-            isProcessing = false
+        statusMessage = "正在完成录制…"
+        self.realtimeRecorder = nil
+        let videoURL = await finish(realtimeRecorder)
+        isProcessing = false
+        guard let videoURL else {
             setStatus("视频写入失败，请重试。")
             return nil
         }
-        do {
-            let composite = try await VideoComposer.makeComposite(front: frontURL, rear: rearURL, layout: layout, primarySide: primarySide)
-            isProcessing = false
-            statusMessage = nil
-            return RecordingFiles(front: frontURL, rear: rearURL, composite: composite)
-        } catch {
-            isProcessing = false
-            setStatus("合成视频失败：\(error.localizedDescription)")
-            return nil
-        }
+        statusMessage = nil
+        return videoURL
     }
 
     @discardableResult
-    func save(files: RecordingFiles, selection: SaveSelection) async -> Bool {
-        let urls = [selection.composite ? files.composite : nil, selection.front ? files.front : nil, selection.rear ? files.rear : nil].compactMap { $0 }
+    func save(videoURL: URL) async -> Bool {
         do {
-            try await PhotoLibrarySaver.save(urls)
+            try await PhotoLibrarySaver.save([videoURL])
             statusMessage = "已保存到照片图库。"
             return true
         } catch {
@@ -168,14 +158,12 @@ final class CameraManager: NSObject, ObservableObject {
     private func appendVideo(_ sample: CMSampleBuffer, side: CameraSide) {
         previewSink?(side, sample)
         guard isRecording else { return }
-        let startTime = CMSampleBufferGetPresentationTimeStamp(sample)
-        switch side { case .front: frontRecorder?.appendVideo(sample, sessionStartTime: startTime); case .rear: rearRecorder?.appendVideo(sample, sessionStartTime: startTime) }
+        realtimeRecorder?.appendVideo(sample, side: side)
     }
 
     private func appendAudio(_ sample: CMSampleBuffer) {
         guard isRecording, audioRecordingEnabled else { return }
-        frontRecorder?.appendAudio(sample)
-        rearRecorder?.appendAudio(sample)
+        realtimeRecorder?.appendAudio(sample)
     }
 
     private func requestPermissions() async -> Bool {
@@ -188,17 +176,16 @@ final class CameraManager: NSObject, ObservableObject {
         DispatchQueue.main.async { self.statusMessage = message }
     }
 
-    private func finishRecorders(frontRecorder: MovieRecorder, rearRecorder: MovieRecorder) async -> (URL?, URL?) {
+    private func finish(_ recorder: RealtimeCompositeRecorder) async -> URL? {
         await withCheckedContinuation { continuation in
             sampleQueue.async {
                 Task {
-                    async let frontURL = frontRecorder.finish()
-                    async let rearURL = rearRecorder.finish()
-                    continuation.resume(returning: (await frontURL, await rearURL))
+                    continuation.resume(returning: await recorder.finish())
                 }
             }
         }
     }
+
 }
 
 private enum CaptureError: LocalizedError { case missingDevice, unsupportedCombination
