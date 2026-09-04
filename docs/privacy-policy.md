@@ -1,6 +1,6 @@
 # DualCapture Privacy Policy
 
-Effective date: July 29, 2026
+Effective date: September 4, 2026
 
 DualCapture (the App) is a local camera recording tool that can capture video from the front and rear cameras at the same time. This policy explains how the App handles information.
 
@@ -9,6 +9,10 @@ DualCapture (the App) is a local camera recording tool that can capture video fr
 The App does not require an account or login. It does not collect, upload, sell, or share personal information, photos, videos, audio, location data, or device identifiers.
 
 The App does not include advertising, analytics, tracking, or third-party data collection SDKs.
+
+## App Store Version Check
+
+To let users know when a newer version is available, the App may contact Apple's App Store service no more than once per day to look up this App's public version number. This request contains only the App's public App Store identifier. It does not include the user's name, account, photos, videos, audio, device identifier, or recording content.
 
 ## Camera, Microphone, and Photos Permissions
 
