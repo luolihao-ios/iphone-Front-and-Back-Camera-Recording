@@ -43,6 +43,64 @@ struct CaptureComposition: Equatable {
     var tapHitTestOrder: [CameraSide] { [secondarySide, primarySide] }
 }
 
+/// Immutable settings for the single video file written while a dual-camera recording is active.
+struct RealtimeRecordingConfiguration: Equatable {
+    let layout: CaptureLayout
+    let primarySide: CameraSide
+    let renderSize: CGSize
+
+    init(
+        layout: CaptureLayout,
+        primarySide: CameraSide,
+        renderSize: CGSize = CGSize(width: 1080, height: 1920)
+    ) {
+        self.layout = layout
+        self.primarySide = primarySide
+        self.renderSize = renderSize
+    }
+
+    var secondarySide: CameraSide { primarySide.secondary }
+}
+
+/// Frames use a top-left origin, matching the preview and the app's visible recording layout.
+struct RealtimeVideoFrames: Equatable {
+    let primary: CGRect
+    let secondary: CGRect
+    let secondaryCornerRadius: CGFloat
+}
+
+enum RealtimeVideoLayout {
+    static func frames(for configuration: RealtimeRecordingConfiguration) -> RealtimeVideoFrames {
+        let renderSize = configuration.renderSize
+
+        switch configuration.layout {
+        case .pictureInPicture:
+            let secondaryWidth = renderSize.width * PictureInPictureMetrics.widthRatio
+            let secondaryHeight = renderSize.height * PictureInPictureMetrics.heightRatio
+            let secondary = CGRect(
+                x: renderSize.width - secondaryWidth - (renderSize.width * PictureInPictureMetrics.rightMarginRatio),
+                y: renderSize.height * PictureInPictureMetrics.topMarginRatio,
+                width: secondaryWidth,
+                height: secondaryHeight
+            )
+
+            return RealtimeVideoFrames(
+                primary: CGRect(origin: .zero, size: renderSize),
+                secondary: secondary,
+                secondaryCornerRadius: 24
+            )
+
+        case .split:
+            let splitFrames = VideoLayoutFrames.splitFrames(in: renderSize)
+            return RealtimeVideoFrames(
+                primary: splitFrames.top,
+                secondary: splitFrames.bottom,
+                secondaryCornerRadius: 0
+            )
+        }
+    }
+}
+
 struct RecordingFiles {
     let front: URL
     let rear: URL
