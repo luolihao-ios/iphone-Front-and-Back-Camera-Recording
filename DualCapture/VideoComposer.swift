@@ -1,5 +1,4 @@
 import AVFoundation
-import UIKit
 
 enum VideoComposer {
     static func makeComposite(front: URL, rear: URL, layout: CaptureLayout, primarySide: CameraSide) async throws -> URL {
@@ -59,28 +58,10 @@ enum VideoComposer {
         let videoComposition = AVMutableVideoComposition()
         videoComposition.renderSize = renderSize
         videoComposition.frameDuration = CMTime(value: 1, timescale: 30)
-        if layout == .pictureInPicture {
-            // Core Image's origin is at the lower-left; convert the shared
-            // preview frame from top-right display coordinates once here.
-            let compositorPIPFrame = CGRect(
-                x: pipFrame.minX,
-                y: renderSize.height - pipFrame.maxY,
-                width: pipFrame.width,
-                height: pipFrame.height
-            )
-            let roundedInstruction = RoundedPIPInstruction(
-                timeRange: range,
-                primaryTrackID: primaryLayer.trackID,
-                secondaryTrackID: secondaryLayer.trackID,
-                primaryTransform: transform(for: primaryVideo, in: CGRect(origin: .zero, size: renderSize), fill: true),
-                secondaryTransform: transform(for: secondaryVideo, in: pipFrame, fill: true),
-                pipFrame: compositorPIPFrame
-            )
-            videoComposition.customVideoCompositorClass = RoundedPIPCompositor.self
-            videoComposition.instructions = [roundedInstruction]
-        } else {
-            videoComposition.instructions = [instruction]
-        }
+        // Use AVFoundation's native compositor for every layout. The custom
+        // per-frame rounded PIP compositor consumed too much memory for longer
+        // recordings and could leave the app unresponsive while saving.
+        videoComposition.instructions = [instruction]
         let destination = front.deletingLastPathComponent().appendingPathComponent("composite-\(layout.rawValue)-\(primarySide == .front ? "front" : "rear").mov")
         try? FileManager.default.removeItem(at: destination)
         guard let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality) else { throw ComposerError.cannotExport }
