@@ -22,4 +22,12 @@ final class RealtimeRecorderStateTests: XCTestCase {
 
         XCTAssertEqual(recorder.state, .finishing)
     }
+
+    func testRealtimePipelineProducesOneFinalFileAndNoPostProcessing() {
+        let plan = RecordingPipelinePlan.realtimeComposite
+
+        XCTAssertEqual(plan.outputFileCount, 1)
+        XCTAssertFalse(plan.requiresPostProcessing)
+        XCTAssertFalse(plan.supportsIndependentCameraFiles)
+    }
 }
