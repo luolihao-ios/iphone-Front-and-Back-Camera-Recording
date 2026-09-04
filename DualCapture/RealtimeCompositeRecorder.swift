@@ -83,7 +83,7 @@ final class RealtimeCompositeRecorder {
         }
 
         guard side == configuration.primarySide,
-              let secondarySample = sample(for: configuration.secondarySide) else { return }
+              let secondarySample = latestSample(for: configuration.secondarySide) else { return }
 
         let primaryTime = CMSampleBufferGetPresentationTimeStamp(sample)
         let secondaryTime = CMSampleBufferGetPresentationTimeStamp(secondarySample)
@@ -139,7 +139,7 @@ final class RealtimeCompositeRecorder {
         return writer.status == .completed ? url : nil
     }
 
-    private func sample(for side: CameraSide) -> CMSampleBuffer? {
+    private func latestSample(for side: CameraSide) -> CMSampleBuffer? {
         side == .front ? latestFrontSample : latestRearSample
     }
 
