@@ -17,6 +17,10 @@ final class RealtimeCompositeRecorder {
     private var latestFrontSample: CMSampleBuffer?
     private var latestRearSample: CMSampleBuffer?
     private var lastWrittenPresentationTime: CMTime?
+    private var primaryFrameCount = 0
+    private var pairedFrameCount = 0
+    private var appendedFrameCount = 0
+    private var appendFailureCount = 0
 
     var failureDescription: String? {
         writer.error?.localizedDescription
@@ -75,10 +79,18 @@ final class RealtimeCompositeRecorder {
 
     func start() {
         stateMachine.start()
+        DebugLog.shared.log("writer.start state=\(stateMachine.state)")
     }
 
     func appendVideo(_ sample: CMSampleBuffer, side: CameraSide) {
         guard stateMachine.acceptsSamples else { return }
+
+        if side == configuration.primarySide {
+            primaryFrameCount += 1
+            if primaryFrameCount == 1 || primaryFrameCount % 30 == 0 {
+                DebugLog.shared.log("writer.primary_frames=\(primaryFrameCount) paired=\(pairedFrameCount) appended=\(appendedFrameCount)")
+            }
+        }
 
         switch side {
         case .front:
@@ -89,6 +101,7 @@ final class RealtimeCompositeRecorder {
 
         guard side == configuration.primarySide,
               let secondarySample = latestSample(for: configuration.secondarySide) else { return }
+        pairedFrameCount += 1
 
         let primaryTime = CMSampleBufferGetPresentationTimeStamp(sample)
         let secondaryTime = CMSampleBufferGetPresentationTimeStamp(secondarySample)
@@ -104,25 +117,46 @@ final class RealtimeCompositeRecorder {
         }
 
         if !hasStartedWriting {
-            guard writer.startWriting() else { return }
+            guard writer.startWriting() else {
+                DebugLog.shared.log("writer.startWriting.failed status=\(writer.status.rawValue) error=\(writer.error?.localizedDescription ?? "none")")
+                return
+            }
             writer.startSession(atSourceTime: primaryTime)
             hasStartedWriting = true
+            DebugLog.shared.log("writer.started session=\(primaryTime.seconds)")
         }
 
-        guard writer.status == .writing else { return }
+        guard writer.status == .writing else {
+            DebugLog.shared.log("writer.not_writing status=\(writer.status.rawValue) error=\(writer.error?.localizedDescription ?? "none")")
+            return
+        }
         // Before startWriting(), AVAssetWriterInput may report that it is not
         // ready even though the first frame is exactly what starts the file.
         // Check readiness only after the writer has entered the writing state.
-        guard videoInput.isReadyForMoreMediaData else { return }
-        guard let pixelBuffer = makePixelBuffer() else { return }
+        guard videoInput.isReadyForMoreMediaData else {
+            appendFailureCount += 1
+            if appendFailureCount == 1 || appendFailureCount % 30 == 0 {
+                DebugLog.shared.log("writer.input_not_ready count=\(appendFailureCount)")
+            }
+            return
+        }
+        guard let pixelBuffer = makePixelBuffer() else {
+            DebugLog.shared.log("writer.pixel_buffer_pool_missing")
+            return
+        }
         context.render(
             composite,
             to: pixelBuffer,
             bounds: CGRect(origin: .zero, size: configuration.renderSize),
             colorSpace: CGColorSpaceCreateDeviceRGB()
         )
-        guard pixelBufferAdaptor.append(pixelBuffer, withPresentationTime: primaryTime) else { return }
+        guard pixelBufferAdaptor.append(pixelBuffer, withPresentationTime: primaryTime) else {
+            appendFailureCount += 1
+            DebugLog.shared.log("writer.append.failed count=\(appendFailureCount) status=\(writer.status.rawValue) error=\(writer.error?.localizedDescription ?? "none")")
+            return
+        }
         lastWrittenPresentationTime = primaryTime
+        appendedFrameCount += 1
     }
 
     func appendAudio(_ sample: CMSampleBuffer) {
@@ -134,8 +168,10 @@ final class RealtimeCompositeRecorder {
     }
 
     func finish() async -> URL? {
+        DebugLog.shared.log("writer.finish.begin started=\(hasStartedWriting) primary=\(primaryFrameCount) paired=\(pairedFrameCount) appended=\(appendedFrameCount)")
         stateMachine.beginFinishing()
         guard hasStartedWriting else {
+            DebugLog.shared.log("writer.finish.no_frames status=\(writer.status.rawValue) error=\(writer.error?.localizedDescription ?? "none")")
             stateMachine.finish()
             return nil
         }
@@ -146,6 +182,7 @@ final class RealtimeCompositeRecorder {
             writer.finishWriting { continuation.resume() }
         }
         stateMachine.finish()
+        DebugLog.shared.log("writer.finish.end status=\(writer.status.rawValue) error=\(writer.error?.localizedDescription ?? "none")")
         return writer.status == .completed ? url : nil
     }
 

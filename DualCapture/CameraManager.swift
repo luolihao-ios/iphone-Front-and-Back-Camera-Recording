@@ -20,11 +20,15 @@ final class CameraManager: NSObject, ObservableObject {
     private var audioRecordingEnabled = false
 
     func prepare() async {
+        DebugLog.shared.log("prepare.begin")
         guard AVCaptureMultiCamSession.isMultiCamSupported else {
+            DebugLog.shared.log("prepare.unsupported_multicam")
             setStatus("此 iPhone 不支持前后摄像头同时录制。")
             return
         }
-        guard await requestPermissions() else {
+        let permissionsGranted = await requestPermissions()
+        DebugLog.shared.log("prepare.permissions=\(permissionsGranted)")
+        guard permissionsGranted else {
             setStatus("请在“设置 > 隐私与安全性”中允许相机和麦克风访问。")
             return
         }
@@ -36,17 +40,20 @@ final class CameraManager: NSObject, ObservableObject {
             }
             sampleQueue.async {
                 self.session.startRunning()
+                DebugLog.shared.log("prepare.session_running=\(self.session.isRunning)")
                 DispatchQueue.main.async {
                     self.isReady = self.session.isRunning
                     self.statusMessage = self.session.isRunning ? nil : "双摄会话未能启动。"
                 }
             }
         } catch {
+            DebugLog.shared.log("prepare.configure_error=\(error.localizedDescription)")
             setStatus("无法配置双摄会话：\(error.localizedDescription)")
         }
     }
 
     func startRecording(layout: CaptureLayout, primarySide: CameraSide) {
+        DebugLog.shared.log("record.start.request ready=\(isReady) recording=\(isRecording) layout=\(layout.rawValue) primary=\(primarySide)")
         guard isReady, !isRecording else { return }
         do {
             let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
@@ -59,6 +66,7 @@ final class CameraManager: NSObject, ObservableObject {
             recorder.start()
             realtimeRecorder = recorder
             isRecording = true
+            DebugLog.shared.log("record.start.success url=\(folder.appendingPathComponent("final.mov").path)")
             audioRecordingEnabled = false
             AudioServicesPlaySystemSound(1117)
             sampleQueue.asyncAfter(deadline: .now() + 1.0) { [weak self] in
@@ -66,13 +74,27 @@ final class CameraManager: NSObject, ObservableObject {
             }
             statusMessage = nil
         } catch {
+            DebugLog.shared.log("record.start.error=\(error.localizedDescription)")
             setStatus("无法创建录制文件：\(error.localizedDescription)")
         }
     }
 
     @MainActor
     func stopRecording() async -> URL? {
-        guard isRecording, !isProcessing, let realtimeRecorder else { return nil }
+        DebugLog.shared.log("record.stop.request recording=\(isRecording) processing=\(isProcessing) hasRecorder=\(realtimeRecorder != nil)")
+        guard isRecording else {
+            DebugLog.shared.log("record.stop.ignored_not_recording")
+            return nil
+        }
+        guard !isProcessing else {
+            DebugLog.shared.log("record.stop.ignored_already_processing")
+            return nil
+        }
+        guard let realtimeRecorder else {
+            DebugLog.shared.log("record.stop.error_recorder_missing")
+            setStatus("录制器已丢失，请重新开始录制。")
+            return nil
+        }
         audioRecordingEnabled = false
         AudioServicesPlaySystemSound(1118)
         isProcessing = true
@@ -87,6 +109,7 @@ final class CameraManager: NSObject, ObservableObject {
         // frames and could leave AVAssetWriter with no video samples at all.
         let videoURL = await finish(realtimeRecorder)
         let failureDescription = realtimeRecorder.failureDescription
+        DebugLog.shared.log("record.stop.finished url=\(videoURL?.path ?? "nil") writerError=\(failureDescription ?? "none")")
         self.realtimeRecorder = nil
         isRecording = false
         isProcessing = false
@@ -96,16 +119,20 @@ final class CameraManager: NSObject, ObservableObject {
             return nil
         }
         statusMessage = nil
+        DebugLog.shared.log("record.stop.success")
         return videoURL
     }
 
     @discardableResult
     func save(videoURL: URL) async -> Bool {
+        DebugLog.shared.log("save.begin url=\(videoURL.path)")
         do {
             try await PhotoLibrarySaver.save([videoURL])
+            DebugLog.shared.log("save.success")
             statusMessage = "已保存到照片图库。"
             return true
         } catch {
+            DebugLog.shared.log("save.error=\(error.localizedDescription)")
             setStatus("保存失败：\(error.localizedDescription)")
             return false
         }
