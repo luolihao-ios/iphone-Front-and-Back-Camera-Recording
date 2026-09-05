@@ -32,9 +32,9 @@ final class RealtimeRecordingConfigurationTests: XCTestCase {
         XCTAssertEqual(frames.secondaryCornerRadius, 0)
     }
 
-    func testFramePairingRequiresASecondaryFrameThatIsNotFromTheFuture() {
+    func testFramePairingAcceptsValidFramesWithEitherCameraTimestampOffset() {
         XCTAssertFalse(FramePairingPolicy.shouldWrite(primaryTime: 1, secondaryTime: nil))
-        XCTAssertFalse(FramePairingPolicy.shouldWrite(primaryTime: 1, secondaryTime: 1.1))
+        XCTAssertTrue(FramePairingPolicy.shouldWrite(primaryTime: 1, secondaryTime: 1.1))
         XCTAssertTrue(FramePairingPolicy.shouldWrite(primaryTime: 1, secondaryTime: 0.99))
     }
 }
