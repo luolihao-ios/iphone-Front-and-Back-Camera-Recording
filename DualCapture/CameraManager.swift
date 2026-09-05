@@ -71,14 +71,19 @@ final class CameraManager: NSObject, ObservableObject {
     }
 
     func stopRecording() async -> URL? {
-        guard isRecording, let realtimeRecorder else { return nil }
-        isRecording = false
+        guard isRecording, !isProcessing, let realtimeRecorder else { return nil }
         audioRecordingEnabled = false
         AudioServicesPlaySystemSound(1118)
         isProcessing = true
         statusMessage = "正在完成录制…"
-        self.realtimeRecorder = nil
+
+        // Keep the recorder attached while the sample queue drains. The stop
+        // request can arrive between the two camera callbacks that form a
+        // composite frame; clearing the property here would drop those queued
+        // frames and could leave AVAssetWriter with no video samples at all.
         let videoURL = await finish(realtimeRecorder)
+        self.realtimeRecorder = nil
+        isRecording = false
         isProcessing = false
         guard let videoURL else {
             setStatus("视频写入失败，请重试。")
