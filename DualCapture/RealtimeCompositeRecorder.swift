@@ -99,7 +99,6 @@ final class RealtimeCompositeRecorder {
                 secondaryTime: secondaryTime.seconds
               ),
               isAfterLastWrittenFrame(primaryTime),
-              let pixelBuffer = makePixelBuffer(),
               let composite = makeComposite(primarySample: sample, secondarySample: secondarySample) else {
             return
         }
@@ -115,6 +114,7 @@ final class RealtimeCompositeRecorder {
         // ready even though the first frame is exactly what starts the file.
         // Check readiness only after the writer has entered the writing state.
         guard videoInput.isReadyForMoreMediaData else { return }
+        guard let pixelBuffer = makePixelBuffer() else { return }
         context.render(
             composite,
             to: pixelBuffer,
