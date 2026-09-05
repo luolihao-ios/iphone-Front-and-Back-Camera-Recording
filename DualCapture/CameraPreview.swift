@@ -54,10 +54,9 @@ final class PreviewView: UIView {
         switch layout {
         case .pictureInPicture:
             mainLayer.frame = bounds
-            let size = CGSize(width: bounds.width * PictureInPictureMetrics.widthRatio, height: bounds.height * PictureInPictureMetrics.heightRatio)
-            let rightMargin = bounds.width * PictureInPictureMetrics.rightMarginRatio
-            let topMargin = bounds.height * PictureInPictureMetrics.topMarginRatio
-            secondaryLayer.frame = CGRect(x: bounds.maxX - size.width - rightMargin, y: bounds.minY + topMargin, width: size.width, height: size.height)
+            let configuration = RealtimeRecordingConfiguration(layout: layout, primarySide: primarySide)
+            secondaryLayer.frame = RealtimeVideoLayout.secondaryFrame(for: configuration, in: bounds)
+            secondaryLayer.cornerRadius = RealtimeVideoLayout.secondaryCornerRadius(for: configuration, in: bounds)
         case .split:
             let height = bounds.height / 2
             mainLayer.frame = CGRect(x: 0, y: 0, width: bounds.width, height: height)

@@ -1,9 +1,9 @@
 import Foundation
 
 enum PictureInPictureMetrics {
-    static let widthRatio: CGFloat = 0.22
-    static let heightRatio: CGFloat = 0.18
-    static let rightMarginRatio: CGFloat = 0.05
+    static let widthRatio: CGFloat = 0.28
+    static let heightRatio: CGFloat = 0.20
+    static let leftMarginRatio: CGFloat = 0.05
     static let topMarginRatio: CGFloat = 0.10
 }
 
@@ -78,7 +78,7 @@ enum RealtimeVideoLayout {
             let secondaryWidth = renderSize.width * PictureInPictureMetrics.widthRatio
             let secondaryHeight = renderSize.height * PictureInPictureMetrics.heightRatio
             let secondary = CGRect(
-                x: renderSize.width - secondaryWidth - (renderSize.width * PictureInPictureMetrics.rightMarginRatio),
+                x: renderSize.width * PictureInPictureMetrics.leftMarginRatio,
                 y: renderSize.height * PictureInPictureMetrics.topMarginRatio,
                 width: secondaryWidth,
                 height: secondaryHeight
@@ -98,6 +98,29 @@ enum RealtimeVideoLayout {
                 secondaryCornerRadius: 0
             )
         }
+    }
+
+    static func secondaryFrame(
+        for configuration: RealtimeRecordingConfiguration,
+        in bounds: CGRect
+    ) -> CGRect {
+        let canonical = frames(for: configuration).secondary
+        let renderSize = configuration.renderSize
+        return CGRect(
+            x: bounds.minX + canonical.minX * bounds.width / renderSize.width,
+            y: bounds.minY + canonical.minY * bounds.height / renderSize.height,
+            width: canonical.width * bounds.width / renderSize.width,
+            height: canonical.height * bounds.height / renderSize.height
+        )
+    }
+
+    static func secondaryCornerRadius(
+        for configuration: RealtimeRecordingConfiguration,
+        in bounds: CGRect
+    ) -> CGFloat {
+        let renderSize = configuration.renderSize
+        let scale = min(bounds.width / renderSize.width, bounds.height / renderSize.height)
+        return frames(for: configuration).secondaryCornerRadius * scale
     }
 }
 
