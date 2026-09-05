@@ -16,6 +16,11 @@ final class RealtimeCompositeRecorder {
     private var hasStartedWriting = false
     private var latestFrontSample: CMSampleBuffer?
     private var latestRearSample: CMSampleBuffer?
+    private var lastWrittenPresentationTime: CMTime?
+
+    var failureDescription: String? {
+        writer.error?.localizedDescription
+    }
 
     init(url: URL, configuration: RealtimeRecordingConfiguration) throws {
         self.url = url
@@ -93,6 +98,7 @@ final class RealtimeCompositeRecorder {
                 primaryTime: primaryTime.seconds,
                 secondaryTime: secondaryTime.seconds
               ),
+              isAfterLastWrittenFrame(primaryTime),
               videoInput.isReadyForMoreMediaData,
               let pixelBuffer = makePixelBuffer(),
               let composite = makeComposite(primarySample: sample, secondarySample: secondarySample) else {
@@ -112,7 +118,8 @@ final class RealtimeCompositeRecorder {
             bounds: CGRect(origin: .zero, size: configuration.renderSize),
             colorSpace: CGColorSpaceCreateDeviceRGB()
         )
-        pixelBufferAdaptor.append(pixelBuffer, withPresentationTime: primaryTime)
+        guard pixelBufferAdaptor.append(pixelBuffer, withPresentationTime: primaryTime) else { return }
+        lastWrittenPresentationTime = primaryTime
     }
 
     func appendAudio(_ sample: CMSampleBuffer) {
@@ -141,6 +148,11 @@ final class RealtimeCompositeRecorder {
 
     private func latestSample(for side: CameraSide) -> CMSampleBuffer? {
         side == .front ? latestFrontSample : latestRearSample
+    }
+
+    private func isAfterLastWrittenFrame(_ time: CMTime) -> Bool {
+        guard let lastWrittenPresentationTime else { return true }
+        return time > lastWrittenPresentationTime
     }
 
     private func makePixelBuffer() -> CVPixelBuffer? {

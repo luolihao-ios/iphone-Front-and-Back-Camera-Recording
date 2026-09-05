@@ -32,7 +32,13 @@ struct ContentView: View {
                 .ignoresSafeArea()
             }
             VStack {
-                if camera.isRecording, let recordingStartedAt {
+                if camera.isProcessing {
+                    ProgressView("正在完成录制…")
+                        .tint(.black)
+                        .foregroundStyle(.black)
+                        .padding(.horizontal, 16).padding(.vertical, 10)
+                        .background(.white.opacity(0.95)).clipShape(RoundedRectangle(cornerRadius: 12))
+                } else if camera.isRecording, let recordingStartedAt {
                     TimelineView(.periodic(from: recordingStartedAt, by: 1)) { context in
                         let elapsed = max(0, Int(context.date.timeIntervalSince(recordingStartedAt)))
                         HStack(spacing: 7) {
@@ -44,12 +50,6 @@ struct ContentView: View {
                         .padding(.horizontal, 14).padding(.vertical, 8)
                         .background(.red).clipShape(RoundedRectangle(cornerRadius: 8))
                     }
-                } else if camera.isProcessing {
-                    ProgressView("正在完成录制…")
-                        .tint(.black)
-                        .foregroundStyle(.black)
-                        .padding(.horizontal, 16).padding(.vertical, 10)
-                        .background(.white.opacity(0.95)).clipShape(RoundedRectangle(cornerRadius: 12))
                 }
                 Spacer()
                 if camera.isRecording {

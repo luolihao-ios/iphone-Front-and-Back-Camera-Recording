@@ -82,11 +82,13 @@ final class CameraManager: NSObject, ObservableObject {
         // composite frame; clearing the property here would drop those queued
         // frames and could leave AVAssetWriter with no video samples at all.
         let videoURL = await finish(realtimeRecorder)
+        let failureDescription = realtimeRecorder.failureDescription
         self.realtimeRecorder = nil
         isRecording = false
         isProcessing = false
         guard let videoURL else {
-            setStatus("视频写入失败，请重试。")
+            let detail = failureDescription.map { "（\($0)）" } ?? ""
+            setStatus("视频写入失败\(detail)，请重试。")
             return nil
         }
         statusMessage = nil

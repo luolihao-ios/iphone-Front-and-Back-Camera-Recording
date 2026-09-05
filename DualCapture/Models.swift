@@ -102,12 +102,12 @@ enum RealtimeVideoLayout {
 }
 
 enum FramePairingPolicy {
-    /// A secondary image may only be combined with a primary frame when it was captured
-    /// at the same instant or earlier. This prevents the final file from showing time
-    /// moving backwards in one camera.
+    /// Both camera outputs can have a small, stable timestamp offset. The most recent
+    /// frame from either output is still a valid composite partner; the recorder keeps
+    /// the primary stream as the output clock and enforces monotonic output timestamps.
     static func shouldWrite(primaryTime: Double, secondaryTime: Double?) -> Bool {
         guard let secondaryTime else { return false }
-        return secondaryTime <= primaryTime
+        return primaryTime.isFinite && secondaryTime.isFinite
     }
 }
 
