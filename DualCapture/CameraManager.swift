@@ -70,12 +70,16 @@ final class CameraManager: NSObject, ObservableObject {
         }
     }
 
+    @MainActor
     func stopRecording() async -> URL? {
         guard isRecording, !isProcessing, let realtimeRecorder else { return nil }
         audioRecordingEnabled = false
         AudioServicesPlaySystemSound(1118)
         isProcessing = true
         statusMessage = "正在完成录制…"
+        // Yield once so SwiftUI can render the processing state before the
+        // writer completion task returns (including the no-frame failure path).
+        await Task.yield()
 
         // Keep the recorder attached while the sample queue drains. The stop
         // request can arrive between the two camera callbacks that form a
