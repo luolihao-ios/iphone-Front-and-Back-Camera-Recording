@@ -16,6 +16,9 @@ struct ContentView: View {
     @State private var recordingStartedAt: Date?
     @State private var latestVideoURL: URL?
     @State private var latestThumbnail: UIImage?
+    @State private var genieThumbnail: UIImage?
+    @State private var genieProgress: CGFloat = 0
+    @State private var showGenieAnimation = false
     @State private var availableUpdate: AppStoreUpdate?
 
     private var layout: CaptureLayout { CaptureLayout(rawValue: captureLayout) ?? .pictureInPicture }
@@ -32,13 +35,7 @@ struct ContentView: View {
                 .ignoresSafeArea()
             }
             VStack {
-                if camera.isProcessing {
-                    ProgressView("正在完成录制…")
-                        .tint(.black)
-                        .foregroundStyle(.black)
-                        .padding(.horizontal, 16).padding(.vertical, 10)
-                        .background(.white.opacity(0.95)).clipShape(RoundedRectangle(cornerRadius: 12))
-                } else if camera.isRecording, let recordingStartedAt {
+                if camera.isRecording, let recordingStartedAt {
                     TimelineView(.periodic(from: recordingStartedAt, by: 1)) { context in
                         let elapsed = max(0, Int(context.date.timeIntervalSince(recordingStartedAt)))
                         HStack(spacing: 7) {
@@ -79,6 +76,11 @@ struct ContentView: View {
                     .padding(.bottom, 34)
                 }
             }
+            if showGenieAnimation, let genieThumbnail {
+                GenieSaveAnimation(image: genieThumbnail, progress: genieProgress)
+                    .allowsHitTesting(false)
+                    .ignoresSafeArea()
+            }
         }
         .task {
             await camera.prepare()
@@ -113,14 +115,30 @@ struct ContentView: View {
                 guard let videoURL = await camera.stopRecording() else { return }
                 if await camera.save(videoURL: videoURL) {
                     latestVideoURL = videoURL
-                    latestThumbnail = await Self.makeThumbnail(for: videoURL)
                     successfulSaveCount += 1
+                    let thumbnail = await Self.makeThumbnail(for: videoURL)
+                    await playSaveAnimation(with: thumbnail)
                 }
             }
         } else {
             recordingStartedAt = Date()
             camera.startRecording(layout: layout, primarySide: primarySide)
         }
+    }
+
+    @MainActor
+    private func playSaveAnimation(with thumbnail: UIImage?) async {
+        guard let thumbnail else { return }
+        genieThumbnail = thumbnail
+        genieProgress = 0
+        showGenieAnimation = true
+        await Task.yield()
+        withAnimation(.easeInOut(duration: 0.65)) {
+            genieProgress = 1
+        }
+        try? await Task.sleep(for: .milliseconds(700))
+        latestThumbnail = thumbnail
+        showGenieAnimation = false
     }
 
     private func switchCamera() {
@@ -188,6 +206,61 @@ struct ContentView: View {
             }
         }
         return (thumbnail, url)
+    }
+}
+
+private struct GenieSaveAnimation: View {
+    let image: UIImage
+    let progress: CGFloat
+
+    var body: some View {
+        GeometryReader { proxy in
+            let width = proxy.size.width
+            let height = proxy.size.height
+            let target = CGPoint(x: width / 2 - 153, y: height - 70)
+            let startCenter = CGPoint(x: width / 2, y: height * 0.46)
+            let center = CGPoint(
+                x: startCenter.x + (target.x - startCenter.x) * progress,
+                y: startCenter.y + (target.y - startCenter.y) * progress
+            )
+            let imageWidth = width * (1 - 0.92 * progress)
+            let imageHeight = height * 0.68 * (1 - 0.94 * progress)
+
+            Image(uiImage: image)
+                .resizable()
+                .scaledToFill()
+                .frame(width: max(12, imageWidth), height: max(18, imageHeight))
+                .clipShape(GenieShape(progress: progress))
+                .position(center)
+                .opacity(1 - max(0, progress - 0.9) / 0.1)
+        }
+    }
+}
+
+private struct GenieShape: Shape {
+    var progress: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        let p = min(max(progress, 0), 1)
+        let bottomPhase = min(p / 0.55, 1)
+        let fullPhase = max(0, (p - 0.35) / 0.65)
+        let bottomInset = rect.width * 0.42 * bottomPhase
+        let topInset = rect.width * 0.49 * fullPhase
+        let topY = rect.height * 0.48 * fullPhase
+        let bottomY = rect.height - rect.height * 0.55 * bottomPhase
+
+        var path = Path()
+        path.move(to: CGPoint(x: topInset, y: topY))
+        path.addLine(to: CGPoint(x: rect.width - topInset, y: topY))
+        path.addLine(to: CGPoint(x: rect.width - bottomInset, y: bottomY))
+        path.addLine(to: CGPoint(x: bottomInset, y: bottomY))
+        path.closeSubpath()
+        return path
     }
 }
 
