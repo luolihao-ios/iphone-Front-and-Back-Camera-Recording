@@ -6,7 +6,6 @@ import StoreKit
 
 struct ContentView: View {
     @StateObject private var camera = CameraManager()
-    @Environment(\.openURL) private var openURL
     @AppStorage("captureLayout") private var captureLayout = CaptureLayout.pictureInPicture.rawValue
     @AppStorage("primaryCamera") private var primaryCamera = "rear"
     @AppStorage("successfulSaveCount") private var successfulSaveCount = 0
@@ -19,7 +18,6 @@ struct ContentView: View {
     @State private var genieThumbnail: UIImage?
     @State private var genieProgress: CGFloat = 0
     @State private var showGenieAnimation = false
-    @State private var availableUpdate: AppStoreUpdate?
 
     private var layout: CaptureLayout { CaptureLayout(rawValue: captureLayout) ?? .pictureInPicture }
     private var primarySide: CameraSide { primaryCamera == "front" ? .front : .rear }
@@ -87,20 +85,8 @@ struct ContentView: View {
             let latest = await Self.loadLatestVideo()
             latestThumbnail = latest.thumbnail
             latestVideoURL = latest.url
-            if let update = await AppStoreUpdateChecker.fetchAvailableUpdate(installedVersion: AppVersion.current) {
-                availableUpdate = update
-            } else {
-                try? await Task.sleep(for: .seconds(2))
-                requestReviewIfAppropriate()
-            }
-        }
-        .alert(item: $availableUpdate) { update in
-            Alert(
-                title: Text("发现新版本"),
-                message: Text("“同框之外”已有 \(update.version) 版本可更新。"),
-                primaryButton: .default(Text("前往更新")) { openURL(update.storeURL) },
-                secondaryButton: .cancel(Text("暂不"))
-            )
+            try? await Task.sleep(for: .seconds(2))
+            requestReviewIfAppropriate()
         }
         .sheet(isPresented: $showSettings) { SettingsView() }
         .fullScreenCover(isPresented: $showPlayer) {
@@ -309,6 +295,9 @@ private struct VideoPlayerView: View {
 private struct SettingsView: View {
     @AppStorage("captureLayout") private var captureLayout = CaptureLayout.pictureInPicture.rawValue
     @AppStorage("primaryCamera") private var primaryCamera = "rear"
+    @Environment(\.openURL) private var openURL
+    @State private var availableUpdate: AppStoreUpdate?
+    @State private var isCheckingUpdate = false
 
     var body: some View {
         NavigationStack {
@@ -327,11 +316,35 @@ private struct SettingsView: View {
                         .foregroundStyle(.secondary)
                 }
                 Section("关于") {
-                    LabeledContent("版本", value: appVersion)
+                    Button {
+                        guard let availableUpdate else { return }
+                        openURL(availableUpdate.storeURL)
+                    } label: {
+                        HStack {
+                            Text("版本")
+                            Spacer()
+                            if isCheckingUpdate {
+                                ProgressView()
+                                    .controlSize(.small)
+                            } else if availableUpdate != nil {
+                                Image(systemName: "arrow.down.circle.fill")
+                                    .foregroundStyle(.red)
+                                    .accessibilityLabel("有新版本可更新")
+                            }
+                            Text(appVersion)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    .disabled(availableUpdate == nil)
                     Link("去 App Store 评分", destination: AppStoreUpdateChecker.writeReviewURL)
                 }
             }
             .navigationTitle("设置")
+            .task {
+                isCheckingUpdate = true
+                availableUpdate = await AppStoreUpdateChecker.fetchAvailableUpdate(installedVersion: AppVersion.current)
+                isCheckingUpdate = false
+            }
         }
     }
 

@@ -9,7 +9,6 @@ struct AppStoreUpdate: Identifiable {
 
 enum AppStoreUpdateChecker {
     static let appID = "6795392492"
-    static let lastCheckDefaultsKey = "appStoreUpdateLastCheckedAt"
     static let productURL = URL(string: "https://apps.apple.com/app/id\(appID)")!
     static let writeReviewURL = URL(string: "https://apps.apple.com/app/id\(appID)?action=write-review")!
 
@@ -26,11 +25,9 @@ enum AppStoreUpdateChecker {
         return false
     }
 
-    static func fetchAvailableUpdate(installedVersion: String, defaults: UserDefaults = .standard) async -> AppStoreUpdate? {
-        guard shouldCheckNow(defaults: defaults) else { return nil }
-        defaults.set(Date(), forKey: lastCheckDefaultsKey)
-
-        guard let url = URL(string: "https://itunes.apple.com/lookup?id=\(appID)") else { return nil }
+    static func fetchAvailableUpdate(installedVersion: String) async -> AppStoreUpdate? {
+        let region = Locale.current.region?.identifier ?? "US"
+        guard let url = URL(string: "https://itunes.apple.com/lookup?id=\(appID)&country=\(region)") else { return nil }
         do {
             let (data, response) = try await URLSession.shared.data(from: url)
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else { return nil }
@@ -41,11 +38,6 @@ enum AppStoreUpdateChecker {
         } catch {
             return nil
         }
-    }
-
-    private static func shouldCheckNow(defaults: UserDefaults, now: Date = Date()) -> Bool {
-        guard let lastCheck = defaults.object(forKey: lastCheckDefaultsKey) as? Date else { return true }
-        return now.timeIntervalSince(lastCheck) >= 24 * 60 * 60
     }
 
     private static func numericParts(of version: String) -> [Int] {
