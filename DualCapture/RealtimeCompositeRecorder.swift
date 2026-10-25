@@ -80,6 +80,7 @@ final class RealtimeCompositeRecorder {
     func start() {
         stateMachine.start()
         DebugLog.shared.log("writer.start state=\(stateMachine.state)")
+        DebugLog.shared.log("writer.layout canvas=\(configuration.renderSize) frames=\(RealtimeVideoLayout.frames(for: configuration)) shape=\(configuration.pictureInPicture.shape.rawValue)")
     }
 
     func appendVideo(_ sample: CMSampleBuffer, side: CameraSide) {

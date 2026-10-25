@@ -56,6 +56,7 @@ final class PreviewView: UIView, UIGestureRecognizerDelegate {
         CATransaction.setDisableActions(true)
         layer.insertSublayer(mainLayer, at: 0)
         layer.insertSublayer(secondaryLayer, above: mainLayer)
+        mainLayer.isHidden = false
         mainLayer.frame = RealtimeVideoLayout.scaledFrame(frames.primary, configuration: configuration, in: bounds)
         mainLayer.cornerRadius = 0
         mainLayer.borderWidth = 0

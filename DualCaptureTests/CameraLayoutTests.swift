@@ -80,6 +80,22 @@ final class CameraLayoutTests: XCTestCase {
     }
 
     @MainActor
+    func testFullScreenCameraSwitchNeverLeavesPrimaryLayerHidden() throws {
+        let view = PreviewView(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
+        let transitions: [(CaptureLayout, CameraSide)] = [
+            (.fullScreen, .rear), (.fullScreen, .front), (.split, .rear), (.pictureInPicture, .front)
+        ]
+        for (layout, primary) in transitions {
+            view.configuration = .init(layout: layout, primarySide: primary, renderSize: CGSize(width: 390, height: 844))
+            view.layoutIfNeeded()
+            let layers = try XCTUnwrap(view.layer.sublayers).compactMap { $0 as? AVSampleBufferDisplayLayer }
+            XCTAssertEqual(layers.count, 2)
+            XCTAssertFalse(layers[0].isHidden, "主画面必须可见：\(layout), \(primary)")
+            XCTAssertEqual(layers.filter { !$0.isHidden }.count, layout == .fullScreen ? 1 : 2)
+        }
+    }
+
+    @MainActor
     func testPreviewRemovesRoundClippingWhenSwitchingToEqualSplit() throws {
         let view = PreviewView(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
         view.configuration = .init(layout: .pictureInPicture, primarySide: .rear,
