@@ -13,14 +13,19 @@ struct CameraShortcutMenu: View {
     let onSettings: () -> Void
 
     var body: some View {
-        ScrollView(.vertical, showsIndicators: false) {
         VStack(spacing: 12) {
-            shortcut("网格", symbol: "grid", selected: gridEnabled) { gridEnabled.toggle() }
-            shortcut("全屏", symbol: "viewfinder", selected: layout == .fullScreen) { onSelectLayout(.fullScreen) }
-            shortcut("上下", symbol: "rectangle.split.1x2", selected: layout == .split) { onSelectLayout(.split) }
-            shortcut("左右", symbol: "rectangle.split.2x1", selected: layout == .sideBySide) { onSelectLayout(.sideBySide) }
-            shortcut("画中画", symbol: "pip", selected: layout == .pictureInPicture) { onSelectLayout(.pictureInPicture) }
-            shortcut("小窗", symbol: "arrow.up.left.and.arrow.down.right", selected: false, action: onWindowSettings)
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 12) {
+                    shortcut("网格", symbol: "grid", selected: gridEnabled) { gridEnabled.toggle() }
+                    shortcut("全屏", symbol: "viewfinder", selected: layout == .fullScreen) { onSelectLayout(.fullScreen) }
+                    shortcut("上下", symbol: "rectangle.split.1x2", selected: layout == .split) { onSelectLayout(.split) }
+                    shortcut("左右", symbol: "rectangle.split.2x1", selected: layout == .sideBySide) { onSelectLayout(.sideBySide) }
+                    shortcut("画中画", symbol: "pip", selected: layout == .pictureInPicture) { onSelectLayout(.pictureInPicture) }
+                    shortcut("形状", symbol: "circle.square", selected: false, action: onWindowSettings)
+                }
+            }
+            .scrollBounceBehavior(.basedOnSize)
+            .frame(maxHeight: 336)
             Button(action: onSettings) {
                 VStack(spacing: 3) {
                     ZStack {
@@ -33,14 +38,15 @@ struct CameraShortcutMenu: View {
                 .frame(width: 48)
                 .foregroundStyle(.white)
             }
+            .fixedSize(horizontal: false, vertical: true)
             .accessibilityLabel("设置")
         }
         .padding(.vertical, 12)
-        .background(.black.opacity(0.28), in: RoundedRectangle(cornerRadius: 24))
-        .buttonStyle(.plain)
-        }
         .frame(width: 48)
-        .frame(maxHeight: 404)
+        .frame(maxHeight: 442)
+        .background(.black.opacity(0.28), in: RoundedRectangle(cornerRadius: 24))
+        .clipShape(RoundedRectangle(cornerRadius: 24))
+        .buttonStyle(.plain)
     }
 
     private func shortcut(_ title: String, symbol: String, selected: Bool, action: @escaping () -> Void) -> some View {
@@ -65,10 +71,10 @@ struct SmallWindowPanel: View {
     var body: some View {
         VStack(spacing: 16) {
             HStack {
-                Text("小窗").font(.headline)
+                Text("形状").font(.headline)
                 Spacer()
                 Button(action: close) { Image(systemName: "xmark.circle.fill").font(.title2) }
-                    .accessibilityLabel("关闭小窗设置")
+                    .accessibilityLabel("关闭形状设置")
             }
             Picker("形状", selection: $shape) {
                 ForEach(SmallWindowShape.allCases) { Text($0.title).tag($0.rawValue) }
@@ -77,7 +83,7 @@ struct SmallWindowPanel: View {
             HStack {
                 Image(systemName: "minus.magnifyingglass")
                 Slider(value: $scale, in: 0.6...1.8)
-                    .accessibilityLabel("小窗大小")
+                    .accessibilityLabel("画中画大小")
                 Image(systemName: "plus.magnifyingglass")
             }
             Text("按住小画面可拖动位置").font(.caption).foregroundStyle(.secondary)

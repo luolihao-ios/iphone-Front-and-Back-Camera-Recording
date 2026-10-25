@@ -13,7 +13,15 @@ enum FrameCompositor {
         guard configuration.layout != .fullScreen else { return main.cropped(to: canvas) }
         guard let secondary else { return nil }
         let frame = ciFrame(frames.secondary)
-        let overlay = aspectFill(secondary, into: frame)
+        let preserveCircleFieldOfView = configuration.layout == .pictureInPicture && configuration.pictureInPicture.shape == .circle
+        let overlay: CIImage
+        if preserveCircleFieldOfView {
+            // 圆形只裁边角，完整视野先等比缩进边界；留边与预览层的黑色背景一致。
+            overlay = aspectFit(secondary, into: frame)
+                .composited(over: CIImage(color: .black).cropped(to: frame))
+        } else {
+            overlay = aspectFill(secondary, into: frame)
+        }
         guard frames.secondaryCornerRadius > 0 else {
             return overlay.composited(over: main).cropped(to: canvas)
         }
@@ -31,9 +39,19 @@ enum FrameCompositor {
     }
 
     private static func aspectFill(_ image: CIImage, into destination: CGRect) -> CIImage {
+        scaledImage(image, into: destination, fill: true)
+    }
+
+    private static func aspectFit(_ image: CIImage, into destination: CGRect) -> CIImage {
+        scaledImage(image, into: destination, fill: false)
+    }
+
+    private static func scaledImage(_ image: CIImage, into destination: CGRect, fill: Bool) -> CIImage {
         let source = image.extent
         guard source.width > 0, source.height > 0 else { return image }
-        let scale = max(destination.width / source.width, destination.height / source.height)
+        let widthScale = destination.width / source.width
+        let heightScale = destination.height / source.height
+        let scale = fill ? max(widthScale, heightScale) : min(widthScale, heightScale)
         let scaled = image.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
         return scaled.transformed(by: CGAffineTransform(
             translationX: destination.midX - scaled.extent.midX,

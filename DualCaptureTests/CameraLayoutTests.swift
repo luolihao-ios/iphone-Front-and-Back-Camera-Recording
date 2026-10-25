@@ -79,6 +79,47 @@ final class CameraLayoutTests: XCTestCase {
             configuration: .init(layout: .pictureInPicture, primarySide: .rear)))
     }
 
+    func testCircleKeepsTopAndBottomOfPortraitCameraInsteadOfZoomingIntoCenter() throws {
+        let size = CGSize(width: 200, height: 400)
+        let source = CGRect(origin: .zero, size: size)
+        let blue = CIImage(color: CIColor(red: 0, green: 0, blue: 1)).cropped(to: source)
+        let green = CIImage(color: CIColor(red: 0, green: 1, blue: 0))
+        let secondary = green.cropped(to: CGRect(x: 0, y: 300, width: 200, height: 100))
+            .composited(over: green.cropped(to: CGRect(x: 0, y: 0, width: 200, height: 100)))
+            .composited(over: blue)
+        let primary = CIImage(color: CIColor(red: 1, green: 0, blue: 0)).cropped(to: source)
+        let context = CIContext(options: [.useSoftwareRenderer: true])
+        for scale in [0.6, 1.0, 1.8] {
+            let configuration = RealtimeRecordingConfiguration(layout: .pictureInPicture, primarySide: .rear,
+                renderSize: size, pictureInPicture: .init(shape: .circle, scale: scale, center: CGPoint(x: 0.5, y: 0.5)))
+            let image = try XCTUnwrap(FrameCompositor.composite(primary: primary, secondary: secondary, configuration: configuration))
+            let frame = RealtimeVideoLayout.frames(for: configuration).secondary
+            for fraction in [0.1, 0.9] {
+                var rgba = [UInt8](repeating: 0, count: 4)
+                context.render(image, toBitmap: &rgba, rowBytes: 4,
+                    bounds: CGRect(x: frame.midX, y: size.height - frame.minY - frame.height * fraction, width: 1, height: 1),
+                    format: .RGBA8, colorSpace: CGColorSpaceCreateDeviceRGB())
+                XCTAssertGreaterThan(rgba[1], 220, "应保留摄像头顶部和底部的绿色标记，比例 \(scale)")
+                XCTAssertLessThan(rgba[2], 30)
+            }
+        }
+    }
+
+    @MainActor
+    func testCirclePreviewPreservesCameraFieldOfViewAndResetsWhenSwitchingShape() throws {
+        let view = PreviewView(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
+        view.configuration = .init(layout: .pictureInPicture, primarySide: .rear,
+            pictureInPicture: .init(shape: .circle))
+        view.layoutIfNeeded()
+        let circleLayers = try XCTUnwrap(view.layer.sublayers).compactMap { $0 as? AVSampleBufferDisplayLayer }
+        XCTAssertEqual(circleLayers[1].videoGravity, .resizeAspect)
+        view.configuration = .init(layout: .pictureInPicture, primarySide: .front)
+        view.layoutIfNeeded()
+        let rectangularLayers = try XCTUnwrap(view.layer.sublayers).compactMap { $0 as? AVSampleBufferDisplayLayer }
+        XCTAssertEqual(rectangularLayers[0].videoGravity, .resizeAspectFill)
+        XCTAssertEqual(rectangularLayers[1].videoGravity, .resizeAspectFill)
+    }
+
     @MainActor
     func testFullScreenCameraSwitchNeverLeavesPrimaryLayerHidden() throws {
         let view = PreviewView(frame: CGRect(x: 0, y: 0, width: 390, height: 844))

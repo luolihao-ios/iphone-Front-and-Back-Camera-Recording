@@ -21,6 +21,7 @@ final class RealtimeCompositeRecorder {
     private var pairedFrameCount = 0
     private var appendedFrameCount = 0
     private var appendFailureCount = 0
+    private var hasLoggedSourceGeometry = false
 
     var failureDescription: String? {
         writer.error?.localizedDescription
@@ -207,6 +208,10 @@ final class RealtimeCompositeRecorder {
     private func makeComposite(primarySample: CMSampleBuffer, secondarySample: CMSampleBuffer?) -> CIImage? {
         guard let primaryBuffer = CMSampleBufferGetImageBuffer(primarySample) else { return nil }
         let secondary = secondarySample.flatMap(CMSampleBufferGetImageBuffer).map { CIImage(cvPixelBuffer: $0) }
+        if !hasLoggedSourceGeometry {
+            hasLoggedSourceGeometry = true
+            DebugLog.shared.log("writer.source primary=\(CVPixelBufferGetWidth(primaryBuffer))x\(CVPixelBufferGetHeight(primaryBuffer)) secondary=\(String(describing: secondary?.extent)) circleFit=\(configuration.layout == .pictureInPicture && configuration.pictureInPicture.shape == .circle)")
+        }
         return FrameCompositor.composite(primary: CIImage(cvPixelBuffer: primaryBuffer), secondary: secondary, configuration: configuration)
     }
 }

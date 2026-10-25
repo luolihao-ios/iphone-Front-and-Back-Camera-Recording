@@ -57,10 +57,14 @@ final class PreviewView: UIView, UIGestureRecognizerDelegate {
         layer.insertSublayer(mainLayer, at: 0)
         layer.insertSublayer(secondaryLayer, above: mainLayer)
         mainLayer.isHidden = false
+        mainLayer.videoGravity = .resizeAspectFill
         mainLayer.frame = RealtimeVideoLayout.scaledFrame(frames.primary, configuration: configuration, in: bounds)
         mainLayer.cornerRadius = 0
         mainLayer.borderWidth = 0
         secondaryLayer.isHidden = configuration.layout == .fullScreen
+        let preserveCircleFieldOfView = configuration.layout == .pictureInPicture && configuration.pictureInPicture.shape == .circle
+        secondaryLayer.videoGravity = preserveCircleFieldOfView ? .resizeAspect : .resizeAspectFill
+        secondaryLayer.backgroundColor = UIColor.black.cgColor
         secondaryLayer.frame = RealtimeVideoLayout.secondaryFrame(for: configuration, in: bounds)
         secondaryLayer.cornerRadius = RealtimeVideoLayout.secondaryCornerRadius(for: configuration, in: bounds)
         secondaryLayer.borderWidth = 0
