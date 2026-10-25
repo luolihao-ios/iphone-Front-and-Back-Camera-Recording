@@ -1,6 +1,8 @@
 import AVFoundation
 import SwiftUI
 import AudioToolbox
+import CoreImage
+import UIKit
 
 final class CameraManager: NSObject, ObservableObject {
     let session = AVCaptureMultiCamSession()
@@ -9,6 +11,9 @@ final class CameraManager: NSObject, ObservableObject {
     @Published private(set) var isRecording = false
     @Published private(set) var isProcessing = false
     @Published private(set) var statusMessage: String?
+    @Published var errorMessage: String?
+    @Published private(set) var isTorchOn = false
+    @Published private(set) var hasTorch = false
 
     var previewSink: ((CameraSide, CMSampleBuffer) -> Void)?
     private let sampleQueue = DispatchQueue(label: "com.dualcapture.samples")
@@ -18,6 +23,9 @@ final class CameraManager: NSObject, ObservableObject {
     private var audioOutput: AVCaptureAudioDataOutput?
     private let delegateRegistry = CaptureDelegateRegistry()
     private var audioRecordingEnabled = false
+    private var latestFrontSample: CMSampleBuffer?
+    private var latestRearSample: CMSampleBuffer?
+    private let photoContext = CIContext(options: [.cacheIntermediates: false])
 
     func prepare() async {
         DebugLog.shared.log("prepare.begin")
@@ -52,22 +60,24 @@ final class CameraManager: NSObject, ObservableObject {
         }
     }
 
-    func startRecording(layout: CaptureLayout, primarySide: CameraSide) {
-        DebugLog.shared.log("record.start.request ready=\(isReady) recording=\(isRecording) layout=\(layout.rawValue) primary=\(primarySide)")
-        guard isReady, !isRecording else { return }
+    @MainActor
+    func startRecording(configuration: RealtimeRecordingConfiguration) {
+        DebugLog.shared.log("record.start.request ready=\(isReady) recording=\(isRecording) layout=\(configuration.layout.rawValue) primary=\(configuration.primarySide)")
+        guard isReady, !isRecording, !isProcessing else { return }
         do {
             let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
             try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
-            let configuration = RealtimeRecordingConfiguration(layout: layout, primarySide: primarySide)
             let recorder = try RealtimeCompositeRecorder(
                 url: folder.appendingPathComponent("final.mov"),
                 configuration: configuration
             )
-            recorder.start()
-            realtimeRecorder = recorder
+            sampleQueue.sync {
+                recorder.start()
+                realtimeRecorder = recorder
+                audioRecordingEnabled = false
+            }
             isRecording = true
             DebugLog.shared.log("record.start.success url=\(folder.appendingPathComponent("final.mov").path)")
-            audioRecordingEnabled = false
             AudioServicesPlaySystemSound(1117)
             sampleQueue.asyncAfter(deadline: .now() + 1.0) { [weak self] in
                 self?.audioRecordingEnabled = true
@@ -95,7 +105,7 @@ final class CameraManager: NSObject, ObservableObject {
             setStatus("录制器已丢失，请重新开始录制。")
             return nil
         }
-        audioRecordingEnabled = false
+        sampleQueue.sync { audioRecordingEnabled = false }
         AudioServicesPlaySystemSound(1118)
         isProcessing = true
         statusMessage = "正在完成录制…"
@@ -124,17 +134,72 @@ final class CameraManager: NSObject, ObservableObject {
     }
 
     @discardableResult
+    @MainActor
     func save(videoURL: URL) async -> Bool {
         DebugLog.shared.log("save.begin url=\(videoURL.path)")
         do {
             try await PhotoLibrarySaver.save([videoURL])
             DebugLog.shared.log("save.success")
-            statusMessage = "已保存到照片图库。"
+            statusMessage = nil
             return true
         } catch {
             DebugLog.shared.log("save.error=\(error.localizedDescription)")
             setStatus("保存失败：\(error.localizedDescription)")
             return false
+        }
+    }
+
+    @MainActor
+    func takePhoto(configuration: RealtimeRecordingConfiguration) async -> UIImage? {
+        guard isReady, !isRecording, !isProcessing else { return nil }
+        isProcessing = true
+        defer { isProcessing = false }
+        DebugLog.shared.log("photo.begin layout=\(configuration.layout.rawValue) shape=\(configuration.pictureInPicture.shape.rawValue)")
+        let image: UIImage? = await withCheckedContinuation { continuation in
+            sampleQueue.async {
+                autoreleasepool {
+                    let primarySample = configuration.primarySide == .front ? self.latestFrontSample : self.latestRearSample
+                    let secondarySample = configuration.secondarySide == .front ? self.latestFrontSample : self.latestRearSample
+                    guard let primarySample, let primary = CMSampleBufferGetImageBuffer(primarySample) else {
+                        continuation.resume(returning: nil)
+                        return
+                    }
+                    let secondary = secondarySample.flatMap(CMSampleBufferGetImageBuffer).map { CIImage(cvPixelBuffer: $0) }
+                    guard let composite = FrameCompositor.composite(primary: CIImage(cvPixelBuffer: primary), secondary: secondary, configuration: configuration),
+                          let cgImage = self.photoContext.createCGImage(composite, from: composite.extent) else {
+                        continuation.resume(returning: nil)
+                        return
+                    }
+                    continuation.resume(returning: UIImage(cgImage: cgImage))
+                }
+            }
+        }
+        guard let image else {
+            setStatus("尚未收到完整相机画面，请稍后重试。")
+            return nil
+        }
+        do {
+            try await PhotoLibrarySaver.save(image: image)
+            DebugLog.shared.log("photo.saved")
+            return image
+        } catch {
+            DebugLog.shared.log("photo.failed \(error.localizedDescription)")
+            setStatus("照片保存失败：\(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    func toggleTorch() {
+        guard !isRecording, !isProcessing else { return }
+        sampleQueue.async {
+            guard let device = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back), device.hasTorch else { return }
+            do {
+                try device.lockForConfiguration()
+                defer { device.unlockForConfiguration() }
+                let enabled = device.torchMode != .on
+                device.torchMode = enabled ? .on : .off
+                DispatchQueue.main.async { self.isTorchOn = enabled }
+            } catch { self.setStatus("无法开启补光灯：\(error.localizedDescription)") }
         }
     }
 
@@ -145,6 +210,7 @@ final class CameraManager: NSObject, ObservableObject {
         guard let front = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front),
               let rear = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
               let microphone = AVCaptureDevice.default(for: .audio) else { throw CaptureError.missingDevice }
+        DispatchQueue.main.async { self.hasTorch = rear.hasTorch }
         let frontInput = try AVCaptureDeviceInput(device: front)
         let rearInput = try AVCaptureDeviceInput(device: rear)
         let audioInput = try AVCaptureDeviceInput(device: microphone)
@@ -194,13 +260,13 @@ final class CameraManager: NSObject, ObservableObject {
     }
 
     private func appendVideo(_ sample: CMSampleBuffer, side: CameraSide) {
+        if side == .front { latestFrontSample = sample } else { latestRearSample = sample }
         previewSink?(side, sample)
-        guard isRecording else { return }
         realtimeRecorder?.appendVideo(sample, side: side)
     }
 
     private func appendAudio(_ sample: CMSampleBuffer) {
-        guard isRecording, audioRecordingEnabled else { return }
+        guard audioRecordingEnabled else { return }
         realtimeRecorder?.appendAudio(sample)
     }
 
@@ -211,7 +277,10 @@ final class CameraManager: NSObject, ObservableObject {
     }
 
     private func setStatus(_ message: String) {
-        DispatchQueue.main.async { self.statusMessage = message }
+        DispatchQueue.main.async {
+            self.statusMessage = message
+            self.errorMessage = message
+        }
     }
 
     private func finish(_ recorder: RealtimeCompositeRecorder) async -> URL? {

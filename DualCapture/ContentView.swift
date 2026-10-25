@@ -8,6 +8,11 @@ struct ContentView: View {
     @StateObject private var camera = CameraManager()
     @AppStorage("captureLayout") private var captureLayout = CaptureLayout.pictureInPicture.rawValue
     @AppStorage("primaryCamera") private var primaryCamera = "rear"
+    @AppStorage("smallWindowShape") private var smallWindowShape = SmallWindowShape.roundedRectangle.rawValue
+    @AppStorage("smallWindowScale") private var smallWindowScale = 1.0
+    @AppStorage("smallWindowCenterX") private var smallWindowCenterX = 0.19
+    @AppStorage("smallWindowCenterY") private var smallWindowCenterY = 0.20
+    @AppStorage("compositionGridEnabled") private var gridEnabled = false
     @AppStorage("successfulSaveCount") private var successfulSaveCount = 0
     @AppStorage("lastReviewPromptedVersion") private var lastReviewPromptedVersion = ""
     @State private var showSettings = false
@@ -15,23 +20,44 @@ struct ContentView: View {
     @State private var recordingStartedAt: Date?
     @State private var latestVideoURL: URL?
     @State private var latestThumbnail: UIImage?
+    @State private var latestPhoto: UIImage?
+    @State private var mode = CaptureMode.video
+    @State private var showWindowControls = false
+    @State private var previewSize = CGSize(width: 390, height: 844)
+    @State private var recordingConfiguration: RealtimeRecordingConfiguration?
+    @State private var handlingCapture = false
+    @State private var albumFrame = CGRect.zero
     @State private var genieThumbnail: UIImage?
     @State private var genieProgress: CGFloat = 0
     @State private var showGenieAnimation = false
 
     private var layout: CaptureLayout { CaptureLayout(rawValue: captureLayout) ?? .pictureInPicture }
     private var primarySide: CameraSide { primaryCamera == "front" ? .front : .rear }
+    private var configuration: RealtimeRecordingConfiguration {
+        RealtimeRecordingConfiguration(layout: layout, primarySide: primarySide,
+            renderSize: RealtimeRecordingConfiguration.renderSize(for: previewSize),
+            pictureInPicture: .init(shape: SmallWindowShape(rawValue: smallWindowShape) ?? .roundedRectangle,
+                scale: smallWindowScale, center: CGPoint(x: smallWindowCenterX, y: smallWindowCenterY)))
+    }
+    private var busy: Bool { handlingCapture || camera.isProcessing }
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            if camera.isSupported {
-                CameraPreview(camera: camera, layout: layout, primarySide: primarySide) { side in
-                    guard !camera.isRecording, side != primarySide else { return }
-                    primaryCamera = side == .front ? "front" : "rear"
+            GeometryReader { proxy in
+                if camera.isSupported {
+                    CameraPreview(camera: camera, configuration: recordingConfiguration ?? configuration) { center in
+                        guard !camera.isRecording, !busy else { return }
+                        smallWindowCenterX = center.x
+                        smallWindowCenterY = center.y
+                    }
                 }
-                .ignoresSafeArea()
+                if gridEnabled { CompositionGrid() }
+                Color.clear.allowsHitTesting(false)
+                    .onAppear { previewSize = proxy.size }
+                    .onChange(of: proxy.size) { _, size in previewSize = size }
             }
+            .ignoresSafeArea()
             VStack {
                 if camera.isRecording, let recordingStartedAt {
                     TimelineView(.periodic(from: recordingStartedAt, by: 1)) { context in
@@ -45,6 +71,16 @@ struct ContentView: View {
                         .padding(.horizontal, 14).padding(.vertical, 8)
                         .background(.red).clipShape(RoundedRectangle(cornerRadius: 8))
                     }
+                } else if !busy {
+                    Button(action: camera.toggleTorch) {
+                        Image(systemName: camera.isTorchOn ? "bolt.fill" : "bolt.slash.fill")
+                            .font(.system(size: 25, weight: .medium))
+                            .foregroundStyle(camera.isTorchOn ? .yellow : .white)
+                            .frame(width: 48, height: 48)
+                            .background(.black.opacity(0.28), in: Circle())
+                    }
+                    .disabled(!camera.hasTorch)
+                    .accessibilityLabel(camera.isTorchOn ? "关闭补光灯" : "开启补光灯")
                 }
                 Spacer()
                 if camera.isRecording {
@@ -52,63 +88,133 @@ struct ContentView: View {
                         .disabled(camera.isProcessing)
                         .padding(.bottom, 34)
                 } else {
-                    ZStack {
-                        HStack(spacing: 22) {
-                        Button(action: switchCamera) {
-                            Image(systemName: "camera.rotate").font(.title2)
-                                .frame(width: 54, height: 54)
-                                .background(.black.opacity(0.55)).clipShape(Circle())
+                    VStack(spacing: 18) {
+                        HStack {
+                            VStack(spacing: 5) {
+                                AlbumThumbnailButton(thumbnail: latestThumbnail) {
+                                    showPlayer = latestVideoURL != nil || latestPhoto != nil
+                                }
+                                .background(GeometryReader { proxy in
+                                    Color.clear.preference(key: AlbumFramePreference.self, value: proxy.frame(in: .named("cameraScreen")))
+                                })
+                                Text("相册").font(.caption).foregroundStyle(.white)
+                            }
+                            .frame(maxWidth: .infinity)
+                            recordButton()
+                            VStack(spacing: 5) {
+                                Button(action: switchCamera) {
+                                    Image(systemName: "camera.rotate").font(.title2)
+                                        .frame(width: 50, height: 50)
+                                        .background(.black.opacity(0.4), in: Circle())
+                                }
+                                .accessibilityLabel("切换主摄像头")
+                                Text("旋转").font(.caption)
+                            }
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
                         }
-                        recordButton()
-                        Button { showSettings = true } label: {
-                            Image(systemName: "slider.horizontal.3").font(.title2)
-                                .frame(width: 54, height: 54)
-                                .background(.black.opacity(0.55)).clipShape(Circle())
+                        HStack(spacing: 4) {
+                            ForEach(CaptureMode.allCases, id: \.self) { item in
+                                Button { mode = item } label: {
+                                    Text(item.rawValue).font(.headline)
+                                        .padding(.horizontal, 18).padding(.vertical, 9)
+                                        .foregroundStyle(mode == item ? .white : .white.opacity(0.65))
+                                        .background(mode == item ? .white.opacity(0.22) : .clear, in: Capsule())
+                                }
+                                .accessibilityAddTraits(mode == item ? .isSelected : [])
+                            }
                         }
-                        }
-                        .frame(maxWidth: .infinity)
-                        AlbumThumbnailButton(thumbnail: latestThumbnail) { showPlayer = latestVideoURL != nil }
-                            .offset(x: -153)
+                        .padding(4)
+                        .background(.black.opacity(0.4), in: Capsule())
                     }
-                    .disabled(camera.isProcessing)
-                    .padding(.bottom, 34)
+                    .disabled(busy)
+                    .padding(.bottom, 20)
+                }
+            }
+            if !camera.isRecording, !busy {
+                HStack {
+                    Spacer()
+                    CameraShortcutMenu(layout: layout, gridEnabled: $gridEnabled,
+                        onSelectLayout: { selected in captureLayout = selected.rawValue; showWindowControls = false },
+                        onWindowSettings: { captureLayout = CaptureLayout.pictureInPicture.rawValue; showWindowControls.toggle() },
+                        onSettings: { showSettings = true })
+                }
+                .padding(.trailing, 10)
+                .padding(.top, 60)
+                .padding(.bottom, 190)
+                if showWindowControls {
+                    VStack {
+                        Spacer()
+                        SmallWindowPanel(shape: $smallWindowShape, scale: $smallWindowScale) { showWindowControls = false }
+                        Spacer().frame(height: 180)
+                    }
                 }
             }
             if showGenieAnimation, let genieThumbnail {
-                GenieSaveAnimation(image: genieThumbnail, progress: genieProgress)
+                GenieSaveAnimation(image: genieThumbnail, progress: genieProgress, target: CGPoint(x: albumFrame.midX, y: albumFrame.midY))
                     .allowsHitTesting(false)
-                    .ignoresSafeArea()
             }
         }
+        .coordinateSpace(name: "cameraScreen")
+        .onPreferenceChange(AlbumFramePreference.self) { albumFrame = $0 }
         .task {
             await camera.prepare()
             let latest = await Self.loadLatestVideo()
-            latestThumbnail = latest.thumbnail
-            latestVideoURL = latest.url
+            if successfulSaveCount == 0 || latestThumbnail == nil {
+                latestThumbnail = latest.thumbnail
+                latestVideoURL = latest.url
+                latestPhoto = latest.photo
+            }
             try? await Task.sleep(for: .seconds(2))
             requestReviewIfAppropriate()
         }
         .sheet(isPresented: $showSettings) { SettingsView() }
         .fullScreenCover(isPresented: $showPlayer) {
             if let latestVideoURL { VideoPlayerView(url: latestVideoURL) }
+            else if let latestPhoto { PhotoViewer(image: latestPhoto) }
         }
+        .alert("无法完成操作", isPresented: Binding(get: { camera.errorMessage != nil }, set: { if !$0 { camera.errorMessage = nil } })) {
+            Button("好", role: .cancel) { camera.errorMessage = nil }
+        } message: { Text(camera.errorMessage ?? "") }
     }
 
+    @MainActor
     private func toggleRecording() {
+        guard !busy else { return }
+        showWindowControls = false
         if camera.isRecording {
+            handlingCapture = true
             Task {
+                defer { handlingCapture = false; recordingConfiguration = nil }
                 recordingStartedAt = nil
                 guard let videoURL = await camera.stopRecording() else { return }
                 if await camera.save(videoURL: videoURL) {
                     latestVideoURL = videoURL
+                    latestPhoto = nil
                     successfulSaveCount += 1
                     let thumbnail = await Self.makeThumbnail(for: videoURL)
                     await playSaveAnimation(with: thumbnail)
                 }
             }
+        } else if mode == .photo {
+            handlingCapture = true
+            let capturedConfiguration = configuration
+            Task {
+                defer { handlingCapture = false }
+                if let image = await camera.takePhoto(configuration: capturedConfiguration) {
+                    latestVideoURL = nil
+                    latestPhoto = image
+                    successfulSaveCount += 1
+                    await playSaveAnimation(with: image)
+                }
+            }
         } else {
-            recordingStartedAt = Date()
-            camera.startRecording(layout: layout, primarySide: primarySide)
+            let capturedConfiguration = configuration
+            camera.startRecording(configuration: capturedConfiguration)
+            if camera.isRecording {
+                recordingConfiguration = capturedConfiguration
+                recordingStartedAt = Date()
+            }
         }
     }
 
@@ -139,11 +245,13 @@ struct ContentView: View {
                 if camera.isRecording {
                     RoundedRectangle(cornerRadius: 6).fill(.red).frame(width: 30, height: 30)
                 } else {
-                    Circle().fill(.red).frame(width: 58, height: 58)
+                    Circle().fill(mode == .photo ? .white : .red).frame(width: 58, height: 58)
                 }
             }
         }
         .disabled(!camera.isReady || camera.isProcessing)
+        .buttonStyle(.plain)
+        .accessibilityLabel(camera.isRecording ? "停止录制" : (mode == .photo ? "拍照" : "开始录制"))
     }
 
     private func requestReviewIfAppropriate() {
@@ -166,44 +274,46 @@ struct ContentView: View {
         }
     }
 
-    private static func loadLatestVideo() async -> (thumbnail: UIImage?, url: URL?) {
+    private static func loadLatestVideo() async -> (thumbnail: UIImage?, url: URL?, photo: UIImage?) {
         var status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
         if status == .notDetermined {
             status = await withCheckedContinuation { continuation in
                 PHPhotoLibrary.requestAuthorization(for: .readWrite) { continuation.resume(returning: $0) }
             }
         }
-        guard status == .authorized || status == .limited else { return (nil, nil) }
+        guard status == .authorized || status == .limited else { return (nil, nil, nil) }
         let options = PHFetchOptions()
         options.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         options.fetchLimit = 1
-        guard let asset = PHAsset.fetchAssets(with: .video, options: options).firstObject else { return (nil, nil) }
+        options.predicate = NSPredicate(format: "mediaType == %d OR mediaType == %d", PHAssetMediaType.image.rawValue, PHAssetMediaType.video.rawValue)
+        guard let asset = PHAsset.fetchAssets(with: options).firstObject else { return (nil, nil, nil) }
         let thumbnail = await withCheckedContinuation { (continuation: CheckedContinuation<UIImage?, Never>) in
             let imageOptions = PHImageRequestOptions()
-            imageOptions.isSynchronous = true
             imageOptions.deliveryMode = .highQualityFormat
-            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 120, height: 120), contentMode: .aspectFill, options: imageOptions) { image, _ in
+            PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 1600, height: 1600), contentMode: .aspectFit, options: imageOptions) { image, info in
+                guard (info?[PHImageResultIsDegradedKey] as? Bool) != true else { return }
                 continuation.resume(returning: image)
             }
         }
+        guard asset.mediaType == .video else { return (thumbnail, nil, thumbnail) }
         let url = await withCheckedContinuation { (continuation: CheckedContinuation<URL?, Never>) in
             PHImageManager.default().requestAVAsset(forVideo: asset, options: nil) { avAsset, _, _ in
                 continuation.resume(returning: (avAsset as? AVURLAsset)?.url)
             }
         }
-        return (thumbnail, url)
+        return (thumbnail, url, nil)
     }
 }
 
 private struct GenieSaveAnimation: View {
     let image: UIImage
     let progress: CGFloat
+    let target: CGPoint
 
     var body: some View {
         GeometryReader { proxy in
             let width = proxy.size.width
             let height = proxy.size.height
-            let target = CGPoint(x: width / 2 - 153, y: height - 70)
             let startCenter = CGPoint(x: width / 2, y: height * 0.46)
             let center = CGPoint(
                 x: startCenter.x + (target.x - startCenter.x) * progress,
@@ -219,6 +329,36 @@ private struct GenieSaveAnimation: View {
                 .clipShape(GenieShape(progress: progress))
                 .position(center)
                 .opacity(1 - max(0, progress - 0.9) / 0.1)
+        }
+    }
+}
+
+private struct AlbumFramePreference: PreferenceKey {
+    static let defaultValue = CGRect.zero
+    static func reduce(value: inout CGRect, nextValue: () -> CGRect) { value = nextValue() }
+}
+
+private struct PhotoViewer: View {
+    let image: UIImage
+    @Environment(\.dismiss) private var dismiss
+    @State private var offset: CGFloat = 0
+
+    var body: some View {
+        ZStack(alignment: .topTrailing) {
+            Color.black.ignoresSafeArea()
+            Image(uiImage: image).resizable().scaledToFit()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .offset(y: offset)
+                .gesture(DragGesture().onChanged { offset = max(0, $0.translation.height) }
+                    .onEnded { value in
+                        if value.translation.height > 120 { dismiss() }
+                        else { withAnimation(.spring()) { offset = 0 } }
+                    })
+            Button { dismiss() } label: {
+                Image(systemName: "xmark.circle.fill").font(.title).foregroundStyle(.white.opacity(0.85))
+            }
+            .padding(18)
+            .accessibilityLabel("返回相机")
         }
     }
 }
@@ -264,6 +404,9 @@ private struct AlbumThumbnailButton: View {
             .background(.black.opacity(0.55)).clipShape(Circle())
             .overlay(Circle().stroke(.white.opacity(0.7), lineWidth: 1))
         }
+        .buttonStyle(.plain)
+        .foregroundStyle(.white)
+        .accessibilityLabel("查看最新照片或视频")
     }
 }
 

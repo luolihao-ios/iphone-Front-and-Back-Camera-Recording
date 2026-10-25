@@ -1,6 +1,15 @@
 import Photos
+import UIKit
 
 enum PhotoLibrarySaver {
+    static func save(image: UIImage) async throws {
+        let status = await PHPhotoLibrary.requestAuthorization(for: .addOnly)
+        guard status == .authorized || status == .limited else { throw PhotoSaveError.permissionDenied }
+        try await PHPhotoLibrary.shared().performChanges {
+            PHAssetChangeRequest.creationRequestForAsset(from: image)
+        }
+    }
+
     static func save(_ urls: [URL]) async throws {
         let status = await withCheckedContinuation { continuation in
             PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in

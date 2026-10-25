@@ -99,12 +99,13 @@ final class RealtimeCompositeRecorder {
             latestRearSample = sample
         }
 
-        guard side == configuration.primarySide,
-              let secondarySample = latestSample(for: configuration.secondarySide) else { return }
+        guard side == configuration.primarySide else { return }
+        let secondarySample = latestSample(for: configuration.secondarySide)
+        guard configuration.layout == .fullScreen || secondarySample != nil else { return }
         pairedFrameCount += 1
 
         let primaryTime = CMSampleBufferGetPresentationTimeStamp(sample)
-        let secondaryTime = CMSampleBufferGetPresentationTimeStamp(secondarySample)
+        let secondaryTime = secondarySample.map(CMSampleBufferGetPresentationTimeStamp) ?? primaryTime
         guard primaryTime.isValid,
               secondaryTime.isValid,
               FramePairingPolicy.shouldWrite(
@@ -202,56 +203,10 @@ final class RealtimeCompositeRecorder {
         return pixelBuffer
     }
 
-    private func makeComposite(primarySample: CMSampleBuffer, secondarySample: CMSampleBuffer) -> CIImage? {
-        guard let primaryBuffer = CMSampleBufferGetImageBuffer(primarySample),
-              let secondaryBuffer = CMSampleBufferGetImageBuffer(secondarySample) else { return nil }
-
-        let frames = RealtimeVideoLayout.frames(for: configuration)
-        let canvas = CGRect(origin: .zero, size: configuration.renderSize)
-        let primary = aspectFill(CIImage(cvPixelBuffer: primaryBuffer), into: ciFrame(for: frames.primary)).cropped(to: canvas)
-        let secondary = aspectFill(CIImage(cvPixelBuffer: secondaryBuffer), into: ciFrame(for: frames.secondary))
-
-        guard frames.secondaryCornerRadius > 0 else {
-            return secondary.composited(over: primary).cropped(to: canvas)
-        }
-
-        guard let roundedMask = roundedMask(in: ciFrame(for: frames.secondary), cornerRadius: frames.secondaryCornerRadius),
-              let blend = CIFilter(name: "CIBlendWithMask") else {
-            return secondary.composited(over: primary).cropped(to: canvas)
-        }
-        blend.setValue(secondary, forKey: kCIInputImageKey)
-        blend.setValue(primary, forKey: kCIInputBackgroundImageKey)
-        blend.setValue(roundedMask, forKey: kCIInputMaskImageKey)
-        return blend.outputImage?.cropped(to: canvas)
-    }
-
-    private func aspectFill(_ image: CIImage, into destination: CGRect) -> CIImage {
-        let source = image.extent
-        guard source.width > 0, source.height > 0 else { return image }
-        let scale = max(destination.width / source.width, destination.height / source.height)
-        let scaled = image.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
-        let x = destination.midX - scaled.extent.midX
-        let y = destination.midY - scaled.extent.midY
-        return scaled.transformed(by: CGAffineTransform(translationX: x, y: y)).cropped(to: destination)
-    }
-
-    private func ciFrame(for topLeftFrame: CGRect) -> CGRect {
-        CGRect(
-            x: topLeftFrame.minX,
-            y: configuration.renderSize.height - topLeftFrame.maxY,
-            width: topLeftFrame.width,
-            height: topLeftFrame.height
-        )
-    }
-
-    private func roundedMask(in frame: CGRect, cornerRadius: CGFloat) -> CIImage? {
-        guard let generator = CIFilter(name: "CIRoundedRectangleGenerator") else { return nil }
-        generator.setValue(CIVector(cgRect: frame), forKey: kCIInputExtentKey)
-        generator.setValue(cornerRadius, forKey: kCIInputRadiusKey)
-        generator.setValue(CIColor.white, forKey: kCIInputColorKey)
-        guard let roundedRectangle = generator.outputImage else { return nil }
-        let emptyCanvas = CIImage(color: .clear).cropped(to: CGRect(origin: .zero, size: configuration.renderSize))
-        return roundedRectangle.composited(over: emptyCanvas)
+    private func makeComposite(primarySample: CMSampleBuffer, secondarySample: CMSampleBuffer?) -> CIImage? {
+        guard let primaryBuffer = CMSampleBufferGetImageBuffer(primarySample) else { return nil }
+        let secondary = secondarySample.flatMap(CMSampleBufferGetImageBuffer).map { CIImage(cvPixelBuffer: $0) }
+        return FrameCompositor.composite(primary: CIImage(cvPixelBuffer: primaryBuffer), secondary: secondary, configuration: configuration)
     }
 }
 

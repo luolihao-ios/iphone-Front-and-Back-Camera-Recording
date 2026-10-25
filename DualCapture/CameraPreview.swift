@@ -4,82 +4,92 @@ import UIKit
 
 struct CameraPreview: UIViewRepresentable {
     @ObservedObject var camera: CameraManager
-    let layout: CaptureLayout
-    let primarySide: CameraSide
-    let onTapSide: (CameraSide) -> Void
+    let configuration: RealtimeRecordingConfiguration
+    let onMoveWindow: (CGPoint) -> Void
 
     func makeUIView(context: Context) -> PreviewView {
         let view = PreviewView()
         camera.previewSink = { [weak view] side, sample in
             DispatchQueue.main.async { view?.display(sample, from: side) }
         }
-        view.onTapSide = onTapSide
         return view
     }
 
     func updateUIView(_ view: PreviewView, context: Context) {
-        view.layout = layout
-        view.primarySide = primarySide
-        view.onTapSide = onTapSide
+        view.configuration = configuration
+        view.canMoveWindow = !camera.isRecording && !camera.isProcessing
+        view.onMoveWindow = onMoveWindow
     }
 }
 
-final class PreviewView: UIView {
+final class PreviewView: UIView, UIGestureRecognizerDelegate {
     private let rearLayer = AVSampleBufferDisplayLayer()
     private let frontLayer = AVSampleBufferDisplayLayer()
-    var layout: CaptureLayout = .pictureInPicture { didSet { setNeedsLayout() } }
-    var primarySide: CameraSide = .rear { didSet { setNeedsLayout() } }
-    var onTapSide: ((CameraSide) -> Void)?
+    private var panStartCenter = CGPoint.zero
+    var configuration = RealtimeRecordingConfiguration(layout: .pictureInPicture, primarySide: .rear) {
+        didSet { setNeedsLayout() }
+    }
+    var canMoveWindow = true
+    var onMoveWindow: ((CGPoint) -> Void)?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         rearLayer.videoGravity = .resizeAspectFill
         frontLayer.videoGravity = .resizeAspectFill
-        frontLayer.borderColor = UIColor.white.cgColor
-        frontLayer.borderWidth = 2
-        frontLayer.cornerRadius = 16
+        rearLayer.masksToBounds = true
         frontLayer.masksToBounds = true
         layer.addSublayer(rearLayer)
         layer.addSublayer(frontLayer)
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(moveWindow(_:)))
+        pan.delegate = self
+        addGestureRecognizer(pan)
     }
 
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        let mainLayer = layer(for: primarySide)
-        let secondaryLayer = layer(for: primarySide.secondary)
+        let mainLayer = displayLayer(for: configuration.primarySide)
+        let secondaryLayer = displayLayer(for: configuration.secondarySide)
+        let frames = RealtimeVideoLayout.frames(for: configuration)
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         layer.insertSublayer(mainLayer, at: 0)
         layer.insertSublayer(secondaryLayer, above: mainLayer)
-        switch layout {
-        case .pictureInPicture:
-            mainLayer.frame = bounds
-            let configuration = RealtimeRecordingConfiguration(layout: layout, primarySide: primarySide)
-            secondaryLayer.frame = RealtimeVideoLayout.secondaryFrame(for: configuration, in: bounds)
-            secondaryLayer.cornerRadius = RealtimeVideoLayout.secondaryCornerRadius(for: configuration, in: bounds)
-        case .split:
-            let height = bounds.height / 2
-            mainLayer.frame = CGRect(x: 0, y: 0, width: bounds.width, height: height)
-            secondaryLayer.frame = CGRect(x: 0, y: height, width: bounds.width, height: height)
-        }
+        mainLayer.frame = RealtimeVideoLayout.scaledFrame(frames.primary, configuration: configuration, in: bounds)
+        mainLayer.cornerRadius = 0
+        mainLayer.borderWidth = 0
+        secondaryLayer.isHidden = configuration.layout == .fullScreen
+        secondaryLayer.frame = RealtimeVideoLayout.secondaryFrame(for: configuration, in: bounds)
+        secondaryLayer.cornerRadius = RealtimeVideoLayout.secondaryCornerRadius(for: configuration, in: bounds)
+        secondaryLayer.borderWidth = 0
+        CATransaction.commit()
     }
 
     func display(_ sample: CMSampleBuffer, from side: CameraSide) {
-        let displayLayer = layer(for: side)
+        let displayLayer = self.displayLayer(for: side)
         if displayLayer.status == .failed { displayLayer.flush() }
         displayLayer.enqueue(sample)
     }
 
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let location = touches.first?.location(in: self) else { return }
-        let composition = CaptureComposition(layout: layout, primarySide: primarySide)
-        for side in composition.tapHitTestOrder where layer(for: side).frame.contains(location) {
-            onTapSide?(side)
-            return
-        }
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard canMoveWindow, configuration.layout == .pictureInPicture else { return false }
+        return displayLayer(for: configuration.secondarySide).frame.contains(gestureRecognizer.location(in: self))
     }
 
-    private func layer(for side: CameraSide) -> AVSampleBufferDisplayLayer {
+    @objc private func moveWindow(_ gesture: UIPanGestureRecognizer) {
+        guard canMoveWindow, bounds.width > 0, bounds.height > 0 else { return }
+        let secondary = displayLayer(for: configuration.secondarySide)
+        if gesture.state == .began { panStartCenter = secondary.position }
+        let translation = gesture.translation(in: self)
+        var settings = configuration.pictureInPicture
+        settings.center = CGPoint(x: (panStartCenter.x + translation.x) / bounds.width,
+                                  y: (panStartCenter.y + translation.y) / bounds.height)
+        let clamped = settings.frame(in: bounds.size)
+        onMoveWindow?(CGPoint(x: clamped.midX / bounds.width, y: clamped.midY / bounds.height))
+    }
+
+    private func displayLayer(for side: CameraSide) -> AVSampleBufferDisplayLayer {
         side == .rear ? rearLayer : frontLayer
     }
 }

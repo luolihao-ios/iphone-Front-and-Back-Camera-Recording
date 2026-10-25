@@ -27,9 +27,44 @@ enum CameraSide: Equatable {
 enum CaptureLayout: String, CaseIterable, Identifiable {
     case pictureInPicture
     case split
+    case sideBySide
+    case fullScreen
 
     var id: String { rawValue }
-    var title: String { self == .pictureInPicture ? "画中画" : "分屏" }
+    var title: String {
+        switch self {
+        case .pictureInPicture: return "画中画"
+        case .split: return "上下"
+        case .sideBySide: return "左右"
+        case .fullScreen: return "全屏"
+        }
+    }
+}
+
+enum SmallWindowShape: String, CaseIterable, Identifiable {
+    case roundedRectangle
+    case circle
+    var id: String { rawValue }
+    var title: String { self == .circle ? "圆形" : "圆角长方形" }
+}
+
+struct PictureInPictureSettings: Equatable {
+    var shape: SmallWindowShape = .roundedRectangle
+    var scale: Double = 1
+    var center = CGPoint(x: 0.19, y: 0.20)
+
+    func frame(in size: CGSize) -> CGRect {
+        let factor = CGFloat(min(max(scale.isFinite ? scale : 1, 0.6), 1.8))
+        let width = size.width * PictureInPictureMetrics.widthRatio * factor
+        let height = shape == .circle ? width : size.height * PictureInPictureMetrics.heightRatio * factor
+        let x = center.x.isFinite ? center.x : 0.19
+        let y = center.y.isFinite ? center.y : 0.20
+        return CGRect(
+            x: min(max(x * size.width - width / 2, 0), max(0, size.width - width)),
+            y: min(max(y * size.height - height / 2, 0), max(0, size.height - height)),
+            width: width, height: height
+        )
+    }
 }
 
 struct CaptureComposition: Equatable {
@@ -48,18 +83,28 @@ struct RealtimeRecordingConfiguration: Equatable {
     let layout: CaptureLayout
     let primarySide: CameraSide
     let renderSize: CGSize
+    let pictureInPicture: PictureInPictureSettings
 
     init(
         layout: CaptureLayout,
         primarySide: CameraSide,
-        renderSize: CGSize = CGSize(width: 1080, height: 1920)
+        renderSize: CGSize = CGSize(width: 1080, height: 1920),
+        pictureInPicture: PictureInPictureSettings = .init()
     ) {
         self.layout = layout
         self.primarySide = primarySide
         self.renderSize = renderSize
+        self.pictureInPicture = pictureInPicture
     }
 
     var secondarySide: CameraSide { primarySide.secondary }
+
+    // 保留预览的宽高比，偶数像素尺寸满足 H.264 编码要求。
+    static func renderSize(for previewSize: CGSize) -> CGSize {
+        guard previewSize.width > 0, previewSize.height > 0 else { return CGSize(width: 1080, height: 1920) }
+        let height = (1080 * previewSize.height / previewSize.width / 2).rounded() * 2
+        return CGSize(width: 1080, height: max(2, height))
+    }
 }
 
 /// Frames use a top-left origin, matching the preview and the app's visible recording layout.
@@ -75,19 +120,12 @@ enum RealtimeVideoLayout {
 
         switch configuration.layout {
         case .pictureInPicture:
-            let secondaryWidth = renderSize.width * PictureInPictureMetrics.widthRatio
-            let secondaryHeight = renderSize.height * PictureInPictureMetrics.heightRatio
-            let secondary = CGRect(
-                x: renderSize.width * PictureInPictureMetrics.leftMarginRatio,
-                y: renderSize.height * PictureInPictureMetrics.topMarginRatio,
-                width: secondaryWidth,
-                height: secondaryHeight
-            )
+            let secondary = configuration.pictureInPicture.frame(in: renderSize)
 
             return RealtimeVideoFrames(
                 primary: CGRect(origin: .zero, size: renderSize),
                 secondary: secondary,
-                secondaryCornerRadius: 24
+                secondaryCornerRadius: configuration.pictureInPicture.shape == .circle ? secondary.width / 2 : 24 * secondary.width / (renderSize.width * PictureInPictureMetrics.widthRatio)
             )
 
         case .split:
@@ -97,6 +135,14 @@ enum RealtimeVideoLayout {
                 secondary: splitFrames.bottom,
                 secondaryCornerRadius: 0
             )
+        case .sideBySide:
+            let half = renderSize.width / 2
+            return RealtimeVideoFrames(
+                primary: CGRect(x: 0, y: 0, width: half, height: renderSize.height),
+                secondary: CGRect(x: half, y: 0, width: half, height: renderSize.height),
+                secondaryCornerRadius: 0)
+        case .fullScreen:
+            return RealtimeVideoFrames(primary: CGRect(origin: .zero, size: renderSize), secondary: .zero, secondaryCornerRadius: 0)
         }
     }
 
@@ -104,7 +150,10 @@ enum RealtimeVideoLayout {
         for configuration: RealtimeRecordingConfiguration,
         in bounds: CGRect
     ) -> CGRect {
-        let canonical = frames(for: configuration).secondary
+        scaledFrame(frames(for: configuration).secondary, configuration: configuration, in: bounds)
+    }
+
+    static func scaledFrame(_ canonical: CGRect, configuration: RealtimeRecordingConfiguration, in bounds: CGRect) -> CGRect {
         let renderSize = configuration.renderSize
         return CGRect(
             x: bounds.minX + canonical.minX * bounds.width / renderSize.width,
