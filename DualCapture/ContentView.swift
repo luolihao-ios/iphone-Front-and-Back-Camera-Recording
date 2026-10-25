@@ -160,7 +160,7 @@ struct ContentView: View {
         .task {
             await camera.prepare()
             let latest = await Self.loadLatestVideo()
-            if successfulSaveCount == 0 || latestThumbnail == nil {
+            if latestVideoURL == nil && latestPhoto == nil {
                 latestThumbnail = latest.thumbnail
                 latestVideoURL = latest.url
                 latestPhoto = latest.photo

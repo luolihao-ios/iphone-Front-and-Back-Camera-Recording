@@ -72,7 +72,7 @@ final class PreviewView: UIView, UIGestureRecognizerDelegate {
         displayLayer.enqueue(sample)
     }
 
-    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+    override func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard canMoveWindow, configuration.layout == .pictureInPicture else { return false }
         return displayLayer(for: configuration.secondarySide).frame.contains(gestureRecognizer.location(in: self))
     }
