@@ -1,61 +1,48 @@
-# DualCapture Privacy Policy
+# 同框之外隐私政策
 
-Effective date: September 4, 2026
+生效日期：2026年10月26日
 
-DualCapture (the App) is a local camera recording tool that can capture video from the front and rear cameras at the same time. This policy explains how the App handles information.
+同框之外（DualCapture，下称“本应用”）是一款在设备本地处理前后摄像头画面的拍摄工具，支持合成照片与实时合成录像。
 
-## Data We Do Not Collect
+## 一、信息处理与联网
 
-The App does not require an account or login. It does not collect, upload, sell, or share personal information, photos, videos, audio, location data, or device identifiers.
+本应用无需注册或登录，不向开发者上传照片、视频、录音、面部内容、位置或设备标识符，不包含广告、行为分析、跟踪或第三方数据收集 SDK。
 
-The App does not include advertising, analytics, tracking, or third-party data collection SDKs.
+用户打开设置页面时，本应用会向 Apple 的 App Store 服务查询公开版本信息。该请求使用本应用的公开 App Store 标识及地区参数，不附带用户的照片、视频、声音、账户或拍摄内容。点击更新或评分入口会跳转系统 App Store。
 
-## App Store Version Check
+## 二、相机、麦克风与照片图库权限
 
-To let users know when a newer version is available, the App may contact Apple's App Store service no more than once per day to look up this App's public version number. This request contains only the App's public App Store identifier. It does not include the user's name, account, photos, videos, audio, device identifier, or recording content.
+- 相机：用于前后摄像头预览、拍照和录像。
+- 麦克风：用于录制视频中的环境声音和讲话声音。
+- 照片图库写入权限：用于将拍摄完成的照片、视频自动保存到系统照片图库。
+- 照片图库读取权限：用于显示最近照片或视频的缩略图，并打开查看该内容；只访问系统授权范围内的媒体。
 
-## Camera, Microphone, and Photos Permissions
+用户可随时在 iPhone 设置中更改权限。拒绝相关权限会影响对应功能。
 
-The App requests these permissions only after the user chooses to use the related function:
+## 三、面部数据的收集、使用与分享
 
-- **Camera:** to preview and record the front and rear camera video.
-- **Microphone:** to record audio with the video.
-- **Photos add-only access:** to save videos that the user explicitly selects to save.
+本应用不执行人脸检测、人脸识别、身份验证、面部关键点提取、身份推断或生物识别模板创建，不单独收集或分析生物识别面部数据。
 
-These permissions are used only for the functions described above. They can be disabled at any time in iPhone Settings.
+如果用户拍摄的照片或视频中包含面部，该内容仅作为用户拍摄画面的组成部分，在设备本地用于预览、布局合成及保存。本应用不会从中提取面部信息，也不会将面部内容、照片或视频发送给开发者、第三方或开发者运营的服务器。
 
-## Face Data
+## 四、本地存储、保留与删除
 
-The App does not perform face detection, face recognition, face verification, facial landmark extraction, identity inference, or biometric template creation. It does not separately collect or process biometric face data.
+录像期间，最终合成视频实时写入设备上的应用临时目录；停止录制后完成文件写入，并保存到系统照片图库。拍照使用当前相机画面在本地合成图片并保存。
 
-If a face appears in a video recorded by the user, it is treated only as part of the user's own video content stored locally on the device. The App does not extract face information from the video and does not upload or share the video or any face-related content with the developer, third parties, or cloud services.
+临时文件供拍摄、保存及最近媒体查看使用，受系统临时文件管理机制管理；用户卸载应用时，系统会删除应用沙盒中的数据。保存到系统照片图库的照片和视频由用户控制，用户可在“照片”应用中删除，并按系统流程管理“最近删除”中的内容。
 
-## Video and Audio Storage
+本应用自身不提供服务器上传、开发者云备份或账户同步。系统照片图库是否通过 iCloud 同步，取决于用户的 Apple 系统设置，由系统管理。
 
-During recording and processing, video files are stored in the App's temporary directory on the device so the App can create the selected individual and composite videos.
+## 五、诊断日志
 
-After recording, only files that the user explicitly selects are written to the system Photos library. The App does not provide server upload, cloud backup, account synchronization, or online sharing.
+本应用在设备本地生成拍摄与保存流程的诊断日志，用于排查故障。日志包含流程状态、时间、错误和临时文件路径，不记录照片、视频、录音内容或面部特征。日志保存在应用的“文件”目录，不会自动上传；仅当用户自行选择分享时，开发者才能获得该文件。用户可以在“文件”应用中删除日志。
 
-## Sharing and Third Parties
+## 六、儿童与拍摄责任
 
-The App does not transmit recorded video, audio, or face-related content to the developer or any third party. No server or cloud service receives the recording content.
+本应用不会有意向开发者收集儿童个人信息。拍摄其他人前，请取得必要同意，并遵守适用的隐私与肖像相关规定。
 
-## Retention and Deletion
+## 七、政策变更与联系
 
-The App does not intentionally retain face data or recordings outside the device. Temporary files are used only for recording processing and are subject to the device's temporary-file management. Videos saved to Photos remain under the user's control and can be deleted by the user in the Photos app.
+本应用的信息处理方式发生变化时，会相应更新本政策及生效日期。
 
-## Children
-
-The App does not knowingly collect personal information from children.
-
-## User Responsibilities
-
-Please obtain any necessary consent before recording other people and comply with applicable privacy, portrait, and recording laws.
-
-## Changes to This Policy
-
-If the App's data practices change, this page will be updated together with the effective date.
-
-## Contact Us
-
-For questions about this policy, contact us through [GitHub Issues](https://github.com/luolihao-ios/iphone-Front-and-Back-Camera-Recording/issues).
+如有问题，请通过[项目问题反馈页面](https://github.com/luolihao-ios/iphone-Front-and-Back-Camera-Recording/issues)联系开发者。

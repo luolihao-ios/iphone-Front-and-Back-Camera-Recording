@@ -1,5 +1,6 @@
 import XCTest
 import CoreImage
+import AVFoundation
 @testable import DualCapture
 
 final class CameraLayoutTests: XCTestCase {
@@ -76,5 +77,51 @@ final class CameraLayoutTests: XCTestCase {
         XCTAssertNotNil(FrameCompositor.composite(primary: primary, secondary: nil, configuration: config))
         XCTAssertNil(FrameCompositor.composite(primary: primary, secondary: nil,
             configuration: .init(layout: .pictureInPicture, primarySide: .rear)))
+    }
+
+    @MainActor
+    func testPreviewRemovesRoundClippingWhenSwitchingToEqualSplit() throws {
+        let view = PreviewView(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
+        view.configuration = .init(layout: .pictureInPicture, primarySide: .rear,
+            renderSize: CGSize(width: 390, height: 844), pictureInPicture: .init(shape: .circle))
+        view.layoutIfNeeded()
+        view.configuration = .init(layout: .split, primarySide: .front, renderSize: CGSize(width: 390, height: 844))
+        view.layoutIfNeeded()
+        let layers = try XCTUnwrap(view.layer.sublayers).compactMap { $0 as? AVSampleBufferDisplayLayer }
+        XCTAssertEqual(layers.count, 2)
+        XCTAssertEqual(layers[0].frame, CGRect(x: 0, y: 0, width: 390, height: 422))
+        XCTAssertEqual(layers[1].frame, CGRect(x: 0, y: 422, width: 390, height: 422))
+        XCTAssertEqual(layers[0].cornerRadius, 0)
+        XCTAssertEqual(layers[1].cornerRadius, 0)
+    }
+
+    func testFullScreenRecorderWritesWithoutReceivingSecondaryFrames() async throws {
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".mov")
+        defer { try? FileManager.default.removeItem(at: url) }
+        let recorder = try RealtimeCompositeRecorder(url: url, configuration: .init(layout: .fullScreen,
+            primarySide: .rear, renderSize: CGSize(width: 200, height: 400)))
+        var buffer: CVPixelBuffer?
+        XCTAssertEqual(CVPixelBufferCreate(nil, 200, 400, kCVPixelFormatType_32BGRA,
+            [kCVPixelBufferIOSurfacePropertiesKey: [:]] as CFDictionary, &buffer), kCVReturnSuccess)
+        let pixelBuffer = try XCTUnwrap(buffer)
+        CIContext().render(CIImage(color: .white), to: pixelBuffer)
+        var description: CMVideoFormatDescription?
+        XCTAssertEqual(CMVideoFormatDescriptionCreateForImageBuffer(allocator: nil, imageBuffer: pixelBuffer,
+            formatDescriptionOut: &description), noErr)
+        let format = try XCTUnwrap(description)
+        recorder.start()
+        for index in 0..<6 {
+            var sample: CMSampleBuffer?
+            var timing = CMSampleTimingInfo(duration: CMTime(value: 1, timescale: 30),
+                presentationTimeStamp: CMTime(value: Int64(index + 30), timescale: 30), decodeTimeStamp: .invalid)
+            XCTAssertEqual(CMSampleBufferCreateReadyWithImageBuffer(allocator: nil, imageBuffer: pixelBuffer,
+                formatDescription: format, sampleTiming: &timing, sampleBufferOut: &sample), noErr)
+            recorder.appendVideo(try XCTUnwrap(sample), side: .rear)
+            try await Task.sleep(for: .milliseconds(40))
+        }
+        let output = await recorder.finish()
+        XCTAssertEqual(output, url)
+        let tracks = try await AVURLAsset(url: url).loadTracks(withMediaType: .video)
+        XCTAssertEqual(tracks.count, 1)
     }
 }

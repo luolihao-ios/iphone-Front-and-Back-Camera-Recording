@@ -44,112 +44,9 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
-            GeometryReader { proxy in
-                if camera.isSupported {
-                    CameraPreview(camera: camera, configuration: recordingConfiguration ?? configuration) { center in
-                        guard !camera.isRecording, !busy else { return }
-                        smallWindowCenterX = center.x
-                        smallWindowCenterY = center.y
-                    }
-                }
-                if gridEnabled { CompositionGrid() }
-                Color.clear.allowsHitTesting(false)
-                    .onAppear { previewSize = proxy.size }
-                    .onChange(of: proxy.size) { _, size in previewSize = size }
-            }
-            .ignoresSafeArea()
-            VStack {
-                if camera.isRecording, let recordingStartedAt {
-                    TimelineView(.periodic(from: recordingStartedAt, by: 1)) { context in
-                        let elapsed = max(0, Int(context.date.timeIntervalSince(recordingStartedAt)))
-                        HStack(spacing: 7) {
-                            Circle().fill(.white).frame(width: 9, height: 9)
-                            Text(String(format: "%02d:%02d:%02d", elapsed / 3600, (elapsed / 60) % 60, elapsed % 60))
-                        }
-                        .foregroundStyle(.white)
-                        .font(.system(.headline, design: .monospaced))
-                        .padding(.horizontal, 14).padding(.vertical, 8)
-                        .background(.red).clipShape(RoundedRectangle(cornerRadius: 8))
-                    }
-                } else if !busy {
-                    Button(action: camera.toggleTorch) {
-                        Image(systemName: camera.isTorchOn ? "bolt.fill" : "bolt.slash.fill")
-                            .font(.system(size: 25, weight: .medium))
-                            .foregroundStyle(camera.isTorchOn ? .yellow : .white)
-                            .frame(width: 48, height: 48)
-                            .background(.black.opacity(0.28), in: Circle())
-                    }
-                    .disabled(!camera.hasTorch)
-                    .accessibilityLabel(camera.isTorchOn ? "关闭补光灯" : "开启补光灯")
-                }
-                Spacer()
-                if camera.isRecording {
-                    recordButton()
-                        .disabled(camera.isProcessing)
-                        .padding(.bottom, 34)
-                } else {
-                    VStack(spacing: 18) {
-                        HStack {
-                            VStack(spacing: 5) {
-                                AlbumThumbnailButton(thumbnail: latestThumbnail) {
-                                    showPlayer = latestVideoURL != nil || latestPhoto != nil
-                                }
-                                .background(GeometryReader { proxy in
-                                    Color.clear.preference(key: AlbumFramePreference.self, value: proxy.frame(in: .named("cameraScreen")))
-                                })
-                                Text("相册").font(.caption).foregroundStyle(.white)
-                            }
-                            .frame(maxWidth: .infinity)
-                            recordButton()
-                            VStack(spacing: 5) {
-                                Button(action: switchCamera) {
-                                    Image(systemName: "camera.rotate").font(.title2)
-                                        .frame(width: 50, height: 50)
-                                        .background(.black.opacity(0.4), in: Circle())
-                                }
-                                .accessibilityLabel("切换主摄像头")
-                                Text("旋转").font(.caption)
-                            }
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                        }
-                        HStack(spacing: 4) {
-                            ForEach(CaptureMode.allCases, id: \.self) { item in
-                                Button { mode = item } label: {
-                                    Text(item.rawValue).font(.headline)
-                                        .padding(.horizontal, 18).padding(.vertical, 9)
-                                        .foregroundStyle(mode == item ? .white : .white.opacity(0.65))
-                                        .background(mode == item ? .white.opacity(0.22) : .clear, in: Capsule())
-                                }
-                                .accessibilityAddTraits(mode == item ? .isSelected : [])
-                            }
-                        }
-                        .padding(4)
-                        .background(.black.opacity(0.4), in: Capsule())
-                    }
-                    .disabled(busy)
-                    .padding(.bottom, 20)
-                }
-            }
-            if !camera.isRecording, !busy {
-                HStack {
-                    Spacer()
-                    CameraShortcutMenu(layout: layout, gridEnabled: $gridEnabled,
-                        onSelectLayout: { selected in captureLayout = selected.rawValue; showWindowControls = false },
-                        onWindowSettings: { captureLayout = CaptureLayout.pictureInPicture.rawValue; showWindowControls.toggle() },
-                        onSettings: { showSettings = true })
-                }
-                .padding(.trailing, 10)
-                .padding(.top, 60)
-                .padding(.bottom, 190)
-                if showWindowControls {
-                    VStack {
-                        Spacer()
-                        SmallWindowPanel(shape: $smallWindowShape, scale: $smallWindowScale) { showWindowControls = false }
-                        Spacer().frame(height: 180)
-                    }
-                }
-            }
+            cameraSurface
+            captureControls
+            shortcuts
             if showGenieAnimation, let genieThumbnail {
                 GenieSaveAnimation(image: genieThumbnail, progress: genieProgress, target: CGPoint(x: albumFrame.midX, y: albumFrame.midY))
                     .allowsHitTesting(false)
@@ -176,6 +73,126 @@ struct ContentView: View {
         .alert("无法完成操作", isPresented: Binding(get: { camera.errorMessage != nil }, set: { if !$0 { camera.errorMessage = nil } })) {
             Button("好", role: .cancel) { camera.errorMessage = nil }
         } message: { Text(camera.errorMessage ?? "") }
+    }
+
+    private var cameraSurface: some View {
+        GeometryReader { proxy in
+            if camera.isSupported {
+                CameraPreview(camera: camera, configuration: recordingConfiguration ?? configuration) { center in
+                    guard !camera.isRecording, !busy else { return }
+                    smallWindowCenterX = center.x
+                    smallWindowCenterY = center.y
+                }
+            }
+            if gridEnabled { CompositionGrid() }
+            Color.clear.allowsHitTesting(false)
+                .onAppear { previewSize = proxy.size }
+                .onChange(of: proxy.size) { _, size in previewSize = size }
+        }
+        .ignoresSafeArea()
+    }
+
+    private var captureControls: some View {
+        VStack {
+            if camera.isRecording, let recordingStartedAt {
+                TimelineView(.periodic(from: recordingStartedAt, by: 1)) { context in
+                    let elapsed = max(0, Int(context.date.timeIntervalSince(recordingStartedAt)))
+                    HStack(spacing: 7) {
+                        Circle().fill(.white).frame(width: 9, height: 9)
+                        Text(String(format: "%02d:%02d:%02d", elapsed / 3600, (elapsed / 60) % 60, elapsed % 60))
+                    }
+                    .foregroundStyle(.white)
+                    .font(.system(.headline, design: .monospaced))
+                    .padding(.horizontal, 14).padding(.vertical, 8)
+                    .background(.red).clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+            } else if !busy {
+                Button(action: camera.toggleTorch) {
+                    Image(systemName: camera.isTorchOn ? "bolt.fill" : "bolt.slash.fill")
+                        .font(.system(size: 25, weight: .medium))
+                        .foregroundStyle(camera.isTorchOn ? .yellow : .white)
+                        .frame(width: 48, height: 48)
+                        .background(.black.opacity(0.28), in: Circle())
+                }
+                .disabled(!camera.hasTorch)
+                .accessibilityLabel(camera.isTorchOn ? "关闭补光灯" : "开启补光灯")
+            }
+            Spacer()
+            if camera.isRecording {
+                recordButton()
+                    .disabled(camera.isProcessing)
+                    .padding(.bottom, 34)
+            } else {
+                idleCaptureControls
+                .disabled(busy)
+                .padding(.bottom, 20)
+            }
+        }
+    }
+
+    private var idleCaptureControls: some View {
+        VStack(spacing: 18) {
+            HStack {
+                VStack(spacing: 5) {
+                    AlbumThumbnailButton(thumbnail: latestThumbnail) {
+                        showPlayer = latestVideoURL != nil || latestPhoto != nil
+                    }
+                    .background(GeometryReader { proxy in
+                        Color.clear.preference(key: AlbumFramePreference.self, value: proxy.frame(in: .named("cameraScreen")))
+                    })
+                    Text("相册").font(.caption).foregroundStyle(.white)
+                }
+                .frame(maxWidth: .infinity)
+                recordButton()
+                VStack(spacing: 5) {
+                    Button(action: switchCamera) {
+                        Image(systemName: "camera.rotate").font(.title2)
+                            .frame(width: 50, height: 50)
+                            .background(.black.opacity(0.4), in: Circle())
+                    }
+                    .accessibilityLabel("切换主摄像头")
+                    Text("旋转").font(.caption)
+                }
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity)
+            }
+            HStack(spacing: 4) {
+                ForEach(CaptureMode.allCases, id: \.self) { item in
+                    Button { mode = item } label: {
+                        Text(item.rawValue).font(.headline)
+                            .padding(.horizontal, 18).padding(.vertical, 9)
+                            .foregroundStyle(mode == item ? .white : .white.opacity(0.65))
+                            .background(mode == item ? .white.opacity(0.22) : .clear, in: Capsule())
+                    }
+                    .accessibilityAddTraits(mode == item ? .isSelected : [])
+                }
+            }
+            .padding(4)
+            .background(.black.opacity(0.4), in: Capsule())
+        }
+    }
+
+    @ViewBuilder
+    private var shortcuts: some View {
+        if !camera.isRecording, !busy {
+            HStack {
+                Spacer()
+                CameraShortcutMenu(layout: layout, gridEnabled: $gridEnabled,
+                    onSelectLayout: { selected in captureLayout = selected.rawValue; showWindowControls = false },
+                    onWindowSettings: { captureLayout = CaptureLayout.pictureInPicture.rawValue; showWindowControls.toggle() },
+                    onSettings: { showSettings = true })
+            }
+            .padding(.trailing, 10)
+            .padding(.top, 60)
+            .padding(.bottom, 190)
+            if showWindowControls {
+                VStack {
+                    Spacer()
+                    SmallWindowPanel(shape: $smallWindowShape, scale: $smallWindowScale) { showWindowControls = false }
+                    Spacer().frame(height: 180)
+                }
+            }
+        }
     }
 
     @MainActor
