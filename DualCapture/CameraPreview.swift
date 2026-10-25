@@ -62,8 +62,8 @@ final class PreviewView: UIView, UIGestureRecognizerDelegate {
         mainLayer.cornerRadius = 0
         mainLayer.borderWidth = 0
         secondaryLayer.isHidden = configuration.layout == .fullScreen
-        let preserveCircleFieldOfView = configuration.layout == .pictureInPicture && configuration.pictureInPicture.shape == .circle
-        secondaryLayer.videoGravity = preserveCircleFieldOfView ? .resizeAspect : .resizeAspectFill
+        // 方形边界内铺满原始帧，等价于先取原始短边作为圆的最大直径。
+        secondaryLayer.videoGravity = .resizeAspectFill
         secondaryLayer.backgroundColor = UIColor.black.cgColor
         secondaryLayer.frame = RealtimeVideoLayout.secondaryFrame(for: configuration, in: bounds)
         secondaryLayer.cornerRadius = RealtimeVideoLayout.secondaryCornerRadius(for: configuration, in: bounds)

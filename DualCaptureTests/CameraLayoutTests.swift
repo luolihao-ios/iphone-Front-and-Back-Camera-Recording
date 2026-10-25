@@ -79,13 +79,16 @@ final class CameraLayoutTests: XCTestCase {
             configuration: .init(layout: .pictureInPicture, primarySide: .rear)))
     }
 
-    func testCircleKeepsTopAndBottomOfPortraitCameraInsteadOfZoomingIntoCenter() throws {
+    func testCircleUsesLargestAvailableSourceRegionWithoutBlackPaddingAtEverySize() throws {
         let size = CGSize(width: 200, height: 400)
         let source = CGRect(origin: .zero, size: size)
         let blue = CIImage(color: CIColor(red: 0, green: 0, blue: 1)).cropped(to: source)
         let green = CIImage(color: CIColor(red: 0, green: 1, blue: 0))
-        let secondary = green.cropped(to: CGRect(x: 0, y: 300, width: 200, height: 100))
-            .composited(over: green.cropped(to: CGRect(x: 0, y: 0, width: 200, height: 100)))
+        // 最大圆的上、下、左、右边缘均有标记；额外放大或留黑边都会丢掉标记。
+        let secondary = green.cropped(to: CGRect(x: 0, y: 270, width: 200, height: 30))
+            .composited(over: green.cropped(to: CGRect(x: 0, y: 100, width: 200, height: 30)))
+            .composited(over: green.cropped(to: CGRect(x: 0, y: 100, width: 30, height: 200)))
+            .composited(over: green.cropped(to: CGRect(x: 170, y: 100, width: 30, height: 200)))
             .composited(over: blue)
         let primary = CIImage(color: CIColor(red: 1, green: 0, blue: 0)).cropped(to: source)
         let context = CIContext(options: [.useSoftwareRenderer: true])
@@ -94,25 +97,29 @@ final class CameraLayoutTests: XCTestCase {
                 renderSize: size, pictureInPicture: .init(shape: .circle, scale: scale, center: CGPoint(x: 0.5, y: 0.5)))
             let image = try XCTUnwrap(FrameCompositor.composite(primary: primary, secondary: secondary, configuration: configuration))
             let frame = RealtimeVideoLayout.frames(for: configuration).secondary
-            for fraction in [0.1, 0.9] {
+            let points = [CGPoint(x: frame.midX, y: frame.minY + frame.height * 0.1),
+                          CGPoint(x: frame.midX, y: frame.minY + frame.height * 0.9),
+                          CGPoint(x: frame.minX + frame.width * 0.1, y: frame.midY),
+                          CGPoint(x: frame.minX + frame.width * 0.9, y: frame.midY)]
+            for point in points {
                 var rgba = [UInt8](repeating: 0, count: 4)
                 context.render(image, toBitmap: &rgba, rowBytes: 4,
-                    bounds: CGRect(x: frame.midX, y: size.height - frame.minY - frame.height * fraction, width: 1, height: 1),
+                    bounds: CGRect(x: point.x, y: size.height - point.y, width: 1, height: 1),
                     format: .RGBA8, colorSpace: CGColorSpaceCreateDeviceRGB())
-                XCTAssertGreaterThan(rgba[1], 220, "应保留摄像头顶部和底部的绿色标记，比例 \(scale)")
+                XCTAssertGreaterThan(rgba[1], 220, "应保留最大圆的四个方向标记，比例 \(scale)")
                 XCTAssertLessThan(rgba[2], 30)
             }
         }
     }
 
     @MainActor
-    func testCirclePreviewPreservesCameraFieldOfViewAndResetsWhenSwitchingShape() throws {
+    func testCirclePreviewFillsLargestCircleAndKeepsGravityConsistentWhenSwitchingShape() throws {
         let view = PreviewView(frame: CGRect(x: 0, y: 0, width: 390, height: 844))
         view.configuration = .init(layout: .pictureInPicture, primarySide: .rear,
             pictureInPicture: .init(shape: .circle))
         view.layoutIfNeeded()
         let circleLayers = try XCTUnwrap(view.layer.sublayers).compactMap { $0 as? AVSampleBufferDisplayLayer }
-        XCTAssertEqual(circleLayers[1].videoGravity, .resizeAspect)
+        XCTAssertEqual(circleLayers[1].videoGravity, .resizeAspectFill)
         view.configuration = .init(layout: .pictureInPicture, primarySide: .front)
         view.layoutIfNeeded()
         let rectangularLayers = try XCTUnwrap(view.layer.sublayers).compactMap { $0 as? AVSampleBufferDisplayLayer }

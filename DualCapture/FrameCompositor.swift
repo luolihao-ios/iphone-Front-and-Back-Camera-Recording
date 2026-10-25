@@ -13,12 +13,12 @@ enum FrameCompositor {
         guard configuration.layout != .fullScreen else { return main.cropped(to: canvas) }
         guard let secondary else { return nil }
         let frame = ciFrame(frames.secondary)
-        let preserveCircleFieldOfView = configuration.layout == .pictureInPicture && configuration.pictureInPicture.shape == .circle
+        let isCircle = configuration.layout == .pictureInPicture && configuration.pictureInPicture.shape == .circle
         let overlay: CIImage
-        if preserveCircleFieldOfView {
-            // 圆形只裁边角，完整视野先等比缩进边界；留边与预览层的黑色背景一致。
-            overlay = aspectFit(secondary, into: frame)
-                .composited(over: CIImage(color: .black).cropped(to: frame))
+        if isCircle {
+            // 直接在原始采集帧中取最大内切圆，不先套用竖屏或矩形小窗的裁切。
+            let source = CameraFrameGeometry.largestCircleBounds(in: secondary.extent)
+            overlay = aspectFill(secondary.cropped(to: source), into: frame)
         } else {
             overlay = aspectFill(secondary, into: frame)
         }
@@ -39,19 +39,11 @@ enum FrameCompositor {
     }
 
     private static func aspectFill(_ image: CIImage, into destination: CGRect) -> CIImage {
-        scaledImage(image, into: destination, fill: true)
-    }
-
-    private static func aspectFit(_ image: CIImage, into destination: CGRect) -> CIImage {
-        scaledImage(image, into: destination, fill: false)
-    }
-
-    private static func scaledImage(_ image: CIImage, into destination: CGRect, fill: Bool) -> CIImage {
         let source = image.extent
         guard source.width > 0, source.height > 0 else { return image }
         let widthScale = destination.width / source.width
         let heightScale = destination.height / source.height
-        let scale = fill ? max(widthScale, heightScale) : min(widthScale, heightScale)
+        let scale = max(widthScale, heightScale)
         let scaled = image.transformed(by: CGAffineTransform(scaleX: scale, y: scale))
         return scaled.transformed(by: CGAffineTransform(
             translationX: destination.midX - scaled.extent.midX,

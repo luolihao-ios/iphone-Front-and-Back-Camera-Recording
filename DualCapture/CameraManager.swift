@@ -26,6 +26,7 @@ final class CameraManager: NSObject, ObservableObject {
     private var latestFrontSample: CMSampleBuffer?
     private var latestRearSample: CMSampleBuffer?
     private let photoContext = CIContext(options: [.cacheIntermediates: false])
+    private var loggedSources: [CameraSide] = []
 
     func prepare() async {
         DebugLog.shared.log("prepare.begin")
@@ -42,6 +43,7 @@ final class CameraManager: NSObject, ObservableObject {
         }
         do {
             try configureSession()
+            try fitCaptureHardwareBudget()
             DispatchQueue.main.async {
                 self.isSupported = true
                 self.statusMessage = "正在启动双摄会话…"
@@ -211,6 +213,17 @@ final class CameraManager: NSObject, ObservableObject {
               let rear = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
               let microphone = AVCaptureDevice.default(for: .audio) else { throw CaptureError.missingDevice }
         DispatchQueue.main.async { self.hasTorch = rear.hasTorch }
+        for (side, device) in [(CameraSide.front, front), (CameraSide.rear, rear)] {
+            logCaptureFormat(device.activeFormat, side: side, phase: "original")
+            let candidates = captureCandidates(for: device)
+            for candidate in CaptureFormatPolicy.ranked(candidates) {
+                DebugLog.shared.log("capture.candidate side=\(side) id=\(candidate.id) size=\(candidate.dimensions) horizontalFOV=\(candidate.horizontalFieldOfView) circularFOV=\(candidate.circularFieldOfView) binned=\(candidate.isBinned)")
+            }
+            if let selected = CaptureFormatPolicy.ranked(candidates).first {
+                try applyCaptureFormat(device.formats[selected.id], to: device)
+            }
+            logCaptureFormat(device.activeFormat, side: side, phase: "selected")
+        }
         let frontInput = try AVCaptureDeviceInput(device: front)
         let rearInput = try AVCaptureDeviceInput(device: rear)
         let audioInput = try AVCaptureDeviceInput(device: microphone)
@@ -218,6 +231,10 @@ final class CameraManager: NSObject, ObservableObject {
         session.addInputWithNoConnections(frontInput)
         session.addInputWithNoConnections(rearInput)
         session.addInputWithNoConnections(audioInput)
+        let frameDuration = CMTime(value: 1, timescale: 30)
+        for input in [frontInput, rearInput] where supports30FPS(input.device.activeFormat) {
+            input.videoMinFrameDurationOverride = frameDuration
+        }
 
         let frontOutput = makeVideoOutput(side: .front)
         let rearOutput = makeVideoOutput(side: .rear)
@@ -239,9 +256,74 @@ final class CameraManager: NSObject, ObservableObject {
         self.audioOutput = audioOutput
     }
 
+    private func supports30FPS(_ format: AVCaptureDevice.Format) -> Bool {
+        format.videoSupportedFrameRateRanges.contains { $0.minFrameRate <= 30 && $0.maxFrameRate >= 30 }
+    }
+
+    private func captureCandidates(for device: AVCaptureDevice) -> [CaptureFormatCandidate] {
+        device.formats.enumerated().map { index, format in
+            let dimensions = CMVideoFormatDescriptionGetDimensions(format.formatDescription)
+            return CaptureFormatCandidate(id: index, dimensions: CGSize(width: Int(dimensions.width), height: Int(dimensions.height)),
+                horizontalFieldOfView: Double(format.videoFieldOfView), supportsMultiCam: format.isMultiCamSupported,
+                supports30FPS: supports30FPS(format), isBinned: format.isVideoBinned)
+        }
+    }
+
+    private func applyCaptureFormat(_ format: AVCaptureDevice.Format, to device: AVCaptureDevice) throws {
+        try device.lockForConfiguration()
+        defer { device.unlockForConfiguration() }
+        device.activeFormat = format
+        if supports30FPS(format) {
+            device.activeVideoMinFrameDuration = CMTime(value: 1, timescale: 30)
+            device.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: 30)
+        }
+        device.videoZoomFactor = min(max(1, device.minAvailableVideoZoomFactor), device.maxAvailableVideoZoomFactor)
+    }
+
+    private func fitCaptureHardwareBudget() throws {
+        let inputs = session.inputs.compactMap { $0 as? AVCaptureDeviceInput }
+            .filter { $0.device.hasMediaType(.video) }
+        // 先以最大圆形视野选择格式，再按系统报告的双摄预算逐级降低像素处理量。
+        while session.hardwareCost > 1 {
+            let reductions = inputs.compactMap { input -> (AVCaptureDeviceInput, CaptureFormatCandidate)? in
+                let candidates = captureCandidates(for: input.device)
+                guard let index = input.device.formats.firstIndex(of: input.device.activeFormat),
+                      let current = candidates.first(where: { $0.id == index }),
+                      let lower = CaptureFormatPolicy.lowerCostCandidate(than: current, from: candidates) else { return nil }
+                return (input, lower)
+            }
+            guard let (input, lower) = reductions.max(by: {
+                let first = CMVideoFormatDescriptionGetDimensions($0.0.device.activeFormat.formatDescription)
+                let second = CMVideoFormatDescriptionGetDimensions($1.0.device.activeFormat.formatDescription)
+                return Int64(first.width) * Int64(first.height) < Int64(second.width) * Int64(second.height)
+            }) else { throw CaptureError.unsupportedCombination }
+            session.beginConfiguration()
+            do {
+                try applyCaptureFormat(input.device.formats[lower.id], to: input.device)
+                input.videoMinFrameDurationOverride = CMTime(value: 1, timescale: 30)
+                session.commitConfiguration()
+            } catch {
+                session.commitConfiguration()
+                throw error
+            }
+            DebugLog.shared.log("capture.budget_reduced side=\(input.device.position.rawValue) size=\(lower.dimensions) circularFOV=\(lower.circularFieldOfView) hardware=\(session.hardwareCost)")
+        }
+        DebugLog.shared.log("capture.cost hardware=\(session.hardwareCost) pressure=\(session.systemPressureCost)")
+        for input in inputs {
+            logCaptureFormat(input.device.activeFormat, side: input.device.position == .front ? .front : .rear, phase: "final")
+        }
+    }
+
+    private func logCaptureFormat(_ format: AVCaptureDevice.Format, side: CameraSide, phase: String) {
+        let dimensions = CMVideoFormatDescriptionGetDimensions(format.formatDescription)
+        DebugLog.shared.log("capture.format phase=\(phase) side=\(side) native=\(dimensions.width)x\(dimensions.height) horizontalFOV=\(format.videoFieldOfView) binned=\(format.isVideoBinned) multiCam=\(format.isMultiCamSupported)")
+    }
+
     private func makeVideoOutput(side: CameraSide) -> AVCaptureVideoDataOutput {
         let output = AVCaptureVideoDataOutput()
         output.alwaysDiscardsLateVideoFrames = true
+        output.automaticallyConfiguresOutputBufferDimensions = false
+        output.deliversPreviewSizedOutputBuffers = false
         output.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: kCVPixelFormatType_420YpCbCr8BiPlanarFullRange]
         let delegate = SampleDelegate { [weak self] sample in self?.appendVideo(sample, side: side) }
         delegateRegistry.retain(delegate)
@@ -255,11 +337,20 @@ final class CameraManager: NSObject, ObservableObject {
         if mediaType == .video, connection.isVideoOrientationSupported {
             connection.videoOrientation = .portrait
         }
+        if mediaType == .video, connection.isVideoStabilizationSupported {
+            connection.preferredVideoStabilizationMode = .off
+        }
         guard session.canAddConnection(connection) else { throw CaptureError.unsupportedCombination }
         session.addConnection(connection)
     }
 
     private func appendVideo(_ sample: CMSampleBuffer, side: CameraSide) {
+        if !loggedSources.contains(side), let buffer = CMSampleBufferGetImageBuffer(sample) {
+            loggedSources.append(side)
+            let circle = CameraFrameGeometry.largestCircleBounds(in: CGRect(x: 0, y: 0,
+                width: CVPixelBufferGetWidth(buffer), height: CVPixelBufferGetHeight(buffer)))
+            DebugLog.shared.log("capture.actual side=\(side) delivered=\(CVPixelBufferGetWidth(buffer))x\(CVPixelBufferGetHeight(buffer)) largestCircle=\(circle)")
+        }
         if side == .front { latestFrontSample = sample } else { latestRearSample = sample }
         previewSink?(side, sample)
         realtimeRecorder?.appendVideo(sample, side: side)
