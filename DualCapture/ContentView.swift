@@ -26,7 +26,7 @@ struct ContentView: View {
     @State private var previewSize = CGSize(width: 390, height: 844)
     @State private var recordingConfiguration: RealtimeRecordingConfiguration?
     @State private var handlingCapture = false
-    @State private var albumFrame = CGRect.zero
+    @State private var saveAnimationDestination = SaveAnimationDestination()
     @State private var genieThumbnail: UIImage?
     @State private var genieProgress: CGFloat = 0
     @State private var showGenieAnimation = false
@@ -47,13 +47,13 @@ struct ContentView: View {
             cameraSurface
             captureControls
             shortcuts
-            if showGenieAnimation, let genieThumbnail {
-                GenieSaveAnimation(image: genieThumbnail, progress: genieProgress, target: CGPoint(x: albumFrame.midX, y: albumFrame.midY))
+            if showGenieAnimation, let genieThumbnail, let target = saveAnimationDestination.activeFrame {
+                GenieSaveAnimation(image: genieThumbnail, progress: genieProgress, target: target)
                     .allowsHitTesting(false)
             }
         }
         .coordinateSpace(name: "cameraScreen")
-        .onPreferenceChange(AlbumFramePreference.self) { albumFrame = $0 }
+        .onPreferenceChange(AlbumFramePreference.self) { saveAnimationDestination.update($0) }
         .task {
             await camera.prepare()
             let latest = await Self.loadLatestVideo()
@@ -238,6 +238,12 @@ struct ContentView: View {
     @MainActor
     private func playSaveAnimation(with thumbnail: UIImage?) async {
         guard let thumbnail else { return }
+        guard let target = saveAnimationDestination.begin() else {
+            DebugLog.shared.log("save.animation.skipped no_valid_album_destination")
+            latestThumbnail = thumbnail
+            return
+        }
+        DebugLog.shared.log("save.animation.begin album_destination=\(target)")
         genieThumbnail = thumbnail
         genieProgress = 0
         showGenieAnimation = true
@@ -248,6 +254,7 @@ struct ContentView: View {
         try? await Task.sleep(for: .milliseconds(700))
         latestThumbnail = thumbnail
         showGenieAnimation = false
+        saveAnimationDestination.end()
     }
 
     private func switchCamera() {
@@ -325,27 +332,25 @@ struct ContentView: View {
 private struct GenieSaveAnimation: View {
     let image: UIImage
     let progress: CGFloat
-    let target: CGPoint
+    let target: CGRect
 
     var body: some View {
         GeometryReader { proxy in
-            let width = proxy.size.width
-            let height = proxy.size.height
-            let startCenter = CGPoint(x: width / 2, y: height * 0.46)
-            let center = CGPoint(
-                x: startCenter.x + (target.x - startCenter.x) * progress,
-                y: startCenter.y + (target.y - startCenter.y) * progress
-            )
-            let imageWidth = width * (1 - 0.92 * progress)
-            let imageHeight = height * 0.68 * (1 - 0.94 * progress)
+            let overlayOrigin = proxy.frame(in: .named("cameraScreen")).origin
+            let localTarget = SaveAnimationGeometry.localTarget(target, overlayOrigin: overlayOrigin)
+            let frame = SaveAnimationGeometry.frame(progress: progress,
+                in: CGRect(origin: .zero, size: proxy.size), target: localTarget)
 
             Image(uiImage: image)
                 .resizable()
                 .scaledToFill()
-                .frame(width: max(12, imageWidth), height: max(18, imageHeight))
+                .frame(width: frame.width, height: frame.height)
                 .clipShape(GenieShape(progress: progress))
-                .position(center)
+                .position(x: frame.midX, y: frame.midY)
                 .opacity(1 - max(0, progress - 0.9) / 0.1)
+                .onAppear {
+                    DebugLog.shared.log("save.animation.geometry overlayOrigin=\(overlayOrigin) localTarget=\(localTarget)")
+                }
         }
     }
 }
@@ -389,19 +394,10 @@ private struct GenieShape: Shape {
     }
 
     func path(in rect: CGRect) -> Path {
-        let p = min(max(progress, 0), 1)
-        let bottomPhase = min(p / 0.55, 1)
-        let fullPhase = max(0, (p - 0.35) / 0.65)
-        let bottomInset = rect.width * 0.42 * bottomPhase
-        let topInset = rect.width * 0.49 * fullPhase
-        let topY = rect.height * 0.48 * fullPhase
-        let bottomY = rect.height - rect.height * 0.55 * bottomPhase
-
+        let vertices = SaveAnimationGeometry.maskVertices(in: rect, progress: progress)
         var path = Path()
-        path.move(to: CGPoint(x: topInset, y: topY))
-        path.addLine(to: CGPoint(x: rect.width - topInset, y: topY))
-        path.addLine(to: CGPoint(x: rect.width - bottomInset, y: bottomY))
-        path.addLine(to: CGPoint(x: bottomInset, y: bottomY))
+        path.move(to: vertices[0])
+        for point in vertices.dropFirst() { path.addLine(to: point) }
         path.closeSubpath()
         return path
     }
