@@ -59,11 +59,6 @@ struct ContentView: View {
           }
           .frame(width: viewport.size.width, height: viewport.size.height)
         }
-        .coordinateSpace(name: "cameraScreen")
-        .onPreferenceChange(AlbumFramePreference.self) {
-            saveAnimationDestination.update($0)
-            DebugLog.shared.log("save.animation.album_measured frame=\($0)")
-        }
         .task {
             await camera.prepare()
             let latest = await Self.loadLatestVideo()
@@ -129,7 +124,7 @@ struct ContentView: View {
             }
             Spacer()
             ZStack(alignment: .bottom) {
-                // 保留相册按钮的布局与目标测量，录制时只隐藏，不移除锚点。
+                // 录制时只隐藏相册按钮，保留实际布局，窗口变化时仍可测量目标。
                 idleCaptureControls
                 .disabled(busy || camera.isRecording)
                 .opacity(camera.isRecording ? 0 : 1)
@@ -151,9 +146,10 @@ struct ContentView: View {
                     AlbumThumbnailButton(thumbnail: latestThumbnail) {
                         showPlayer = latestVideoURL != nil || latestPhoto != nil
                     }
-                    .background(GeometryReader { proxy in
-                        Color.clear.preference(key: AlbumFramePreference.self, value: proxy.frame(in: .named("cameraScreen")))
-                    })
+                    .overlay(AlbumAnimationTargetProbe { frame in
+                        saveAnimationDestination.update(frame)
+                        DebugLog.shared.log("save.animation.album_measured frame=\(frame) coordinate=window")
+                    }.allowsHitTesting(false))
                     Text("相册").font(.caption).foregroundStyle(.white)
                 }
                 .frame(maxWidth: .infinity)
@@ -353,11 +349,6 @@ struct ContentView: View {
         }
         return (thumbnail, url, nil)
     }
-}
-
-private struct AlbumFramePreference: PreferenceKey {
-    static let defaultValue = CGRect.zero
-    static func reduce(value: inout CGRect, nextValue: () -> CGRect) { value = nextValue() }
 }
 
 private struct PhotoViewer: View {

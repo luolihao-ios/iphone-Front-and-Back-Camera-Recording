@@ -28,7 +28,8 @@ struct GenieSaveAnimation: View {
 
     var body: some View {
         GeometryReader { proxy in
-            let origin = proxy.frame(in: .named("cameraScreen")).origin
+            // target 来自按钮的真实窗口坐标，覆盖层也必须使用同一全局坐标系。
+            let origin = proxy.frame(in: .global).origin
             let localTarget = SaveAnimationGeometry.localTarget(target, overlayOrigin: origin)
             TimelineView(.animation(minimumInterval: 1.0 / 60)) { context in
                 let progress = clock.progress(at: context.date)
