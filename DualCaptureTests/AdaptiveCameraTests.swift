@@ -27,7 +27,7 @@ final class AdaptiveCameraTests: XCTestCase {
             XCTAssertLessThanOrEqual(max(canvas.width, canvas.height), 1920)
             XCTAssertEqual(canvas.width / canvas.height, size.width / size.height, accuracy: 0.003)
         }
-        XCTAssertEqual(RealtimeRecordingConfiguration.renderSize(for: CGSize(width: .infinity, height: 1)),
+        XCTAssertEqual(RealtimeRecordingConfiguration.renderSize(for: CGSize(width: CGFloat.infinity, height: 1)),
             CGSize(width: 1080, height: 1920))
     }
 
