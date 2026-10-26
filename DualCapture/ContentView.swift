@@ -304,7 +304,7 @@ struct ContentView: View {
         SKStoreReviewController.requestReview(in: scene)
     }
 
-    private static func makeThumbnail(for url: URL) async -> UIImage? {
+    static func makeThumbnail(for url: URL) async -> UIImage? {
         await withCheckedContinuation { continuation in
             let generator = AVAssetImageGenerator(asset: AVAsset(url: url))
             generator.appliesPreferredTrackTransform = true
