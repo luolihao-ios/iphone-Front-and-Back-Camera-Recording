@@ -69,6 +69,7 @@ jobs:
           plist="$RUNNER_TEMP/DualCapture.xcarchive/Products/Applications/DualCapture.app/Info.plist"
           test "$(/usr/libexec/PlistBuddy -c 'Print :UIFileSharingEnabled' "$plist")" = true
           test "$(/usr/libexec/PlistBuddy -c 'Print :LSSupportsOpeningDocumentsInPlace' "$plist")" = true
+          python3 tools/verify_app_metadata.py "$plist"
       - name: Export App Store IPA
         run: |
           cat > "$RUNNER_TEMP/ExportOptions.plist" <<EOF

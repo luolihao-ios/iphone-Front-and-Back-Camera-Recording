@@ -6,3 +6,4 @@ build/
 *.xcworkspace
 xcuserdata/
 .worktrees/
+__pycache__/

@@ -23,6 +23,8 @@ jobs:
         run: brew install xcodegen
       - name: Generate Xcode project
         run: xcodegen generate
+      - name: Test package metadata validation
+        run: python3 -m unittest discover -s tests -p test_app_metadata.py -v
       - name: Build device app without signing
         run: |
           xcodebuild \
@@ -39,6 +41,7 @@ jobs:
           plist=build/Build/Products/Release-iphoneos/DualCapture.app/Info.plist
           test "$(/usr/libexec/PlistBuddy -c 'Print :UIFileSharingEnabled' "$plist")" = true
           test "$(/usr/libexec/PlistBuddy -c 'Print :LSSupportsOpeningDocumentsInPlace' "$plist")" = true
+          python3 tools/verify_app_metadata.py "$plist"
       - name: Run iPhone unit tests
         run: |
           xcodebuild \
