@@ -9,6 +9,7 @@ struct CameraPreview: UIViewRepresentable {
 
     func makeUIView(context: Context) -> PreviewView {
         let view = PreviewView()
+        view.onOrientationChange = { [weak camera] orientation in camera?.updateCaptureOrientation(orientation) }
         camera.previewSink = { [weak view] side, sample in
             DispatchQueue.main.async { view?.display(sample, from: side) }
         }
@@ -31,6 +32,8 @@ final class PreviewView: UIView, UIGestureRecognizerDelegate {
     }
     var canMoveWindow = true
     var onMoveWindow: ((CGPoint) -> Void)?
+    var onOrientationChange: ((UIInterfaceOrientation) -> Void)?
+    private var lastOrientation: UIInterfaceOrientation = .unknown
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,6 +52,7 @@ final class PreviewView: UIView, UIGestureRecognizerDelegate {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+        updateSceneOrientation()
         let mainLayer = displayLayer(for: configuration.primarySide)
         let secondaryLayer = displayLayer(for: configuration.secondarySide)
         let frames = RealtimeVideoLayout.frames(for: configuration)
@@ -69,6 +73,18 @@ final class PreviewView: UIView, UIGestureRecognizerDelegate {
         secondaryLayer.cornerRadius = RealtimeVideoLayout.secondaryCornerRadius(for: configuration, in: bounds)
         secondaryLayer.borderWidth = 0
         CATransaction.commit()
+    }
+
+    override func didMoveToWindow() {
+        super.didMoveToWindow()
+        updateSceneOrientation()
+    }
+
+    private func updateSceneOrientation() {
+        guard let orientation = window?.windowScene?.interfaceOrientation,
+              orientation != .unknown, orientation != lastOrientation else { return }
+        lastOrientation = orientation
+        onOrientationChange?(orientation)
     }
 
     func display(_ sample: CMSampleBuffer, from side: CameraSide) {

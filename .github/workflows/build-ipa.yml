@@ -8,11 +8,17 @@ on:
 
 jobs:
   build:
-    runs-on: macos-15
+    runs-on: xcode-27
     permissions:
       contents: read
     steps:
       - uses: actions/checkout@v4
+      - name: Select Xcode 27.1 for native iPhone Duo full-screen support
+        run: |
+          sudo xcode-select -s /Applications/Xcode_27.1.app/Contents/Developer
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+          xcrun simctl list devices available
       - name: Install XcodeGen
         run: brew install xcodegen
       - name: Generate Xcode project
@@ -28,13 +34,40 @@ jobs:
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
             build
-      - name: Run unit tests
+      - name: Run iPhone unit tests
         run: |
           xcodebuild \
             -project DualCapture.xcodeproj \
             -scheme DualCapture \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -destination 'platform=iOS Simulator,name=iPhone 17,OS=27.0' \
+            -parallel-testing-enabled NO \
+            -resultBundlePath TestResults/iPhone.xcresult \
             test
+      - name: Run iPad unit tests
+        run: |
+          xcodebuild \
+            -project DualCapture.xcodeproj \
+            -scheme DualCapture \
+            -destination 'platform=iOS Simulator,name=iPad Air 11-inch (M4),OS=27.0' \
+            -parallel-testing-enabled NO \
+            -resultBundlePath TestResults/iPad.xcresult \
+            test
+      - name: Run iPhone Duo unit tests
+        run: |
+          xcodebuild \
+            -project DualCapture.xcodeproj \
+            -scheme DualCapture \
+            -destination 'platform=iOS Simulator,name=iPhone Duo,OS=27.1' \
+            -parallel-testing-enabled NO \
+            -resultBundlePath TestResults/iPhoneDuo.xcresult \
+            test
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: camera-test-results
+          path: TestResults
+          if-no-files-found: ignore
       - name: Package IPA
         run: |
           mkdir -p ipa/Payload

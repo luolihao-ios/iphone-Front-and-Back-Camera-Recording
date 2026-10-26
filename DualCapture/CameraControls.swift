@@ -8,6 +8,7 @@ enum CaptureMode: String, CaseIterable {
 struct CameraShortcutMenu: View {
     let layout: CaptureLayout
     @Binding var gridEnabled: Bool
+    var maximumHeight: CGFloat = 442
     let onSelectLayout: (CaptureLayout) -> Void
     let onWindowSettings: () -> Void
     let onSettings: () -> Void
@@ -25,7 +26,7 @@ struct CameraShortcutMenu: View {
                 }
             }
             .scrollBounceBehavior(.basedOnSize)
-            .frame(maxHeight: 336)
+            .frame(maxHeight: max(24, maximumHeight - 106))
             Button(action: onSettings) {
                 VStack(spacing: 3) {
                     ZStack {
@@ -43,7 +44,7 @@ struct CameraShortcutMenu: View {
         }
         .padding(.vertical, 12)
         .frame(width: 48)
-        .frame(maxHeight: 442)
+        .frame(maxHeight: maximumHeight)
         .background(.black.opacity(0.28), in: RoundedRectangle(cornerRadius: 24))
         .clipShape(RoundedRectangle(cornerRadius: 24))
         .buttonStyle(.plain)

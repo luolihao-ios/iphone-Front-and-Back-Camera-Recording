@@ -55,8 +55,12 @@ struct PictureInPictureSettings: Equatable {
 
     func frame(in size: CGSize) -> CGRect {
         let factor = CGFloat(min(max(scale.isFinite ? scale : 1, 0.6), 1.8))
-        let width = size.width * PictureInPictureMetrics.widthRatio * factor
-        let height = shape == .circle ? width : size.height * PictureInPictureMetrics.heightRatio * factor
+        let desiredWidth = size.width * PictureInPictureMetrics.widthRatio * factor
+        let desiredHeight = shape == .circle ? desiredWidth : size.height * PictureInPictureMetrics.heightRatio * factor
+        // 展开、横屏及小窗口中以短边限制整体大小，圆形不能超出窗口或变成椭圆。
+        let fit = min(1, size.width / max(1, desiredWidth), size.height / max(1, desiredHeight))
+        let width = desiredWidth * fit
+        let height = desiredHeight * fit
         let x = center.x.isFinite ? center.x : 0.19
         let y = center.y.isFinite ? center.y : 0.20
         return CGRect(
@@ -101,9 +105,12 @@ struct RealtimeRecordingConfiguration: Equatable {
 
     // 保留预览的宽高比，偶数像素尺寸满足 H.264 编码要求。
     static func renderSize(for previewSize: CGSize) -> CGSize {
-        guard previewSize.width > 0, previewSize.height > 0 else { return CGSize(width: 1080, height: 1920) }
-        let height = (1080 * previewSize.height / previewSize.width / 2).rounded() * 2
-        return CGSize(width: 1080, height: max(2, height))
+        guard previewSize.width.isFinite, previewSize.height.isFinite,
+              previewSize.width > 0, previewSize.height > 0 else { return CGSize(width: 1080, height: 1920) }
+        let scale = min(1080 / min(previewSize.width, previewSize.height),
+                        1920 / max(previewSize.width, previewSize.height))
+        return CGSize(width: max(2, (previewSize.width * scale / 2).rounded() * 2),
+                      height: max(2, (previewSize.height * scale / 2).rounded() * 2))
     }
 }
 
@@ -150,7 +157,12 @@ enum RealtimeVideoLayout {
         for configuration: RealtimeRecordingConfiguration,
         in bounds: CGRect
     ) -> CGRect {
-        scaledFrame(frames(for: configuration).secondary, configuration: configuration, in: bounds)
+        let scaled = scaledFrame(frames(for: configuration).secondary, configuration: configuration, in: bounds)
+        guard configuration.layout == .pictureInPicture, configuration.pictureInPicture.shape == .circle else { return scaled }
+        let diameter = min(scaled.width, scaled.height, bounds.width, bounds.height)
+        return CGRect(x: min(max(scaled.midX - diameter / 2, bounds.minX), bounds.maxX - diameter),
+                      y: min(max(scaled.midY - diameter / 2, bounds.minY), bounds.maxY - diameter),
+                      width: diameter, height: diameter)
     }
 
     static func scaledFrame(_ canonical: CGRect, configuration: RealtimeRecordingConfiguration, in bounds: CGRect) -> CGRect {
@@ -167,6 +179,9 @@ enum RealtimeVideoLayout {
         for configuration: RealtimeRecordingConfiguration,
         in bounds: CGRect
     ) -> CGFloat {
+        if configuration.layout == .pictureInPicture, configuration.pictureInPicture.shape == .circle {
+            return secondaryFrame(for: configuration, in: bounds).width / 2
+        }
         let renderSize = configuration.renderSize
         let scale = min(bounds.width / renderSize.width, bounds.height / renderSize.height)
         return frames(for: configuration).secondaryCornerRadius * scale

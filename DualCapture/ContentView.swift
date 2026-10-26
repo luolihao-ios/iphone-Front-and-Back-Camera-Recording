@@ -28,7 +28,6 @@ struct ContentView: View {
     @State private var handlingCapture = false
     @State private var saveAnimationDestination = SaveAnimationDestination()
     @State private var genieThumbnail: UIImage?
-    @State private var genieProgress: CGFloat = 0
     @State private var showGenieAnimation = false
 
     private var layout: CaptureLayout { CaptureLayout(rawValue: captureLayout) ?? .pictureInPicture }
@@ -39,18 +38,26 @@ struct ContentView: View {
             pictureInPicture: .init(shape: SmallWindowShape(rawValue: smallWindowShape) ?? .roundedRectangle,
                 scale: smallWindowScale, center: CGPoint(x: smallWindowCenterX, y: smallWindowCenterY)))
     }
-    private var busy: Bool { handlingCapture || camera.isProcessing }
+    private var busy: Bool { handlingCapture || camera.isProcessing || showGenieAnimation }
 
     var body: some View {
-        ZStack {
+        GeometryReader { viewport in
+          ZStack {
             Color.black.ignoresSafeArea()
             cameraSurface
             captureControls
-            shortcuts
+                .frame(width: min(520, max(0, viewport.size.width - 24)))
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            shortcuts(availableSize: viewport.size)
             if showGenieAnimation, let genieThumbnail, let target = saveAnimationDestination.activeFrame {
-                GenieSaveAnimation(image: genieThumbnail, progress: genieProgress, target: target)
-                    .allowsHitTesting(false)
+                GenieSaveAnimation(image: genieThumbnail, target: target) {
+                    latestThumbnail = genieThumbnail
+                    showGenieAnimation = false
+                    saveAnimationDestination.end()
+                }
             }
+          }
+          .frame(width: viewport.size.width, height: viewport.size.height)
         }
         .coordinateSpace(name: "cameraScreen")
         .onPreferenceChange(AlbumFramePreference.self) { saveAnimationDestination.update($0) }
@@ -86,8 +93,8 @@ struct ContentView: View {
             }
             if gridEnabled { CompositionGrid() }
             Color.clear.allowsHitTesting(false)
-                .onAppear { previewSize = proxy.size }
-                .onChange(of: proxy.size) { _, size in previewSize = size }
+                .onAppear { updateViewport(proxy.size) }
+                .onChange(of: proxy.size) { _, size in updateViewport(size) }
         }
         .ignoresSafeArea()
     }
@@ -118,14 +125,18 @@ struct ContentView: View {
                 .accessibilityLabel(camera.isTorchOn ? "关闭补光灯" : "开启补光灯")
             }
             Spacer()
-            if camera.isRecording {
-                recordButton()
-                    .disabled(camera.isProcessing)
-                    .padding(.bottom, 34)
-            } else {
+            ZStack(alignment: .bottom) {
+                // 保留相册按钮的布局与目标测量，录制时只隐藏，不移除锚点。
                 idleCaptureControls
-                .disabled(busy)
+                .disabled(busy || camera.isRecording)
+                .opacity(camera.isRecording ? 0 : 1)
+                .accessibilityHidden(camera.isRecording)
                 .padding(.bottom, 20)
+                if camera.isRecording {
+                    recordButton()
+                        .disabled(camera.isProcessing)
+                        .padding(.bottom, 34)
+                }
             }
         }
     }
@@ -173,18 +184,19 @@ struct ContentView: View {
     }
 
     @ViewBuilder
-    private var shortcuts: some View {
+    private func shortcuts(availableSize: CGSize) -> some View {
         if !camera.isRecording, !busy {
             HStack {
                 Spacer()
                 CameraShortcutMenu(layout: layout, gridEnabled: $gridEnabled,
+                    maximumHeight: max(110, min(442, availableSize.height - 250)),
                     onSelectLayout: { selected in captureLayout = selected.rawValue; showWindowControls = false },
                     onWindowSettings: { captureLayout = CaptureLayout.pictureInPicture.rawValue; showWindowControls.toggle() },
                     onSettings: { showSettings = true })
             }
             .padding(.trailing, 10)
-            .padding(.top, 60)
-            .padding(.bottom, 190)
+            .padding(.top, availableSize.height < 500 ? 8 : 60)
+            .padding(.bottom, availableSize.height < 500 ? 158 : 190)
             if showWindowControls {
                 VStack {
                     Spacer()
@@ -193,6 +205,19 @@ struct ContentView: View {
                 }
             }
         }
+    }
+
+    private func updateViewport(_ size: CGSize) {
+        guard size.width.isFinite, size.height.isFinite, size.width > 0, size.height > 0 else { return }
+        if size != previewSize, showGenieAnimation {
+            // 旋转或折叠后旧目标坐标已失效，立即收尾而不是向屏幕外吸入。
+            latestThumbnail = genieThumbnail
+            showGenieAnimation = false
+            saveAnimationDestination.end()
+            DebugLog.shared.log("save.animation.cancelled viewport_changed from=\(previewSize) to=\(size)")
+        }
+        previewSize = size
+        DebugLog.shared.log("viewport.changed size=\(size) recording=\(camera.isRecording)")
     }
 
     @MainActor
@@ -245,16 +270,7 @@ struct ContentView: View {
         }
         DebugLog.shared.log("save.animation.begin album_destination=\(target)")
         genieThumbnail = thumbnail
-        genieProgress = 0
         showGenieAnimation = true
-        await Task.yield()
-        withAnimation(.easeInOut(duration: 0.65)) {
-            genieProgress = 1
-        }
-        try? await Task.sleep(for: .milliseconds(700))
-        latestThumbnail = thumbnail
-        showGenieAnimation = false
-        saveAnimationDestination.end()
     }
 
     private func switchCamera() {
@@ -329,32 +345,6 @@ struct ContentView: View {
     }
 }
 
-private struct GenieSaveAnimation: View {
-    let image: UIImage
-    let progress: CGFloat
-    let target: CGRect
-
-    var body: some View {
-        GeometryReader { proxy in
-            let overlayOrigin = proxy.frame(in: .named("cameraScreen")).origin
-            let localTarget = SaveAnimationGeometry.localTarget(target, overlayOrigin: overlayOrigin)
-            let frame = SaveAnimationGeometry.frame(progress: progress,
-                in: CGRect(origin: .zero, size: proxy.size), target: localTarget)
-
-            Image(uiImage: image)
-                .resizable()
-                .scaledToFill()
-                .frame(width: frame.width, height: frame.height)
-                .clipShape(GenieShape(progress: progress))
-                .position(x: frame.midX, y: frame.midY)
-                .opacity(1 - max(0, progress - 0.9) / 0.1)
-                .onAppear {
-                    DebugLog.shared.log("save.animation.geometry overlayOrigin=\(overlayOrigin) localTarget=\(localTarget)")
-                }
-        }
-    }
-}
-
 private struct AlbumFramePreference: PreferenceKey {
     static let defaultValue = CGRect.zero
     static func reduce(value: inout CGRect, nextValue: () -> CGRect) { value = nextValue() }
@@ -382,24 +372,6 @@ private struct PhotoViewer: View {
             .padding(18)
             .accessibilityLabel("返回相机")
         }
-    }
-}
-
-private struct GenieShape: Shape {
-    var progress: CGFloat
-
-    var animatableData: CGFloat {
-        get { progress }
-        set { progress = newValue }
-    }
-
-    func path(in rect: CGRect) -> Path {
-        let vertices = SaveAnimationGeometry.maskVertices(in: rect, progress: progress)
-        var path = Path()
-        path.move(to: vertices[0])
-        for point in vertices.dropFirst() { path.addLine(to: point) }
-        path.closeSubpath()
-        return path
     }
 }
 

@@ -27,12 +27,15 @@ final class CameraManager: NSObject, ObservableObject {
     private var latestRearSample: CMSampleBuffer?
     private let photoContext = CIContext(options: [.cacheIntermediates: false])
     private var loggedSources: [CameraSide] = []
+    // 只在 sampleQueue 上读写；录制期间保持输出方向，结束后应用新窗口方向。
+    private var pendingCaptureOrientation: AVCaptureVideoOrientation = .portrait
+    private var appliedCaptureOrientation: AVCaptureVideoOrientation = .portrait
 
     func prepare() async {
         DebugLog.shared.log("prepare.begin")
         guard AVCaptureMultiCamSession.isMultiCamSupported else {
             DebugLog.shared.log("prepare.unsupported_multicam")
-            setStatus("此 iPhone 不支持前后摄像头同时录制。")
+            setStatus("此设备不支持前后摄像头同时录制。")
             return
         }
         let permissionsGranted = await requestPermissions()
@@ -49,6 +52,7 @@ final class CameraManager: NSObject, ObservableObject {
                 self.statusMessage = "正在启动双摄会话…"
             }
             sampleQueue.async {
+                self.applyPendingCaptureOrientation()
                 self.session.startRunning()
                 DebugLog.shared.log("prepare.session_running=\(self.session.isRunning)")
                 DispatchQueue.main.async {
@@ -122,7 +126,10 @@ final class CameraManager: NSObject, ObservableObject {
         let videoURL = await finish(realtimeRecorder)
         let failureDescription = realtimeRecorder.failureDescription
         DebugLog.shared.log("record.stop.finished url=\(videoURL?.path ?? "nil") writerError=\(failureDescription ?? "none")")
-        self.realtimeRecorder = nil
+        sampleQueue.sync {
+            self.realtimeRecorder = nil
+            self.applyPendingCaptureOrientation()
+        }
         isRecording = false
         isProcessing = false
         guard let videoURL else {
@@ -209,9 +216,9 @@ final class CameraManager: NSObject, ObservableObject {
         session.beginConfiguration()
         defer { session.commitConfiguration() }
         session.automaticallyConfiguresApplicationAudioSession = true
-        guard let front = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front),
-              let rear = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back),
+        guard let (front, rear) = supportedCameraPair(),
               let microphone = AVCaptureDevice.default(for: .audio) else { throw CaptureError.missingDevice }
+        DebugLog.shared.log("capture.devices front=\(front.deviceType.rawValue) rear=\(rear.deviceType.rawValue)")
         DispatchQueue.main.async { self.hasTorch = rear.hasTorch }
         for (side, device) in [(CameraSide.front, front), (CameraSide.rear, rear)] {
             logCaptureFormat(device.activeFormat, side: side, phase: "original")
@@ -248,12 +255,57 @@ final class CameraManager: NSObject, ObservableObject {
         try connect(input: frontInput, mediaType: .video, output: frontOutput)
         try connect(input: rearInput, mediaType: .video, output: rearOutput)
         if let connection = frontOutput.connection(with: .video), connection.isVideoMirroringSupported {
+            connection.automaticallyAdjustsVideoMirroring = false
             connection.isVideoMirrored = true
         }
         try connect(input: audioInput, mediaType: .audio, output: audioOutput)
         self.frontOutput = frontOutput
         self.rearOutput = rearOutput
         self.audioOutput = audioOutput
+    }
+
+    private func supportedCameraPair() -> (AVCaptureDevice, AVCaptureDevice)? {
+        let discovery = AVCaptureDevice.DiscoverySession(
+            deviceTypes: [.builtInWideAngleCamera, .builtInUltraWideCamera], mediaType: .video, position: .unspecified)
+        let preferredFront = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .front)
+        let preferredRear = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)
+        let fronts = discovery.devices.filter { $0.position == .front }.sorted {
+            ($0.uniqueID == preferredFront?.uniqueID ? 0 : 1) < ($1.uniqueID == preferredFront?.uniqueID ? 0 : 1)
+        }
+        let rears = discovery.devices.filter { $0.position == .back }.sorted {
+            ($0.uniqueID == preferredRear?.uniqueID ? 0 : 1) < ($1.uniqueID == preferredRear?.uniqueID ? 0 : 1)
+        }
+        for front in fronts {
+            for rear in rears where discovery.supportedMultiCamDeviceSets.contains(where: { set in
+                set.contains(front) && set.contains(rear)
+            }) { return (front, rear) }
+        }
+        return nil
+    }
+
+    func updateCaptureOrientation(_ orientation: UIInterfaceOrientation) {
+        guard let videoOrientation = CameraOrientation.videoOrientation(for: orientation) else { return }
+        sampleQueue.async {
+            self.pendingCaptureOrientation = videoOrientation
+            self.applyPendingCaptureOrientation()
+        }
+    }
+
+    private func applyPendingCaptureOrientation() {
+        guard realtimeRecorder == nil else { return }
+        let connections = [frontOutput, rearOutput].compactMap { $0?.connection(with: .video) }
+        guard connections.count == 2 else { return }
+        guard appliedCaptureOrientation != pendingCaptureOrientation || connections.contains(where: {
+            $0.videoOrientation != pendingCaptureOrientation
+        }) else { return }
+        for connection in connections where connection.isVideoOrientationSupported {
+            connection.videoOrientation = pendingCaptureOrientation
+        }
+        appliedCaptureOrientation = pendingCaptureOrientation
+        latestFrontSample = nil
+        latestRearSample = nil
+        loggedSources.removeAll()
+        DebugLog.shared.log("capture.orientation applied=\(appliedCaptureOrientation.rawValue)")
     }
 
     private func supports30FPS(_ format: AVCaptureDevice.Format) -> Bool {
