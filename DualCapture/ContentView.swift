@@ -60,7 +60,10 @@ struct ContentView: View {
           .frame(width: viewport.size.width, height: viewport.size.height)
         }
         .coordinateSpace(name: "cameraScreen")
-        .onPreferenceChange(AlbumFramePreference.self) { saveAnimationDestination.update($0) }
+        .onPreferenceChange(AlbumFramePreference.self) {
+            saveAnimationDestination.update($0)
+            DebugLog.shared.log("save.animation.album_measured frame=\($0)")
+        }
         .task {
             await camera.prepare()
             let latest = await Self.loadLatestVideo()
@@ -231,10 +234,12 @@ struct ContentView: View {
                 recordingStartedAt = nil
                 guard let videoURL = await camera.stopRecording() else { return }
                 if await camera.save(videoURL: videoURL) {
+                    DebugLog.shared.log("feedback.video.saved thumbnail_request")
                     latestVideoURL = videoURL
                     latestPhoto = nil
                     successfulSaveCount += 1
                     let thumbnail = await Self.makeThumbnail(for: videoURL)
+                    DebugLog.shared.log("feedback.video.thumbnail available=\(thumbnail != nil) viewport=\(previewSize)")
                     await playSaveAnimation(with: thumbnail)
                 }
             }
@@ -262,7 +267,10 @@ struct ContentView: View {
 
     @MainActor
     private func playSaveAnimation(with thumbnail: UIImage?) async {
-        guard let thumbnail else { return }
+        guard let thumbnail else {
+            DebugLog.shared.log("save.animation.skipped thumbnail_missing")
+            return
+        }
         guard let target = saveAnimationDestination.begin() else {
             DebugLog.shared.log("save.animation.skipped no_valid_album_destination")
             latestThumbnail = thumbnail
@@ -305,10 +313,12 @@ struct ContentView: View {
     }
 
     static func makeThumbnail(for url: URL) async -> UIImage? {
-        await withCheckedContinuation { continuation in
+        DebugLog.shared.log("thumbnail.request file=\(url.lastPathComponent)")
+        return await withCheckedContinuation { continuation in
             let generator = AVAssetImageGenerator(asset: AVAsset(url: url))
             generator.appliesPreferredTrackTransform = true
-            generator.generateCGImagesAsynchronously(forTimes: [NSValue(time: .zero)]) { _, image, _, _, _ in
+            generator.generateCGImagesAsynchronously(forTimes: [NSValue(time: .zero)]) { requested, image, actual, result, error in
+                DebugLog.shared.log("thumbnail.result code=\(result.rawValue) image=\(image != nil) requested=\(requested.seconds) actual=\(actual.seconds) error=\(error?.localizedDescription ?? "none")")
                 continuation.resume(returning: image.map(UIImage.init(cgImage:)))
             }
         }
@@ -465,6 +475,11 @@ private struct SettingsView: View {
                     }
                     .disabled(availableUpdate == nil)
                     Link("去 App Store 评分", destination: AppStoreUpdateChecker.writeReviewURL)
+                }
+                Section("诊断") {
+                    NavigationLink("查看／导出诊断日志") { DiagnosticsView() }
+                    Text("日志自动保存在本机，不会自动上传。遇到问题后可在此导出 .log 文件。")
+                        .font(.footnote).foregroundStyle(.secondary)
                 }
             }
             .navigationTitle("设置")

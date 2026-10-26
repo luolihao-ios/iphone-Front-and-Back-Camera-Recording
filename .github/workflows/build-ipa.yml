@@ -34,6 +34,11 @@ jobs:
             -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
             build
+      - name: Verify device package exposes diagnostic files
+        run: |
+          plist=build/Build/Products/Release-iphoneos/DualCapture.app/Info.plist
+          test "$(/usr/libexec/PlistBuddy -c 'Print :UIFileSharingEnabled' "$plist")" = true
+          test "$(/usr/libexec/PlistBuddy -c 'Print :LSSupportsOpeningDocumentsInPlace' "$plist")" = true
       - name: Run iPhone unit tests
         run: |
           xcodebuild \

@@ -52,24 +52,24 @@ struct GenieSaveAnimation: View {
                 clock.start(at: Date())
                 DebugLog.shared.log("save.animation.mounted bounds=\(proxy.size) target=\(localTarget) progress=0")
             }
-            .onChange(of: proxy.size) { _, _ in finish() }
-            .onChange(of: origin) { _, _ in finish() }
+            .onChange(of: proxy.size) { _, _ in finish(reason: "geometry_size_changed") }
+            .onChange(of: origin) { _, _ in finish(reason: "geometry_origin_changed") }
             .task {
                 // 计时起点属于已挂载的动效视图，而不是等待保存的父任务。
                 try? await Task.sleep(for: .milliseconds(800))
                 guard !Task.isCancelled else { return }
-                finish()
+                finish(reason: "duration_elapsed")
             }
-            .onDisappear { finish() }
+            .onDisappear { finish(reason: "view_disappeared") }
         }
         .allowsHitTesting(false)
         .accessibilityHidden(true)
     }
 
-    private func finish() {
+    private func finish(reason: String) {
         guard !completed else { return }
         completed = true
-        DebugLog.shared.log("save.animation.completed middleFrame=\(reportedMiddleFrame)")
+        DebugLog.shared.log("save.animation.completed reason=\(reason) middleFrame=\(reportedMiddleFrame)")
         onComplete()
     }
 }
