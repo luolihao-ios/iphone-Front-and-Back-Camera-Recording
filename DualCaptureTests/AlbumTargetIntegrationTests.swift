@@ -43,10 +43,21 @@ final class AlbumTargetIntegrationTests: XCTestCase {
             let originReady = expectation(description: "读取带安全区的覆盖层位置")
             let albumReady = expectation(description: "读取窗口内相册位置")
             let host = UIHostingController(rootView: GeometryReader { proxy in
-                Color.clear.onAppear {
-                    overlayOrigin = proxy.frame(in: .global).origin
-                    originReady.fulfill()
-                }
+                Color.clear
+                    .overlay(alignment: .topLeading) {
+                        // 与主界面使用同一个 UIViewRepresentable，不能向 HostingView 强插子视图。
+                        AlbumAnimationTargetProbe { frame in
+                            guard albumFrame == nil else { return }
+                            albumFrame = frame
+                            albumReady.fulfill()
+                        }
+                        .frame(width: 46, height: 46)
+                        .offset(x: 70, y: 500)
+                    }
+                    .onAppear {
+                        overlayOrigin = proxy.frame(in: .global).origin
+                        originReady.fulfill()
+                    }
             })
             host.additionalSafeAreaInsets = UIEdgeInsets(top: 59, left: 23, bottom: 34, right: 0)
             let window = UIWindow(frame: CGRect(origin: .zero, size: size))
@@ -54,23 +65,18 @@ final class AlbumTargetIntegrationTests: XCTestCase {
             window.makeKeyAndVisible()
             defer { window.isHidden = true; window.rootViewController = nil }
             host.view.frame = window.bounds
-            let probe = AlbumAnimationTargetView(frame: CGRect(x: 70, y: 500, width: 46, height: 46))
-            probe.onFrame = { frame in
-                guard albumFrame == nil else { return }
-                albumFrame = frame
-                albumReady.fulfill()
-            }
-            host.view.addSubview(probe)
             host.view.layoutIfNeeded()
             await fulfillment(of: [originReady, albumReady], timeout: 2)
             let origin = try XCTUnwrap(overlayOrigin)
             let globalFrame = try XCTUnwrap(albumFrame)
             let localFrame = SaveAnimationGeometry.localTarget(globalFrame, overlayOrigin: origin)
-            let expected = probe.convert(probe.bounds, to: host.view).offsetBy(
-                dx: -host.view.safeAreaInsets.left, dy: -host.view.safeAreaInsets.top)
+            // 独立的预期值来自上方声明的布局，不调用被测坐标转换来生成预期。
+            let expected = CGRect(x: 70, y: 500, width: 46, height: 46)
             XCTAssertGreaterThan(origin.y, 0)
             XCTAssertEqual(localFrame.midX, expected.midX, accuracy: 0.5)
             XCTAssertEqual(localFrame.midY, expected.midY, accuracy: 0.5)
+            XCTAssertEqual(localFrame.width, 46, accuracy: 0.5)
+            XCTAssertEqual(localFrame.height, 46, accuracy: 0.5)
         }
     }
 
