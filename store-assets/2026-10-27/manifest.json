@@ -1,0 +1,172 @@
+[
+  {
+    "key": "creative-header",
+    "file": "creative/creative-header.png",
+    "size": [
+      3840,
+      1646
+    ],
+    "category": "CREATIVE_ASSETS",
+    "referenceName": "同框之外-20261027-creative-header-功能示意"
+  },
+  {
+    "key": "creative-search",
+    "file": "creative/creative-search.png",
+    "size": [
+      3840,
+      2560
+    ],
+    "category": "CREATIVE_ASSETS",
+    "referenceName": "同框之外-20261027-creative-search-功能示意"
+  },
+  {
+    "key": "duo-01",
+    "file": "duo/duo-01.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-duo-01-功能示意"
+  },
+  {
+    "key": "duo-02",
+    "file": "duo/duo-02.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-duo-02-功能示意"
+  },
+  {
+    "key": "duo-03",
+    "file": "duo/duo-03.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-duo-03-功能示意"
+  },
+  {
+    "key": "duo-04",
+    "file": "duo/duo-04.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-duo-04-功能示意"
+  },
+  {
+    "key": "duo-05",
+    "file": "duo/duo-05.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-duo-05-功能示意"
+  },
+  {
+    "key": "ipad-01",
+    "file": "ipad/ipad-01.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-ipad-01-功能示意"
+  },
+  {
+    "key": "ipad-02",
+    "file": "ipad/ipad-02.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-ipad-02-功能示意"
+  },
+  {
+    "key": "ipad-03",
+    "file": "ipad/ipad-03.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-ipad-03-功能示意"
+  },
+  {
+    "key": "ipad-04",
+    "file": "ipad/ipad-04.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-ipad-04-功能示意"
+  },
+  {
+    "key": "ipad-05",
+    "file": "ipad/ipad-05.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-ipad-05-功能示意"
+  },
+  {
+    "key": "iphone-01",
+    "file": "iphone/iphone-01.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-iphone-01-功能示意"
+  },
+  {
+    "key": "iphone-02",
+    "file": "iphone/iphone-02.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-iphone-02-功能示意"
+  },
+  {
+    "key": "iphone-03",
+    "file": "iphone/iphone-03.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-iphone-03-功能示意"
+  },
+  {
+    "key": "iphone-04",
+    "file": "iphone/iphone-04.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-iphone-04-功能示意"
+  },
+  {
+    "key": "iphone-05",
+    "file": "iphone/iphone-05.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261027-iphone-05-功能示意"
+  }
+]
