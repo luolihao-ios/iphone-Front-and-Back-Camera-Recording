@@ -312,10 +312,58 @@ def upload(client, report, manifest_path, create_draft, checkpoint):
           f'{len(report["processingPending"])} 张仍在 Apple 处理中；未提交审核、未发布。')
 
 
+def update_metadata(client, report, copy_path, checkpoint):
+    content = json.loads(Path(copy_path).read_text(encoding='utf-8'))
+    if set(content) != {'version', 'localizations'} or content['version'] != '1.0.13':
+        raise ValueError('仅允许更新本次 1.0.13 本地化文案')
+    desired = content['localizations']
+    if set(desired) != {'zh-Hans', 'zh-Hant', 'en-US'}:
+        raise ValueError('本次文案必须完整包含简体、繁体和英文')
+    for locale, fields in desired.items():
+        if set(fields) != {'description', 'whatsNew'}:
+            raise ValueError(f'不允许修改描述、更新说明之外的字段：{locale}')
+        for value in fields.values():
+            if not isinstance(value, str) or not value.strip() or len(value) > 4000:
+                raise ValueError(f'文案为空或超过 4000 字符：{locale}')
+    versions = [v for v in report['versions'] if v['attributes'].get('versionString') == content['version']
+                and v['attributes'].get('platform') == 'IOS']
+    if len(versions) != 1:
+        raise ValueError('没有唯一的 1.0.13 iOS 草稿版本，未写入文案')
+    version = client.api('GET', '/v1/appStoreVersions/' + versions[0]['id'])['data']
+    require_editable(version)
+    if version['attributes'].get('versionString') != content['version']:
+        raise ValueError('版本复查不一致，未写入文案')
+    rows = client.api('GET', f'/v1/appStoreVersions/{version["id"]}/appStoreVersionLocalizations')['data']
+    localized = {row['attributes']['locale']: row for row in rows}
+    if set(localized) != set(desired) or len(rows) != len(desired):
+        raise ValueError('后台本地化语言与本次文案不一致，未写入任何语言')
+    report['metadataVersion'] = {'id': version['id'], 'version': content['version']}
+    report['metadataPrevious'] = {locale: {'id': row['id'], 'fields': {
+        field: row['attributes'].get(field) for field in ('description', 'whatsNew')}}
+        for locale, row in localized.items()}
+    report['metadataVerified'] = {}
+    checkpoint()
+    for locale, fields in desired.items():
+        locale_id = localized[locale]['id']
+        client.api('PATCH', '/v1/appStoreVersionLocalizations/' + locale_id, {'data': {
+            'type': 'appStoreVersionLocalizations', 'id': locale_id, 'attributes': fields}})
+        actual = client.api('GET', '/v1/appStoreVersionLocalizations/' + locale_id)['data']['attributes']
+        if any(actual.get(field) != value for field, value in fields.items()):
+            raise ValueError(f'写入后重新读取的文案不一致：{locale}')
+        report['metadataVerified'][locale] = {'id': locale_id, 'description': actual['description'],
+                                             'whatsNew': actual['whatsNew']}
+        checkpoint()
+        print(f'{locale}：描述和此版本新增内容已保存并重新读取核对。', flush=True)
+    report['metadataComplete'] = True
+    checkpoint()
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--report', required=True)
-    parser.add_argument('--manifest')
+    action = parser.add_mutually_exclusive_group()
+    action.add_argument('--manifest')
+    action.add_argument('--metadata')
     parser.add_argument('--create-draft', action='store_true')
     args = parser.parse_args()
     destination = Path(args.report)
@@ -330,6 +378,9 @@ def main():
         checkpoint()
         if args.manifest:
             upload(client, report, args.manifest, args.create_draft, checkpoint)
+            return
+        if args.metadata:
+            update_metadata(client, report, args.metadata, checkpoint)
             return
         print('素材库、参考规格和版本状态读取成功；本步骤未写入 Apple 后台。')
     except Exception as error:
