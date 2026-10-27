@@ -75,7 +75,7 @@ class StoreAssetTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 store_assets.read_manifest(root / 'manifest.json')
 
-    def _placement_scenario(self, initial=None, omit_post_relationships=False):
+    def _placement_scenario(self, initial=None, omit_post_relationships=False, processing=False):
         class AppleBoundary:
             def __init__(self):
                 self.placements = [{'id': 'legacy', 'attributes': {'placementType': 'APP_SCREENSHOT', 'placementGroup': 'PHONE'},
@@ -87,7 +87,8 @@ class StoreAssetTests(unittest.TestCase):
             def api(self, method, path, body=None, params=None):
                 if path.endswith('/images?limit=200'): return {'data': []}
                 if path.startswith('/v1/appAssetLibraryImages/'):
-                    return {'data': {'attributes': {'state': 'PREPARE_FOR_SUBMISSION', 'specId': 's'}}}
+                    return {'data': {'attributes': {'state': 'UPLOAD_COMPLETE' if processing else 'PREPARE_FOR_SUBMISSION',
+                                                    'specId': None if processing else 's'}}}
                 if path == '/v1/appStoreVersions/version':
                     return {'data': {'id': 'version', 'attributes': {'appStoreState': 'PREPARE_FOR_SUBMISSION'}}}
                 if path.endswith('/appStoreVersionLocalizations'):
@@ -125,7 +126,8 @@ class StoreAssetTests(unittest.TestCase):
             boundary = AppleBoundary()
             with patch.object(store_assets, 'upload_image', side_effect=[
                 {'key': 'a', 'id': 'a', 'state': 'PREPARE_FOR_SUBMISSION', 'specId': 's'},
-                {'key': 'b', 'id': 'b', 'state': 'PREPARE_FOR_SUBMISSION', 'specId': 's'}]):
+                {'key': 'b', 'id': 'b', 'state': 'PREPARE_FOR_SUBMISSION', 'specId': 's'}]), \
+                    patch.object(store_assets.time, 'sleep', side_effect=AssertionError('不应等待 Apple 图片处理才建立关联')):
                 store_assets.upload(boundary, report, root / 'manifest.json', False, lambda: None)
             return boundary, report
 
@@ -143,6 +145,13 @@ class StoreAssetTests(unittest.TestCase):
     def test_post_response_without_relationships_does_not_delete_new_placement(self):
         boundary, report = self._placement_scenario(omit_post_relationships=True)
         self.assertEqual([p['id'] for p in boundary.placements], ['p-a', 'p-b'])
+        self.assertTrue(report['complete'])
+
+    def test_processing_images_do_not_block_draft_and_product_page_placements(self):
+        boundary, report = self._placement_scenario(processing=True)
+        self.assertEqual(report['targetVersion']['version'], '1.0.13')
+        self.assertEqual([p['id'] for p in boundary.placements], ['p-a', 'p-b'])
+        self.assertEqual(report['processingPending'], ['a', 'b'])
         self.assertTrue(report['complete'])
 
     def test_repeated_report_backup_preserves_first_snapshot(self):

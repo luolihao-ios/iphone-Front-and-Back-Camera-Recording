@@ -139,3 +139,5 @@ jobs:
         with:
           name: store-asset-inspection
           path: .artifacts/store-asset-inspection*.json
+          include-hidden-files: true
+          if-no-files-found: error

@@ -126,7 +126,8 @@ class AppleClient:
                 codes = [row.get('code', '') for row in json.loads(error.read()).get('errors', [])]
             except (ValueError, UnicodeError):
                 codes = []
-            raise RuntimeError(f'Apple API HTTP {error.code}: {",".join(codes)}') from None
+            resource_path = path.partition('?')[0]
+            raise RuntimeError(f'Apple API {method} {resource_path} HTTP {error.code}: {",".join(codes)}') from None
 
 
 def inspect(client):
@@ -239,6 +240,10 @@ def upload(client, report, manifest_path, create_draft, checkpoint):
         if len(groups) != 1:
             raise ValueError(f'无法唯一匹配官方设备规格：{item["key"]} {groups}')
         item['placementType'], item['placementGroup'] = placement_type, groups[0]
+    version, locale = prepare_draft(client, report, create_draft)
+    report['targetVersion'] = {'id': version['id'], 'version': '1.0.13', 'locale': locale['attributes']['locale'], 'localeId': locale['id']}
+    checkpoint()
+    print(f'产品页草稿已就绪：1.0.13，语言 {locale["attributes"]["locale"]}。', flush=True)
     report['uploads'] = []
     existing = all_images(client, report['library']['id'])
     for item in items:
@@ -246,24 +251,18 @@ def upload(client, report, manifest_path, create_draft, checkpoint):
         report['uploads'].append(row)
         checkpoint()
         print(item['key'], row['state'], flush=True)
-    for attempt in range(7):
-        pending = False
-        for row in report['uploads']:
-            asset = client.api('GET', '/v1/appAssetLibraryImages/' + row['id'])['data']['attributes']
-            row.update(state=asset['state'], specId=asset.get('specId'))
-            if asset['state'] == 'FAILED':
-                row['stateDetails'] = asset.get('stateDetails')
-                checkpoint()
-                raise ValueError(f'Apple 素材处理失败：{row["key"]}')
-            pending |= asset['state'] in {'AWAITING_UPLOAD', 'UPLOAD_COMPLETE'}
-        checkpoint()
-        if not pending:
-            break
-        if attempt == 6:
-            raise ValueError('素材仍在 Apple 处理中，尚未关联产品页；稍后可安全重跑')
-        time.sleep(5)
-    version, locale = prepare_draft(client, report, create_draft)
-    report['targetVersion'] = {'id': version['id'], 'version': '1.0.13', 'locale': locale['attributes']['locale'], 'localeId': locale['id']}
+    report['processingPending'] = []
+    for row in report['uploads']:
+        asset = client.api('GET', '/v1/appAssetLibraryImages/' + row['id'])['data']['attributes']
+        row.update(state=asset['state'], specId=asset.get('specId'))
+        if asset['state'] == 'FAILED':
+            row['stateDetails'] = asset.get('stateDetails')
+            checkpoint()
+            raise ValueError(f'Apple 素材处理失败：{row["key"]}')
+        if asset['state'] in {'AWAITING_UPLOAD', 'UPLOAD_COMPLETE'}:
+            report['processingPending'].append(row['key'])
+    # Apple 支持在素材处理期间建立 ASSET_PROCESSING 关联；无需轮询阻塞草稿页。
+    checkpoint()
     old = client.api('GET', f'/v1/appStoreVersionLocalizations/{locale["id"]}/placements',
                      params={'include': 'image', 'limit': 200, 'sort': 'placementGroupPosition'})['data']
     report['previousPlacements'] = json.loads(json.dumps(old))
@@ -309,7 +308,8 @@ def upload(client, report, manifest_path, create_draft, checkpoint):
             raise ValueError('产品页关联数量或顺序不符，不能报告上传完成')
     report['complete'] = True
     checkpoint()
-    print(f'{len(items)} 张素材已处理并关联到 1.0.13 简体中文草稿；未提交审核、未发布。')
+    print(f'{len(items)} 张素材已上传并关联到 1.0.13 简体中文草稿；'
+          f'{len(report["processingPending"])} 张仍在 Apple 处理中；未提交审核、未发布。')
 
 
 def main():
