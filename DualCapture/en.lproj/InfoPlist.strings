@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "同框之外";
+"NSCameraUsageDescription" = "Camera access is used to record with the front and rear cameras together.";
+"NSMicrophoneUsageDescription" = "Microphone access is used to record audio for your videos.";
+"NSPhotoLibraryAddUsageDescription" = "Photo library access is used to save captured photos and videos.";
+"NSPhotoLibraryUsageDescription" = "Photo library access is used to display and view your most recently saved photo or video.";

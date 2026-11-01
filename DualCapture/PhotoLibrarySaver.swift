@@ -32,8 +32,8 @@ private enum PhotoSaveError: LocalizedError {
     case permissionDenied, saveFailed
     var errorDescription: String? {
         switch self {
-        case .permissionDenied: return "请在 iPhone 设置中允许本应用保存到照片图库。"
-        case .saveFailed: return "照片图库未能保存文件，请检查设备剩余空间后重试。"
+        case .permissionDenied: return L10n.string("error.photos.permission")
+        case .saveFailed: return L10n.string("error.photos.save")
         }
     }
 }

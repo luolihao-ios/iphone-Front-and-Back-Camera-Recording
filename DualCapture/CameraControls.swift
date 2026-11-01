@@ -1,8 +1,10 @@
 import SwiftUI
 
 enum CaptureMode: String, CaseIterable {
-    case video = "视频"
-    case photo = "拍照"
+    case video
+    case photo
+
+    var title: String { L10n.string(self == .video ? "camera.video" : "camera.photo") }
 }
 
 struct CameraShortcutMenu: View {
@@ -17,12 +19,12 @@ struct CameraShortcutMenu: View {
         VStack(spacing: 12) {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(spacing: 12) {
-                    shortcut("网格", symbol: "grid", selected: gridEnabled) { gridEnabled.toggle() }
-                    shortcut("全屏", symbol: "viewfinder", selected: layout == .fullScreen) { onSelectLayout(.fullScreen) }
-                    shortcut("上下", symbol: "rectangle.split.1x2", selected: layout == .split) { onSelectLayout(.split) }
-                    shortcut("左右", symbol: "rectangle.split.2x1", selected: layout == .sideBySide) { onSelectLayout(.sideBySide) }
-                    shortcut("画中画", symbol: "pip", selected: layout == .pictureInPicture) { onSelectLayout(.pictureInPicture) }
-                    shortcut("形状", symbol: "circle.square", selected: false, action: onWindowSettings)
+                    shortcut(L10n.string("layout.grid"), symbol: "grid", selected: gridEnabled) { gridEnabled.toggle() }
+                    shortcut(CaptureLayout.fullScreen.title, symbol: "viewfinder", selected: layout == .fullScreen) { onSelectLayout(.fullScreen) }
+                    shortcut(CaptureLayout.split.title, symbol: "rectangle.split.1x2", selected: layout == .split) { onSelectLayout(.split) }
+                    shortcut(CaptureLayout.sideBySide.title, symbol: "rectangle.split.2x1", selected: layout == .sideBySide) { onSelectLayout(.sideBySide) }
+                    shortcut(CaptureLayout.pictureInPicture.title, symbol: "pip", selected: layout == .pictureInPicture) { onSelectLayout(.pictureInPicture) }
+                    shortcut(L10n.string("window.shape"), symbol: "circle.square", selected: false, action: onWindowSettings)
                 }
             }
             .scrollBounceBehavior(.basedOnSize)
@@ -34,13 +36,13 @@ struct CameraShortcutMenu: View {
                         Circle().stroke(lineWidth: 2).frame(width: 10, height: 10)
                     }
                     .frame(height: 30)
-                    Text("设置").font(.system(size: 11))
+                    Text(L10n.string("settings.title")).font(.system(size: 11))
                 }
                 .frame(width: 48)
                 .foregroundStyle(.white)
             }
             .fixedSize(horizontal: false, vertical: true)
-            .accessibilityLabel("设置")
+            .accessibilityLabel(L10n.string("settings.title"))
         }
         .padding(.vertical, 12)
         .frame(width: 48)
@@ -54,7 +56,7 @@ struct CameraShortcutMenu: View {
         Button(action: action) {
             VStack(spacing: 3) {
                 Image(systemName: symbol).font(.system(size: 25, weight: .regular)).frame(height: 30)
-                Text(title).font(.system(size: 11))
+                Text(title).font(.system(size: 11)).multilineTextAlignment(.center)
             }
             .foregroundStyle(selected ? .yellow : .white)
             .frame(width: 48)
@@ -72,22 +74,22 @@ struct SmallWindowPanel: View {
     var body: some View {
         VStack(spacing: 16) {
             HStack {
-                Text("形状").font(.headline)
+                Text(L10n.string("window.shape")).font(.headline)
                 Spacer()
                 Button(action: close) { Image(systemName: "xmark.circle.fill").font(.title2) }
-                    .accessibilityLabel("关闭形状设置")
+                    .accessibilityLabel(L10n.string("window.shape.close"))
             }
-            Picker("形状", selection: $shape) {
+            Picker(L10n.string("window.shape"), selection: $shape) {
                 ForEach(SmallWindowShape.allCases) { Text($0.title).tag($0.rawValue) }
             }
             .pickerStyle(.segmented)
             HStack {
                 Image(systemName: "minus.magnifyingglass")
                 Slider(value: $scale, in: 0.6...1.8)
-                    .accessibilityLabel("画中画大小")
+                    .accessibilityLabel(L10n.string("window.size.accessibility"))
                 Image(systemName: "plus.magnifyingglass")
             }
-            Text("按住小画面可拖动位置").font(.caption).foregroundStyle(.secondary)
+            Text(L10n.string("window.drag_hint")).font(.caption).foregroundStyle(.secondary)
         }
         .padding(20)
         .frame(maxWidth: 340)

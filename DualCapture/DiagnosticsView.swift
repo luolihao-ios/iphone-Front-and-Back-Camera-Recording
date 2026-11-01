@@ -7,24 +7,24 @@ struct DiagnosticsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                Text("日志只保存在本机，不含拍摄画面或录音，不会自动上传。点击右上角“导出”，可以发送给开发者或存储到“文件”。")
+                Text(L10n.string("diagnostics.privacy"))
                     .font(.footnote).foregroundStyle(.secondary)
                 if let failure {
-                    Text("无法读取诊断日志：\(failure)").foregroundStyle(.red)
+                    Text(L10n.format("diagnostics.read_error", failure)).foregroundStyle(.red)
                 } else if let snapshot {
                     Text(snapshot.text).font(.system(size: 12, design: .monospaced)).textSelection(.enabled)
                 } else {
-                    ProgressView("正在读取日志…")
+                    ProgressView(L10n.string("diagnostics.loading"))
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading).padding()
         }
-        .navigationTitle("诊断日志")
+        .navigationTitle(L10n.string("diagnostics.title"))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItemGroup(placement: .topBarTrailing) {
-                Button("刷新") { Task { await reload() } }
-                if let snapshot { ShareLink("导出", item: snapshot.fileURL) }
+                Button(L10n.string("action.refresh")) { Task { await reload() } }
+                if let snapshot { ShareLink(L10n.string("action.export"), item: snapshot.fileURL) }
             }
         }
         .task { await reload() }

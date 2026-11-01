@@ -35,13 +35,13 @@ final class CameraManager: NSObject, ObservableObject {
         DebugLog.shared.log("prepare.begin")
         guard AVCaptureMultiCamSession.isMultiCamSupported else {
             DebugLog.shared.log("prepare.unsupported_multicam")
-            setStatus("此设备不支持前后摄像头同时录制。")
+            setStatus(L10n.string("error.multicam.unsupported"))
             return
         }
         let permissionsGranted = await requestPermissions()
         DebugLog.shared.log("prepare.permissions=\(permissionsGranted)")
         guard permissionsGranted else {
-            setStatus("请在“设置 > 隐私与安全性”中允许相机和麦克风访问。")
+            setStatus(L10n.string("error.capture.permissions"))
             return
         }
         do {
@@ -49,7 +49,7 @@ final class CameraManager: NSObject, ObservableObject {
             try fitCaptureHardwareBudget()
             DispatchQueue.main.async {
                 self.isSupported = true
-                self.statusMessage = "正在启动双摄会话…"
+                self.statusMessage = L10n.string("status.session.starting")
             }
             sampleQueue.async {
                 self.applyPendingCaptureOrientation()
@@ -57,12 +57,12 @@ final class CameraManager: NSObject, ObservableObject {
                 DebugLog.shared.log("prepare.session_running=\(self.session.isRunning)")
                 DispatchQueue.main.async {
                     self.isReady = self.session.isRunning
-                    self.statusMessage = self.session.isRunning ? nil : "双摄会话未能启动。"
+                    self.statusMessage = self.session.isRunning ? nil : L10n.string("error.session.start")
                 }
             }
         } catch {
             DebugLog.shared.log("prepare.configure_error=\(error.localizedDescription)")
-            setStatus("无法配置双摄会话：\(error.localizedDescription)")
+            setStatus(L10n.format("error.session.configuration", error.localizedDescription))
         }
     }
 
@@ -91,7 +91,7 @@ final class CameraManager: NSObject, ObservableObject {
             statusMessage = nil
         } catch {
             DebugLog.shared.log("record.start.error=\(error.localizedDescription)")
-            setStatus("无法创建录制文件：\(error.localizedDescription)")
+            setStatus(L10n.format("error.recording.file", error.localizedDescription))
         }
     }
 
@@ -108,13 +108,13 @@ final class CameraManager: NSObject, ObservableObject {
         }
         guard let realtimeRecorder else {
             DebugLog.shared.log("record.stop.error_recorder_missing")
-            setStatus("录制器已丢失，请重新开始录制。")
+            setStatus(L10n.string("error.recorder.missing"))
             return nil
         }
         sampleQueue.sync { audioRecordingEnabled = false }
         AudioServicesPlaySystemSound(1118)
         isProcessing = true
-        statusMessage = "正在完成录制…"
+        statusMessage = L10n.string("status.recording.finishing")
         // Yield once so SwiftUI can render the processing state before the
         // writer completion task returns (including the no-frame failure path).
         await Task.yield()
@@ -133,8 +133,9 @@ final class CameraManager: NSObject, ObservableObject {
         isRecording = false
         isProcessing = false
         guard let videoURL else {
-            let detail = failureDescription.map { "（\($0)）" } ?? ""
-            setStatus("视频写入失败\(detail)，请重试。")
+            let message = failureDescription.map { L10n.format("error.recording.write_detail", $0) }
+                ?? L10n.string("error.recording.write")
+            setStatus(message)
             return nil
         }
         statusMessage = nil
@@ -153,7 +154,7 @@ final class CameraManager: NSObject, ObservableObject {
             return true
         } catch {
             DebugLog.shared.log("save.error=\(error.localizedDescription)")
-            setStatus("保存失败：\(error.localizedDescription)")
+            setStatus(L10n.format("error.video.save", error.localizedDescription))
             return false
         }
     }
@@ -184,7 +185,7 @@ final class CameraManager: NSObject, ObservableObject {
             }
         }
         guard let image else {
-            setStatus("尚未收到完整相机画面，请稍后重试。")
+            setStatus(L10n.string("error.camera.frames"))
             return nil
         }
         do {
@@ -193,7 +194,7 @@ final class CameraManager: NSObject, ObservableObject {
             return image
         } catch {
             DebugLog.shared.log("photo.failed \(error.localizedDescription)")
-            setStatus("照片保存失败：\(error.localizedDescription)")
+            setStatus(L10n.format("error.photo.save", error.localizedDescription))
             return nil
         }
     }
@@ -208,7 +209,7 @@ final class CameraManager: NSObject, ObservableObject {
                 let enabled = device.torchMode != .on
                 device.torchMode = enabled ? .on : .off
                 DispatchQueue.main.async { self.isTorchOn = enabled }
-            } catch { self.setStatus("无法开启补光灯：\(error.localizedDescription)") }
+            } catch { self.setStatus(L10n.format("error.torch", error.localizedDescription)) }
         }
     }
 
@@ -439,7 +440,7 @@ final class CameraManager: NSObject, ObservableObject {
 }
 
 private enum CaptureError: LocalizedError { case missingDevice, unsupportedCombination
-    var errorDescription: String? { self == .missingDevice ? "找不到摄像头或麦克风" : "此机型不支持该双摄组合" }
+    var errorDescription: String? { L10n.string(self == .missingDevice ? "error.device.missing" : "error.camera.combination") }
 }
 
 private final class SampleDelegate: NSObject, AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureAudioDataOutputSampleBufferDelegate {

@@ -33,10 +33,10 @@ enum CaptureLayout: String, CaseIterable, Identifiable {
     var id: String { rawValue }
     var title: String {
         switch self {
-        case .pictureInPicture: return "画中画"
-        case .split: return "上下"
-        case .sideBySide: return "左右"
-        case .fullScreen: return "全屏"
+        case .pictureInPicture: return L10n.string("layout.picture_in_picture")
+        case .split: return L10n.string("layout.split")
+        case .sideBySide: return L10n.string("layout.side_by_side")
+        case .fullScreen: return L10n.string("layout.fullscreen")
         }
     }
 }
@@ -45,7 +45,7 @@ enum SmallWindowShape: String, CaseIterable, Identifiable {
     case roundedRectangle
     case circle
     var id: String { rawValue }
-    var title: String { self == .circle ? "圆形" : "圆角长方形" }
+    var title: String { L10n.string(self == .circle ? "window.shape.circle" : "window.shape.rectangle") }
 }
 
 struct PictureInPictureSettings: Equatable {

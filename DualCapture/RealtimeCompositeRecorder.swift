@@ -216,6 +216,8 @@ final class RealtimeCompositeRecorder {
     }
 }
 
-private enum RealtimeCompositeRecorderError: Error {
+private enum RealtimeCompositeRecorderError: LocalizedError {
     case cannotAddInput
+
+    var errorDescription: String? { L10n.string("error.recording.inputs") }
 }

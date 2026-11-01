@@ -1,0 +1,5 @@
+"CFBundleDisplayName" = "同框之外";
+"NSCameraUsageDescription" = "用于同时录制前后摄像头视频。";
+"NSMicrophoneUsageDescription" = "用于为录制的视频采集音频。";
+"NSPhotoLibraryAddUsageDescription" = "用于将拍摄的照片和视频保存到照片图库。";
+"NSPhotoLibraryUsageDescription" = "用于显示并查看最近保存的照片或视频。";

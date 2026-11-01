@@ -75,8 +75,8 @@ struct ContentView: View {
             if let latestVideoURL { VideoPlayerView(url: latestVideoURL) }
             else if let latestPhoto { PhotoViewer(image: latestPhoto) }
         }
-        .alert("无法完成操作", isPresented: Binding(get: { camera.errorMessage != nil }, set: { if !$0 { camera.errorMessage = nil } })) {
-            Button("好", role: .cancel) { camera.errorMessage = nil }
+        .alert(L10n.string("error.operation"), isPresented: Binding(get: { camera.errorMessage != nil }, set: { if !$0 { camera.errorMessage = nil } })) {
+            Button(L10n.string("action.ok"), role: .cancel) { camera.errorMessage = nil }
         } message: { Text(camera.errorMessage ?? "") }
     }
 
@@ -120,7 +120,7 @@ struct ContentView: View {
                         .background(.black.opacity(0.28), in: Circle())
                 }
                 .disabled(!camera.hasTorch)
-                .accessibilityLabel(camera.isTorchOn ? "关闭补光灯" : "开启补光灯")
+                .accessibilityLabel(L10n.string(camera.isTorchOn ? "camera.torch.off" : "camera.torch.on"))
             }
             Spacer()
             ZStack(alignment: .bottom) {
@@ -150,7 +150,7 @@ struct ContentView: View {
                         saveAnimationDestination.update(frame)
                         DebugLog.shared.log("save.animation.album_measured frame=\(frame) coordinate=window")
                     }.allowsHitTesting(false))
-                    Text("相册").font(.caption).foregroundStyle(.white)
+                    Text(L10n.string("camera.album")).font(.caption).foregroundStyle(.white)
                 }
                 .frame(maxWidth: .infinity)
                 recordButton()
@@ -160,8 +160,8 @@ struct ContentView: View {
                             .frame(width: 50, height: 50)
                             .background(.black.opacity(0.4), in: Circle())
                     }
-                    .accessibilityLabel("切换主摄像头")
-                    Text("旋转").font(.caption)
+                    .accessibilityLabel(L10n.string("camera.switch.accessibility"))
+                    Text(L10n.string("camera.rotate")).font(.caption)
                 }
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
@@ -169,7 +169,7 @@ struct ContentView: View {
             HStack(spacing: 4) {
                 ForEach(CaptureMode.allCases, id: \.self) { item in
                     Button { mode = item } label: {
-                        Text(item.rawValue).font(.headline)
+                        Text(item.title).font(.headline)
                             .padding(.horizontal, 18).padding(.vertical, 9)
                             .foregroundStyle(mode == item ? .white : .white.opacity(0.65))
                             .background(mode == item ? .white.opacity(0.22) : .clear, in: Capsule())
@@ -295,7 +295,7 @@ struct ContentView: View {
         }
         .disabled(!camera.isReady || camera.isProcessing)
         .buttonStyle(.plain)
-        .accessibilityLabel(camera.isRecording ? "停止录制" : (mode == .photo ? "拍照" : "开始录制"))
+        .accessibilityLabel(L10n.string(camera.isRecording ? "camera.record.stop" : (mode == .photo ? "camera.photo.capture" : "camera.record.start")))
     }
 
     private func requestReviewIfAppropriate() {
@@ -371,7 +371,7 @@ private struct PhotoViewer: View {
                 Image(systemName: "xmark.circle.fill").font(.title).foregroundStyle(.white.opacity(0.85))
             }
             .padding(18)
-            .accessibilityLabel("返回相机")
+            .accessibilityLabel(L10n.string("camera.return"))
         }
     }
 }
@@ -392,7 +392,7 @@ private struct AlbumThumbnailButton: View {
         }
         .buttonStyle(.plain)
         .foregroundStyle(.white)
-        .accessibilityLabel("查看最新照片或视频")
+        .accessibilityLabel(L10n.string("camera.latest.accessibility"))
     }
 }
 
@@ -417,6 +417,7 @@ private struct VideoPlayerView: View {
                 Image(systemName: "xmark.circle.fill").font(.title).foregroundStyle(.white.opacity(0.85))
             }
             .padding(.top, 18).padding(.trailing, 18)
+            .accessibilityLabel(L10n.string("camera.return"))
         }
     }
 }
@@ -431,26 +432,26 @@ private struct SettingsView: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("录制") {
-                    Picker("默认布局", selection: $captureLayout) {
+                Section(L10n.string("settings.recording")) {
+                    Picker(L10n.string("settings.default_layout"), selection: $captureLayout) {
                         ForEach(CaptureLayout.allCases) { Text($0.title).tag($0.rawValue) }
                     }
-                    Picker("默认主摄像头", selection: $primaryCamera) {
-                        Text("后置").tag("rear")
-                        Text("前置").tag("front")
+                    Picker(L10n.string("settings.default_camera"), selection: $primaryCamera) {
+                        Text(L10n.string("settings.camera.rear")).tag("rear")
+                        Text(L10n.string("settings.camera.front")).tag("front")
                     }
                 }
-                Section("保存") {
-                    Text("录制完成后自动保存合成视频到照片图库")
+                Section(L10n.string("settings.saving")) {
+                    Text(L10n.string("settings.saving.description"))
                         .foregroundStyle(.secondary)
                 }
-                Section("关于") {
+                Section(L10n.string("settings.about")) {
                     Button {
                         guard let availableUpdate else { return }
                         openURL(availableUpdate.storeURL)
                     } label: {
                         HStack {
-                            Text("版本")
+                            Text(L10n.string("settings.version"))
                             Spacer()
                             if isCheckingUpdate {
                                 ProgressView()
@@ -458,22 +459,22 @@ private struct SettingsView: View {
                             } else if availableUpdate != nil {
                                 Image(systemName: "arrow.down.circle.fill")
                                     .foregroundStyle(.red)
-                                    .accessibilityLabel("有新版本可更新")
+                                    .accessibilityLabel(L10n.string("settings.update.available"))
                             }
                             Text(appVersion)
                                 .foregroundStyle(.secondary)
                         }
                     }
                     .disabled(availableUpdate == nil)
-                    Link("去 App Store 评分", destination: AppStoreUpdateChecker.writeReviewURL)
+                    Link(L10n.string("settings.rate"), destination: AppStoreUpdateChecker.writeReviewURL)
                 }
-                Section("诊断") {
-                    NavigationLink("查看／导出诊断日志") { DiagnosticsView() }
-                    Text("日志自动保存在本机，不会自动上传。遇到问题后可在此导出 .log 文件。")
+                Section(L10n.string("settings.diagnostics")) {
+                    NavigationLink(L10n.string("settings.diagnostics.open")) { DiagnosticsView() }
+                    Text(L10n.string("settings.diagnostics.description"))
                         .font(.footnote).foregroundStyle(.secondary)
                 }
             }
-            .navigationTitle("设置")
+            .navigationTitle(L10n.string("settings.title"))
             .task {
                 isCheckingUpdate = true
                 availableUpdate = await AppStoreUpdateChecker.fetchAvailableUpdate(installedVersion: AppVersion.current)
@@ -484,7 +485,7 @@ private struct SettingsView: View {
 
     private var appVersion: String {
         let info = Bundle.main.infoDictionary
-        let version = info?["CFBundleShortVersionString"] as? String ?? "未知"
+        let version = info?["CFBundleShortVersionString"] as? String ?? L10n.string("version.unknown")
         let build = info?["CFBundleVersion"] as? String
         return build.map { "\(version) (\($0))" } ?? version
     }
