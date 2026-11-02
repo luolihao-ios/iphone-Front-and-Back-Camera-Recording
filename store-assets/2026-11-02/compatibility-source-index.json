@@ -1,0 +1,326 @@
+[
+  {
+    "key": "zh-Hans-iphone-large-01",
+    "file": "zh-Hans/iphone-large/iphone-large-01.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-01-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 1,
+    "title": "小小画面，自由安排",
+    "subtitle": "拖动位置，切换形状，调整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-02.png",
+    "reuse": true,
+    "source": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-02.png"
+  },
+  {
+    "key": "zh-Hans-iphone-large-02",
+    "file": "zh-Hans/iphone-large/iphone-large-02.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 2,
+    "title": "左右分屏，并肩记录",
+    "subtitle": "两个视角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-6dde694c-666d-412f-86a1-7d044566f238.png"
+  },
+  {
+    "key": "zh-Hans-iphone-large-03",
+    "file": "zh-Hans/iphone-large/iphone-large-03.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 3,
+    "title": "上下分屏，双面精彩",
+    "subtitle": "风景与自己，同时入镜",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-e85f930a-1a5d-4170-a043-8730d06e7a5c.png"
+  },
+  {
+    "key": "zh-Hans-iphone-large-04",
+    "file": "zh-Hans/iphone-large/iphone-large-04.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-04-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 4,
+    "title": "前后同录，精彩同框",
+    "subtitle": "记录眼前风景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-01.png",
+    "reuse": true,
+    "source": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-01.png"
+  },
+  {
+    "key": "zh-Hans-iphone-large-05",
+    "file": "zh-Hans/iphone-large/iphone-large-05.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-05-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 5,
+    "title": "按下快门，双面定格",
+    "subtitle": "风景与自己，一张照片同时留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-04.png",
+    "reuse": true,
+    "source": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-04.png"
+  },
+  {
+    "key": "zh-Hans-iphone-large-06",
+    "file": "zh-Hans/iphone-large/iphone-large-06.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-06-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 6,
+    "title": "边录边合成，停下即保存",
+    "subtitle": "自动存入相册，回看这一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-05.png",
+    "reuse": true,
+    "source": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-05.png"
+  },
+  {
+    "key": "zh-Hant-iphone-large-01",
+    "file": "zh-Hant/iphone-large/iphone-large-01.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 1,
+    "title": "小小畫面，自由安排",
+    "subtitle": "拖曳位置，切換形狀，調整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-02.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-e2cd6125-ecf5-44c2-8d0b-7669acc9c521.png"
+  },
+  {
+    "key": "zh-Hant-iphone-large-02",
+    "file": "zh-Hant/iphone-large/iphone-large-02.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 2,
+    "title": "左右分割，並肩記錄",
+    "subtitle": "兩個視角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-b03f9069-1fc4-4c0e-8188-e95a4f36a013.png"
+  },
+  {
+    "key": "zh-Hant-iphone-large-03",
+    "file": "zh-Hant/iphone-large/iphone-large-03.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 3,
+    "title": "上下分割，雙面精彩",
+    "subtitle": "風景與自己，同時入鏡",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-80f5fa97-57d1-4b22-b13d-3c0de394fc55.png"
+  },
+  {
+    "key": "zh-Hant-iphone-large-04",
+    "file": "zh-Hant/iphone-large/iphone-large-04.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 4,
+    "title": "前後同錄，精彩同框",
+    "subtitle": "記錄眼前風景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-01.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-7c86247a-6e37-4547-88c8-c1f9e733c37e.png"
+  },
+  {
+    "key": "zh-Hant-iphone-large-05",
+    "file": "zh-Hant/iphone-large/iphone-large-05.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 5,
+    "title": "按下快門，雙面定格",
+    "subtitle": "風景與自己，一張照片同時留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-04.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-c56fc311-d0e2-4e10-a5d7-49243cf6b250.png"
+  },
+  {
+    "key": "zh-Hant-iphone-large-06",
+    "file": "zh-Hant/iphone-large/iphone-large-06.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 6,
+    "title": "邊錄邊合成，停止即儲存",
+    "subtitle": "自動存入相簿，回看這一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-05.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-f37fef98-495b-4e31-94b5-8dfa0dee656a.png"
+  },
+  {
+    "key": "en-US-iphone-large-01",
+    "file": "en-US/iphone-large/iphone-large-01.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-01-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 1,
+    "title": "A small view. More possibilities.",
+    "subtitle": "Drag, resize and choose your shape",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-02.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-43d57e81-1bc6-46f3-af37-1b90c4eb7e9b.png"
+  },
+  {
+    "key": "en-US-iphone-large-02",
+    "file": "en-US/iphone-large/iphone-large-02.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-02-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 2,
+    "title": "Two views. Side by side.",
+    "subtitle": "Two perspectives, equal space",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-f59c891e-ccd7-4ec1-81f3-b9bb45d9ed19.png"
+  },
+  {
+    "key": "en-US-iphone-large-03",
+    "file": "en-US/iphone-large/iphone-large-03.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-03-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 3,
+    "title": "One moment. Top and bottom.",
+    "subtitle": "The view and you, together",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-2a231f6d-2b64-4bc9-8f98-9f518a7a9ffd.png"
+  },
+  {
+    "key": "en-US-iphone-large-04",
+    "file": "en-US/iphone-large/iphone-large-04.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-04-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 4,
+    "title": "Both cameras. One story.",
+    "subtitle": "Capture the scenery and yourself",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-01.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-73f77c8f-0a82-4d70-bce4-0a5c987f7136.png"
+  },
+  {
+    "key": "en-US-iphone-large-05",
+    "file": "en-US/iphone-large/iphone-large-05.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-05-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 5,
+    "title": "One photo. Both sides.",
+    "subtitle": "Keep the view and yourself in one shot",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-04.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-ffdae466-ee0a-40c8-94ba-c3935843bff4.png"
+  },
+  {
+    "key": "en-US-iphone-large-06",
+    "file": "en-US/iphone-large/iphone-large-06.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-06-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 6,
+    "title": "Compose as you record.",
+    "subtitle": "Automatically saved to Photos",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-05.png",
+    "reuse": false,
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-eaa8cf2b-736a-48e0-8479-3e0beb817bb3.png"
+  }
+]

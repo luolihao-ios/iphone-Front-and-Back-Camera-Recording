@@ -16,6 +16,7 @@ from urllib.request import Request, urlopen
 
 TARGET_LOCALES = ('zh-Hans', 'zh-Hant', 'en-US')
 TARGET_DEVICES = ('iphone', 'ipad', 'duo')
+SUPPORTED_DEVICES = TARGET_DEVICES + ('iphone-large',)
 
 
 def commit_payload(asset_id):
@@ -71,7 +72,7 @@ def read_manifest(path):
                 raise ValueError(f'素材字段缺失或重复：{field}')
             seen[field].add(value)
         if localized:
-            if (item.get('locale') not in TARGET_LOCALES or item.get('device') not in TARGET_DEVICES
+            if (item.get('locale') not in TARGET_LOCALES or item.get('device') not in SUPPORTED_DEVICES
                     or type(item.get('order')) is not int or not 1 <= item['order'] <= 6
                     or item.get('category') != 'APP_SCREENSHOTS_AND_PREVIEWS'):
                 raise ValueError(f'本地化截图语言、设备、顺序或类别不合法：{item["key"]}')
@@ -90,11 +91,12 @@ def read_manifest(path):
         if [width, height] != item['size'] or depth != 8 or color != 2:
             raise ValueError(f'素材尺寸或无透明 RGB 格式不符：{item["key"]}')
     if localized:
+        devices = SUPPORTED_DEVICES if any(item['device'] == 'iphone-large' for item in items) else TARGET_DEVICES
         expected = {(locale, device, order) for locale in TARGET_LOCALES
-                    for device in TARGET_DEVICES for order in range(1, 7)}
+                    for device in devices for order in range(1, 7)}
         actual = {(item['locale'], item['device'], item['order']) for item in items}
-        if len(items) != 54 or actual != expected:
-            raise ValueError('本地化截图必须完整包含三种语言、三种设备各六张，且顺序不得重复')
+        if len(items) != len(expected) or actual != expected:
+            raise ValueError('本地化截图必须完整包含三种语言、每种设备各六张；可选大屏 iPhone 规格必须三种语言齐全，且顺序不得重复')
     return items
 
 
@@ -304,8 +306,9 @@ def upload(client, report, manifest_path, create_draft, checkpoint):
     localized = 'locale' in items[0]
     report['complete'] = False
     if localized:
+        devices = SUPPORTED_DEVICES if any(item['device'] == 'iphone-large' for item in items) else TARGET_DEVICES
         items.sort(key=lambda item: (TARGET_LOCALES.index(item['locale']),
-                                    TARGET_DEVICES.index(item['device']), item['order']))
+                                    devices.index(item['device']), item['order']))
     catalog = report['referenceData'][0]['attributes']
     for item in items:
         placement_type = ('PRODUCT_PAGE_HEADER_ASSET' if item['key'] == 'creative-header' else
@@ -316,9 +319,9 @@ def upload(client, report, manifest_path, create_draft, checkpoint):
         item['placementType'], item['placementGroup'] = placement_type, groups[0]
     if localized:
         device_groups = {device: {item['placementGroup'] for item in items if item['device'] == device}
-                         for device in TARGET_DEVICES}
-        if any(len(groups) != 1 for groups in device_groups.values()) or len(set.union(*device_groups.values())) != 3:
-            raise ValueError('三种设备必须分别匹配三个唯一官方截图分组，未写入素材')
+                         for device in devices}
+        if any(len(groups) != 1 for groups in device_groups.values()) or len(set.union(*device_groups.values())) != len(devices):
+            raise ValueError('每种设备规格必须分别匹配唯一官方截图分组，未写入素材')
         version, locales = prepare_draft(client, report, create_draft, TARGET_LOCALES)
         report['targetVersion'] = {'id': version['id'], 'version': target_version,
             'localizations': {name: row['id'] for name, row in locales.items()}}

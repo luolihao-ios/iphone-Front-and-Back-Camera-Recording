@@ -117,6 +117,50 @@ class LocalizedStoreAssetTests(unittest.TestCase):
     def setUp(self):
         self.enterContext(redirect_stdout(io.StringIO()))
 
+    def test_optional_large_iphone_profile_replaces_inherited_screenshots_in_all_locales(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            rows = manifest_fixture(root)
+            for locale in LOCALES:
+                for order in range(1, 7):
+                    key = f'{locale}-iphone-large-{order:02d}'
+                    (root / f'{key}.png').write_bytes(
+                        b'\x89PNG\r\n\x1a\n' + struct.pack('>I', 13) + b'IHDR'
+                        + struct.pack('>IIBBBBB', 1284, 2778, 8, 2, 0, 0, 0))
+                    rows.append({'key': key, 'file': f'{key}.png', 'size': [1284, 2778],
+                        'category': 'APP_SCREENSHOTS_AND_PREVIEWS', 'referenceName': key,
+                        'locale': locale, 'device': 'iphone-large', 'order': order})
+            path = root / 'manifest.json'
+            path.write_text(json.dumps(list(reversed(rows))))
+            report, boundary = report_fixture(), AppleBoundary()
+            catalog = report['referenceData'][0]['attributes']
+            catalog['imageSpecs'].append({'specId': 'iphone-large', 'dimensions': {
+                'minWidth': 1284, 'maxWidth': 1284, 'minHeight': 2778, 'maxHeight': 2778}})
+            catalog['placementTypes'][0]['specMappings'].append({
+                'placementGroupId': 'IPHONE_FACE_ID_LARGE_PROFILE', 'specs': ['iphone-large']})
+            for locale in LOCALES:
+                boundary.placements[f'fresh-{locale}'].append(boundary.placement(
+                    f'old-large-{locale}', 'APP_SCREENSHOT', 'IPHONE_FACE_ID_LARGE_PROFILE', 'old-large-image'))
+            try:
+                store_assets.upload(boundary, report, path, False, lambda: None)
+            except ValueError as error:
+                self.fail(f'完整 72 张兼容规格清单应被接受：{error}')
+            self.assertTrue(report['complete'])
+            self.assertEqual(len(report['placements']), 72)
+            for locale in LOCALES:
+                for device, group in [('iphone', 'IPHONE'), ('ipad', 'IPAD'), ('duo', 'DUO'),
+                                      ('iphone-large', 'IPHONE_FACE_ID_LARGE_PROFILE')]:
+                    actual = [row['id'] for row in boundary.placements[f'fresh-{locale}']
+                              if row['attributes']['placementGroup'] == group]
+                    self.assertEqual(actual, [f'p-{locale}-{device}-{order:02d}' for order in range(1, 7)])
+                self.assertEqual(len(report['localizedPlacements'][locale]), 24)
+            partial = rows[:-1]
+            path.write_text(json.dumps(partial))
+            invalid_boundary = AppleBoundary()
+            with self.assertRaises(ValueError):
+                store_assets.upload(invalid_boundary, report_fixture(), path, False, lambda: None)
+            self.assertEqual(invalid_boundary.writes, [])
+
     def test_new_version_gets_all_54_screenshots_without_touching_published_version(self):
         class NewVersionBoundary(AppleBoundary):
             def __init__(self):

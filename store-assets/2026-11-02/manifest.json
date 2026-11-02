@@ -700,5 +700,239 @@
     "locale": "en-US",
     "device": "duo",
     "order": 6
+  },
+  {
+    "key": "zh-Hans-iphone-large-01",
+    "file": "zh-Hans/iphone-large/iphone-large-01.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-01-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 1
+  },
+  {
+    "key": "zh-Hans-iphone-large-02",
+    "file": "zh-Hans/iphone-large/iphone-large-02.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 2
+  },
+  {
+    "key": "zh-Hans-iphone-large-03",
+    "file": "zh-Hans/iphone-large/iphone-large-03.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 3
+  },
+  {
+    "key": "zh-Hans-iphone-large-04",
+    "file": "zh-Hans/iphone-large/iphone-large-04.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-04-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 4
+  },
+  {
+    "key": "zh-Hans-iphone-large-05",
+    "file": "zh-Hans/iphone-large/iphone-large-05.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-05-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 5
+  },
+  {
+    "key": "zh-Hans-iphone-large-06",
+    "file": "zh-Hans/iphone-large/iphone-large-06.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-large-06-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone-large",
+    "order": 6
+  },
+  {
+    "key": "zh-Hant-iphone-large-01",
+    "file": "zh-Hant/iphone-large/iphone-large-01.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 1
+  },
+  {
+    "key": "zh-Hant-iphone-large-02",
+    "file": "zh-Hant/iphone-large/iphone-large-02.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 2
+  },
+  {
+    "key": "zh-Hant-iphone-large-03",
+    "file": "zh-Hant/iphone-large/iphone-large-03.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 3
+  },
+  {
+    "key": "zh-Hant-iphone-large-04",
+    "file": "zh-Hant/iphone-large/iphone-large-04.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 4
+  },
+  {
+    "key": "zh-Hant-iphone-large-05",
+    "file": "zh-Hant/iphone-large/iphone-large-05.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 5
+  },
+  {
+    "key": "zh-Hant-iphone-large-06",
+    "file": "zh-Hant/iphone-large/iphone-large-06.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-large-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone-large",
+    "order": 6
+  },
+  {
+    "key": "en-US-iphone-large-01",
+    "file": "en-US/iphone-large/iphone-large-01.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-01-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 1
+  },
+  {
+    "key": "en-US-iphone-large-02",
+    "file": "en-US/iphone-large/iphone-large-02.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-02-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 2
+  },
+  {
+    "key": "en-US-iphone-large-03",
+    "file": "en-US/iphone-large/iphone-large-03.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-03-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 3
+  },
+  {
+    "key": "en-US-iphone-large-04",
+    "file": "en-US/iphone-large/iphone-large-04.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-04-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 4
+  },
+  {
+    "key": "en-US-iphone-large-05",
+    "file": "en-US/iphone-large/iphone-large-05.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-05-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 5
+  },
+  {
+    "key": "en-US-iphone-large-06",
+    "file": "en-US/iphone-large/iphone-large-06.png",
+    "size": [
+      1284,
+      2778
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-large-06-功能示意",
+    "locale": "en-US",
+    "device": "iphone-large",
+    "order": 6
   }
 ]
