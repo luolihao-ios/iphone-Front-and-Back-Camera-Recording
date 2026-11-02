@@ -1,0 +1,758 @@
+[
+  {
+    "key": "zh-Hans-iphone-02",
+    "file": "zh-Hans/iphone/iphone-02.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 2,
+    "title": "左右分屏，并肩记录",
+    "subtitle": "两个视角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL vertical halves: LEFT half coastal scenic rear-camera view, RIGHT half the fictional adult fully clothed woman's front-camera selfie, with the boundary exactly at screen horizontal midpoint. Not two devices; two halves within ONE continuous screen. Menu Side/Side / 左右 highlighted yellow.\nReplace ALL text throughout the artwork using Simplified Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"左右分屏，并肩记录\". Subtitle EXACT: \"两个视角，各占一半\". Brand label \"同框之外 · 双摄录影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (网格、全屏、上下、左右、画中画、形状、设置; bottom 相册、旋转、视频、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Simplified Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hans-iphone-03",
+    "file": "zh-Hans/iphone/iphone-03.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 3,
+    "title": "上下分屏，双面精彩",
+    "subtitle": "风景与自己，同时入镜",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL horizontal halves: TOP half coastal scenic rear-camera view, BOTTOM half the fictional adult fully clothed woman's front-camera selfie. Boundary exactly at screen vertical midpoint, each view50% height. Menu Top/Bottom / 上下 highlighted yellow.\nReplace ALL text throughout the artwork using Simplified Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"上下分屏，双面精彩\". Subtitle EXACT: \"风景与自己，同时入镜\". Brand label \"同框之外 · 双摄录影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (网格、全屏、上下、左右、画中画、形状、设置; bottom 相册、旋转、视频、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Simplified Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hans-ipad-02",
+    "file": "zh-Hans/ipad/ipad-02.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 2,
+    "title": "左右分屏，并肩记录",
+    "subtitle": "两个视角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-03.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL vertical halves: LEFT half coastal scenic rear-camera view, RIGHT half the fictional adult fully clothed woman's front-camera selfie, with the boundary exactly at screen horizontal midpoint. Not two devices; two halves within ONE continuous screen. Menu Side/Side / 左右 highlighted yellow.\nReplace ALL text throughout the artwork using Simplified Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"左右分屏，并肩记录\". Subtitle EXACT: \"两个视角，各占一半\". Brand label \"同框之外 · 双摄录影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (网格、全屏、上下、左右、画中画、形状、设置; bottom 相册、旋转、视频、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Simplified Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hans-ipad-03",
+    "file": "zh-Hans/ipad/ipad-03.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 3,
+    "title": "上下分屏，双面精彩",
+    "subtitle": "风景与自己，同时入镜",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-03.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL horizontal halves: TOP half coastal scenic rear-camera view, BOTTOM half the fictional adult fully clothed woman's front-camera selfie. Boundary exactly at screen vertical midpoint, each view50% height. Menu Top/Bottom / 上下 highlighted yellow.\nReplace ALL text throughout the artwork using Simplified Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"上下分屏，双面精彩\". Subtitle EXACT: \"风景与自己，同时入镜\". Brand label \"同框之外 · 双摄录影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (网格、全屏、上下、左右、画中画、形状、设置; bottom 相册、旋转、视频、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Simplified Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hans-duo-02",
+    "file": "zh-Hans/duo/duo-02.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 2,
+    "title": "左右分屏，并肩记录",
+    "subtitle": "两个视角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-03.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL vertical halves: LEFT half coastal scenic rear-camera view, RIGHT half the fictional adult fully clothed woman's front-camera selfie, with the boundary exactly at screen horizontal midpoint. Not two devices; two halves within ONE continuous screen. Menu Side/Side / 左右 highlighted yellow.\nReplace ALL text throughout the artwork using Simplified Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"左右分屏，并肩记录\". Subtitle EXACT: \"两个视角，各占一半\". Brand label \"同框之外 · 双摄录影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (网格、全屏、上下、左右、画中画、形状、设置; bottom 相册、旋转、视频、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Simplified Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hans-duo-03",
+    "file": "zh-Hans/duo/duo-03.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 3,
+    "title": "上下分屏，双面精彩",
+    "subtitle": "风景与自己，同时入镜",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-03.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL horizontal halves: TOP half coastal scenic rear-camera view, BOTTOM half the fictional adult fully clothed woman's front-camera selfie. Boundary exactly at screen vertical midpoint, each view50% height. Menu Top/Bottom / 上下 highlighted yellow.\nReplace ALL text throughout the artwork using Simplified Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"上下分屏，双面精彩\". Subtitle EXACT: \"风景与自己，同时入镜\". Brand label \"同框之外 · 双摄录影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (网格、全屏、上下、左右、画中画、形状、设置; bottom 相册、旋转、视频、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Simplified Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-iphone-01",
+    "file": "zh-Hant/iphone/iphone-01.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 1,
+    "title": "小小畫面，自由安排",
+    "subtitle": "拖曳位置，切換形狀，調整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-02.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 1 CIRCULAR inset at upper left, geometrically perfect round.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"小小畫面，自由安排\". Subtitle EXACT: \"拖曳位置，切換形狀，調整大小\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-iphone-02",
+    "file": "zh-Hant/iphone/iphone-02.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 2,
+    "title": "左右分割，並肩記錄",
+    "subtitle": "兩個視角，各占一半",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-6dde694c-666d-412f-86a1-7d044566f238.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL vertical halves: LEFT half coastal scenic rear-camera view, RIGHT half the fictional adult fully clothed woman's front-camera selfie, with the boundary exactly at screen horizontal midpoint. Not two devices; two halves within ONE continuous screen. Menu Side/Side / 左右 highlighted yellow.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"左右分割，並肩記錄\". Subtitle EXACT: \"兩個視角，各占一半\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "zh-Hant-iphone-03",
+    "file": "zh-Hant/iphone/iphone-03.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 3,
+    "title": "上下分割，雙面精彩",
+    "subtitle": "風景與自己，同時入鏡",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-108c1d49-e822-4180-9a28-22d9e4ded6be.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL horizontal halves: TOP half coastal scenic rear-camera view, BOTTOM half the fictional adult fully clothed woman's front-camera selfie. Boundary exactly at screen vertical midpoint, each view50% height. Menu Top/Bottom / 上下 highlighted yellow.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"上下分割，雙面精彩\". Subtitle EXACT: \"風景與自己，同時入鏡\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "zh-Hant-iphone-04",
+    "file": "zh-Hant/iphone/iphone-04.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 4,
+    "title": "前後同錄，精彩同框",
+    "subtitle": "記錄眼前風景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-01.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 4 rounded RECTANGLE inset at upper left.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"前後同錄，精彩同框\". Subtitle EXACT: \"記錄眼前風景，也留下此刻的你\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-iphone-05",
+    "file": "zh-Hant/iphone/iphone-05.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 5,
+    "title": "按下快門，雙面定格",
+    "subtitle": "風景與自己，一張照片同時留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-04.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 5 dual-view PHOTO mode, white shutter.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"按下快門，雙面定格\". Subtitle EXACT: \"風景與自己，一張照片同時留下\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-iphone-06",
+    "file": "zh-Hant/iphone/iphone-06.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 6,
+    "title": "邊錄邊合成，停止即儲存",
+    "subtitle": "自動存入相簿，回看這一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-05.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 6 recording with red rectangle WHITE 00:00:12 timer and small RED stop SQUARE inside dark circle, no other menu or bottom buttons.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"邊錄邊合成，停止即儲存\". Subtitle EXACT: \"自動存入相簿，回看這一刻\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-ipad-01",
+    "file": "zh-Hant/ipad/ipad-01.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 1,
+    "title": "小小畫面，自由安排",
+    "subtitle": "拖曳位置，切換形狀，調整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-02.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 1 CIRCULAR inset at upper left, geometrically perfect round.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"小小畫面，自由安排\". Subtitle EXACT: \"拖曳位置，切換形狀，調整大小\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-ipad-02",
+    "file": "zh-Hant/ipad/ipad-02.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 2,
+    "title": "左右分割，並肩記錄",
+    "subtitle": "兩個視角，各占一半",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-1ec3de4a-0ef7-48e3-9684-76eb0dc6acdd.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL vertical halves: LEFT half coastal scenic rear-camera view, RIGHT half the fictional adult fully clothed woman's front-camera selfie, with the boundary exactly at screen horizontal midpoint. Not two devices; two halves within ONE continuous screen. Menu Side/Side / 左右 highlighted yellow.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"左右分割，並肩記錄\". Subtitle EXACT: \"兩個視角，各占一半\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "zh-Hant-ipad-03",
+    "file": "zh-Hant/ipad/ipad-03.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 3,
+    "title": "上下分割，雙面精彩",
+    "subtitle": "風景與自己，同時入鏡",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-32c3eb81-1472-4a93-b8f9-88824b205ebd.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL horizontal halves: TOP half coastal scenic rear-camera view, BOTTOM half the fictional adult fully clothed woman's front-camera selfie. Boundary exactly at screen vertical midpoint, each view50% height. Menu Top/Bottom / 上下 highlighted yellow.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"上下分割，雙面精彩\". Subtitle EXACT: \"風景與自己，同時入鏡\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "zh-Hant-ipad-04",
+    "file": "zh-Hant/ipad/ipad-04.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 4,
+    "title": "前後同錄，精彩同框",
+    "subtitle": "記錄眼前風景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-01.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 4 rounded RECTANGLE inset at upper left.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"前後同錄，精彩同框\". Subtitle EXACT: \"記錄眼前風景，也留下此刻的你\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-ipad-05",
+    "file": "zh-Hant/ipad/ipad-05.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 5,
+    "title": "按下快門，雙面定格",
+    "subtitle": "風景與自己，一張照片同時留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-04.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 5 dual-view PHOTO mode, white shutter.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"按下快門，雙面定格\". Subtitle EXACT: \"風景與自己，一張照片同時留下\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-ipad-06",
+    "file": "zh-Hant/ipad/ipad-06.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 6,
+    "title": "邊錄邊合成，停止即儲存",
+    "subtitle": "自動存入相簿，回看這一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-05.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 6 recording with red rectangle WHITE 00:00:12 timer and small RED stop SQUARE inside dark circle, no other menu or bottom buttons.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"邊錄邊合成，停止即儲存\". Subtitle EXACT: \"自動存入相簿，回看這一刻\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-duo-01",
+    "file": "zh-Hant/duo/duo-01.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 1,
+    "title": "小小畫面，自由安排",
+    "subtitle": "拖曳位置，切換形狀，調整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-02.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 1 CIRCULAR inset at upper left, geometrically perfect round.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"小小畫面，自由安排\". Subtitle EXACT: \"拖曳位置，切換形狀，調整大小\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-duo-02",
+    "file": "zh-Hant/duo/duo-02.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 2,
+    "title": "左右分割，並肩記錄",
+    "subtitle": "兩個視角，各占一半",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-d9fe5803-19a5-4191-8cb0-4acd6a73ee21.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL vertical halves: LEFT half coastal scenic rear-camera view, RIGHT half the fictional adult fully clothed woman's front-camera selfie, with the boundary exactly at screen horizontal midpoint. Not two devices; two halves within ONE continuous screen. Menu Side/Side / 左右 highlighted yellow.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"左右分割，並肩記錄\". Subtitle EXACT: \"兩個視角，各占一半\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "zh-Hant-duo-03",
+    "file": "zh-Hant/duo/duo-03.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 3,
+    "title": "上下分割，雙面精彩",
+    "subtitle": "風景與自己，同時入鏡",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-99844daa-5aec-4f0b-8dc4-18e3359201f7.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL horizontal halves: TOP half coastal scenic rear-camera view, BOTTOM half the fictional adult fully clothed woman's front-camera selfie. Boundary exactly at screen vertical midpoint, each view50% height. Menu Top/Bottom / 上下 highlighted yellow.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"上下分割，雙面精彩\". Subtitle EXACT: \"風景與自己，同時入鏡\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "zh-Hant-duo-04",
+    "file": "zh-Hant/duo/duo-04.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 4,
+    "title": "前後同錄，精彩同框",
+    "subtitle": "記錄眼前風景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-01.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 4 rounded RECTANGLE inset at upper left.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"前後同錄，精彩同框\". Subtitle EXACT: \"記錄眼前風景，也留下此刻的你\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-duo-05",
+    "file": "zh-Hant/duo/duo-05.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 5,
+    "title": "按下快門，雙面定格",
+    "subtitle": "風景與自己，一張照片同時留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-04.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 5 dual-view PHOTO mode, white shutter.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"按下快門，雙面定格\". Subtitle EXACT: \"風景與自己，一張照片同時留下\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "zh-Hant-duo-06",
+    "file": "zh-Hant/duo/duo-06.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 6,
+    "title": "邊錄邊合成，停止即儲存",
+    "subtitle": "自動存入相簿，回看這一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-05.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 6 recording with red rectangle WHITE 00:00:12 timer and small RED stop SQUARE inside dark circle, no other menu or bottom buttons.\nReplace ALL text throughout the artwork using Traditional Chinese only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"邊錄邊合成，停止即儲存\". Subtitle EXACT: \"自動存入相簿，回看這一刻\". Brand label \"同框之外 · 雙鏡頭錄影\". Footer \"功能示意\".\nVisible idle menu and controls text EXACT (格線、全螢幕、上下、左右、畫中畫、形狀、設定; bottom 相簿、切換、錄影、拍照). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text Traditional Chinese only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-iphone-01",
+    "file": "en-US/iphone/iphone-01.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-01-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 1,
+    "title": "A small view. More possibilities.",
+    "subtitle": "Drag, resize and choose your shape",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-02.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 1 CIRCULAR inset at upper left, geometrically perfect round.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"A small view. More possibilities.\". Subtitle EXACT: \"Drag, resize and choose your shape\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-iphone-02",
+    "file": "en-US/iphone/iphone-02.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-02-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 2,
+    "title": "Two views. Side by side.",
+    "subtitle": "Two perspectives, equal space",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-6dde694c-666d-412f-86a1-7d044566f238.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL vertical halves: LEFT half coastal scenic rear-camera view, RIGHT half the fictional adult fully clothed woman's front-camera selfie, with the boundary exactly at screen horizontal midpoint. Not two devices; two halves within ONE continuous screen. Menu Side/Side / 左右 highlighted yellow.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"Two views. Side by side.\". Subtitle EXACT: \"Two perspectives, equal space\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "en-US-iphone-03",
+    "file": "en-US/iphone/iphone-03.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-03-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 3,
+    "title": "One moment. Top and bottom.",
+    "subtitle": "The view and you, together",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-108c1d49-e822-4180-9a28-22d9e4ded6be.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL horizontal halves: TOP half coastal scenic rear-camera view, BOTTOM half the fictional adult fully clothed woman's front-camera selfie. Boundary exactly at screen vertical midpoint, each view50% height. Menu Top/Bottom / 上下 highlighted yellow.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"One moment. Top and bottom.\". Subtitle EXACT: \"The view and you, together\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "en-US-iphone-04",
+    "file": "en-US/iphone/iphone-04.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-04-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 4,
+    "title": "Both cameras. One story.",
+    "subtitle": "Capture the scenery and yourself",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-01.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 4 rounded RECTANGLE inset at upper left.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"Both cameras. One story.\". Subtitle EXACT: \"Capture the scenery and yourself\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-iphone-05",
+    "file": "en-US/iphone/iphone-05.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-05-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 5,
+    "title": "One photo. Both sides.",
+    "subtitle": "Keep the view and yourself in one shot",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-04.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 5 dual-view PHOTO mode, white shutter.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"One photo. Both sides.\". Subtitle EXACT: \"Keep the view and yourself in one shot\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-iphone-06",
+    "file": "en-US/iphone/iphone-06.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-06-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 6,
+    "title": "Compose as you record.",
+    "subtitle": "Automatically saved to Photos",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-05.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 1206:2622, target 1206x2622. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single portrait iPhone display with thin black bezel, native tall 1206:2622 ratio. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 6 recording with red rectangle WHITE 00:00:12 timer and small RED stop SQUARE inside dark circle, no other menu or bottom buttons.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"Compose as you record.\". Subtitle EXACT: \"Automatically saved to Photos\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For iphone, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-ipad-01",
+    "file": "en-US/ipad/ipad-01.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-01-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 1,
+    "title": "A small view. More possibilities.",
+    "subtitle": "Drag, resize and choose your shape",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-02.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 1 CIRCULAR inset at upper left, geometrically perfect round.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"A small view. More possibilities.\". Subtitle EXACT: \"Drag, resize and choose your shape\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-ipad-02",
+    "file": "en-US/ipad/ipad-02.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-02-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 2,
+    "title": "Two views. Side by side.",
+    "subtitle": "Two perspectives, equal space",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-1ec3de4a-0ef7-48e3-9684-76eb0dc6acdd.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL vertical halves: LEFT half coastal scenic rear-camera view, RIGHT half the fictional adult fully clothed woman's front-camera selfie, with the boundary exactly at screen horizontal midpoint. Not two devices; two halves within ONE continuous screen. Menu Side/Side / 左右 highlighted yellow.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"Two views. Side by side.\". Subtitle EXACT: \"Two perspectives, equal space\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "en-US-ipad-03",
+    "file": "en-US/ipad/ipad-03.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-03-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 3,
+    "title": "One moment. Top and bottom.",
+    "subtitle": "The view and you, together",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-32c3eb81-1472-4a93-b8f9-88824b205ebd.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL horizontal halves: TOP half coastal scenic rear-camera view, BOTTOM half the fictional adult fully clothed woman's front-camera selfie. Boundary exactly at screen vertical midpoint, each view50% height. Menu Top/Bottom / 上下 highlighted yellow.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"One moment. Top and bottom.\". Subtitle EXACT: \"The view and you, together\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "en-US-ipad-04",
+    "file": "en-US/ipad/ipad-04.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-04-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 4,
+    "title": "Both cameras. One story.",
+    "subtitle": "Capture the scenery and yourself",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-01.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 4 rounded RECTANGLE inset at upper left.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"Both cameras. One story.\". Subtitle EXACT: \"Capture the scenery and yourself\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-ipad-05",
+    "file": "en-US/ipad/ipad-05.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-05-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 5,
+    "title": "One photo. Both sides.",
+    "subtitle": "Keep the view and yourself in one shot",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-04.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 5 dual-view PHOTO mode, white shutter.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"One photo. Both sides.\". Subtitle EXACT: \"Keep the view and yourself in one shot\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-ipad-06",
+    "file": "en-US/ipad/ipad-06.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-06-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 6,
+    "title": "Compose as you record.",
+    "subtitle": "Automatically saved to Photos",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-05.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2064:2752, target 2064x2752. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single native portrait iPad display with thin black bezel, true 3:4 ratio, NOT a narrow phone. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 6 recording with red rectangle WHITE 00:00:12 timer and small RED stop SQUARE inside dark circle, no other menu or bottom buttons.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"Compose as you record.\". Subtitle EXACT: \"Automatically saved to Photos\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For ipad, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-duo-01",
+    "file": "en-US/duo/duo-01.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-01-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 1,
+    "title": "A small view. More possibilities.",
+    "subtitle": "Drag, resize and choose your shape",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-02.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 1 CIRCULAR inset at upper left, geometrically perfect round.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"A small view. More possibilities.\". Subtitle EXACT: \"Drag, resize and choose your shape\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-duo-02",
+    "file": "en-US/duo/duo-02.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-02-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 2,
+    "title": "Two views. Side by side.",
+    "subtitle": "Two perspectives, equal space",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-d9fe5803-19a5-4191-8cb0-4acd6a73ee21.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL vertical halves: LEFT half coastal scenic rear-camera view, RIGHT half the fictional adult fully clothed woman's front-camera selfie, with the boundary exactly at screen horizontal midpoint. Not two devices; two halves within ONE continuous screen. Menu Side/Side / 左右 highlighted yellow.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"Two views. Side by side.\". Subtitle EXACT: \"Two perspectives, equal space\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "en-US-duo-03",
+    "file": "en-US/duo/duo-03.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-03-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 3,
+    "title": "One moment. Top and bottom.",
+    "subtitle": "The view and you, together",
+    "reference": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-99844daa-5aec-4f0b-8dc4-18e3359201f7.png",
+    "reuse": false,
+    "prompt": "Use case: ads-marketing. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Remove all picture-in-picture insets and any other devices. Show exactly ONE device. The ONE screen has exactly TWO EQUAL horizontal halves: TOP half coastal scenic rear-camera view, BOTTOM half the fictional adult fully clothed woman's front-camera selfie. Boundary exactly at screen vertical midpoint, each view50% height. Menu Top/Bottom / 上下 highlighted yellow.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"One moment. Top and bottom.\". Subtitle EXACT: \"The view and you, together\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement.\nCRITICAL: Idle VIDEO mode only, Video / 视频 / 錄影 selected with coral underline, Photo unselected grey; red record circle. Retain exact equal split geometry of input1; do not draw another device."
+  },
+  {
+    "key": "en-US-duo-04",
+    "file": "en-US/duo/duo-04.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-04-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 4,
+    "title": "Both cameras. One story.",
+    "subtitle": "Capture the scenery and yourself",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-01.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 4 rounded RECTANGLE inset at upper left.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"Both cameras. One story.\". Subtitle EXACT: \"Capture the scenery and yourself\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-duo-05",
+    "file": "en-US/duo/duo-05.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-05-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 5,
+    "title": "One photo. Both sides.",
+    "subtitle": "Keep the view and yourself in one shot",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-04.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 5 dual-view PHOTO mode, white shutter.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"One photo. Both sides.\". Subtitle EXACT: \"Keep the view and yourself in one shot\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  },
+  {
+    "key": "en-US-duo-06",
+    "file": "en-US/duo/duo-06.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-06-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 6,
+    "title": "Compose as you record.",
+    "subtitle": "Automatically saved to Photos",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-05.png",
+    "reuse": false,
+    "prompt": "Use case: text-localization. Input image1 is the EDIT TARGET and visual style reference. Deliver ONE full premium App Store promotional image, not a grid, not multiple posters. Canvas aspect 2007:2853, target 2007x2853. Keep deep navy background, crisp white bold headline at top, smaller white subtitle, small coral dash, realistic travel scene and generic fictional adult traveler identity. Maintain a single unfolded iPhone Duo INNER display with thin black bezel, true wide 2007:2853 ratio, NOT a narrow phone, NO hinge gap. App fills entire device display. Preserve the original exact depicted feature and scenery. Order 6 recording with red rectangle WHITE 00:00:12 timer and small RED stop SQUARE inside dark circle, no other menu or bottom buttons.\nReplace ALL text throughout the artwork using English only; no mixed scripts except brand proper name 同框之外 may remain in English artwork as small brand label. Main headline EXACT: \"Compose as you record.\". Subtitle EXACT: \"Automatically saved to Photos\". Brand label \"同框之外 · Dual Camera\". Footer \"Feature illustration\".\nVisible idle menu and controls text EXACT (Grid, Full, Top/Bottom, Side/Side, PiP, Shape, Settings; bottom Photos, Flip, Video, Photo). For short menu English Top/Bottom and Side/Side can wrap cleanly onto 2lines. All menu text English only, legible and uncut. Seven menu white line icons order grid,fullcorners,topbottomsplit,leftrightsplit,PiP,circlesquare,HEXAGONwithsmallcircle(settings NOT gear). Bottom idle circular photo thumbnail LEFT, red record circle CENTER dark backing NO white ring, rotate icon RIGHT; Video/Photo segment. On photo image white shutter and Photo selected. Recording image no menu/album/rotate/segment. Do not add zoomchips, editorbuttons, fakefeatures, subscriptions, watermarks, prices, Apple logos, stars. Keep same polished visual hierarchy as target, margins safe, all words exact. Do not leave source-language text anywhere except brand proper name. For duo, use native display shape specified above. Preserve all other composition/scene details unless split instruction requires rearrangement."
+  }
+]

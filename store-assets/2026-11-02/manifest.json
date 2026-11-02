@@ -1,0 +1,704 @@
+[
+  {
+    "key": "zh-Hans-iphone-01",
+    "file": "zh-Hans/iphone/iphone-01.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-01-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 1
+  },
+  {
+    "key": "zh-Hans-iphone-02",
+    "file": "zh-Hans/iphone/iphone-02.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 2
+  },
+  {
+    "key": "zh-Hans-iphone-03",
+    "file": "zh-Hans/iphone/iphone-03.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 3
+  },
+  {
+    "key": "zh-Hans-iphone-04",
+    "file": "zh-Hans/iphone/iphone-04.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-04-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 4
+  },
+  {
+    "key": "zh-Hans-iphone-05",
+    "file": "zh-Hans/iphone/iphone-05.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-05-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 5
+  },
+  {
+    "key": "zh-Hans-iphone-06",
+    "file": "zh-Hans/iphone/iphone-06.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-06-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 6
+  },
+  {
+    "key": "zh-Hans-ipad-01",
+    "file": "zh-Hans/ipad/ipad-01.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-01-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 1
+  },
+  {
+    "key": "zh-Hans-ipad-02",
+    "file": "zh-Hans/ipad/ipad-02.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 2
+  },
+  {
+    "key": "zh-Hans-ipad-03",
+    "file": "zh-Hans/ipad/ipad-03.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 3
+  },
+  {
+    "key": "zh-Hans-ipad-04",
+    "file": "zh-Hans/ipad/ipad-04.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-04-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 4
+  },
+  {
+    "key": "zh-Hans-ipad-05",
+    "file": "zh-Hans/ipad/ipad-05.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-05-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 5
+  },
+  {
+    "key": "zh-Hans-ipad-06",
+    "file": "zh-Hans/ipad/ipad-06.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-06-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 6
+  },
+  {
+    "key": "zh-Hans-duo-01",
+    "file": "zh-Hans/duo/duo-01.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-01-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 1
+  },
+  {
+    "key": "zh-Hans-duo-02",
+    "file": "zh-Hans/duo/duo-02.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 2
+  },
+  {
+    "key": "zh-Hans-duo-03",
+    "file": "zh-Hans/duo/duo-03.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 3
+  },
+  {
+    "key": "zh-Hans-duo-04",
+    "file": "zh-Hans/duo/duo-04.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-04-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 4
+  },
+  {
+    "key": "zh-Hans-duo-05",
+    "file": "zh-Hans/duo/duo-05.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-05-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 5
+  },
+  {
+    "key": "zh-Hans-duo-06",
+    "file": "zh-Hans/duo/duo-06.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-06-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 6
+  },
+  {
+    "key": "zh-Hant-iphone-01",
+    "file": "zh-Hant/iphone/iphone-01.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 1
+  },
+  {
+    "key": "zh-Hant-iphone-02",
+    "file": "zh-Hant/iphone/iphone-02.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 2
+  },
+  {
+    "key": "zh-Hant-iphone-03",
+    "file": "zh-Hant/iphone/iphone-03.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 3
+  },
+  {
+    "key": "zh-Hant-iphone-04",
+    "file": "zh-Hant/iphone/iphone-04.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 4
+  },
+  {
+    "key": "zh-Hant-iphone-05",
+    "file": "zh-Hant/iphone/iphone-05.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 5
+  },
+  {
+    "key": "zh-Hant-iphone-06",
+    "file": "zh-Hant/iphone/iphone-06.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 6
+  },
+  {
+    "key": "zh-Hant-ipad-01",
+    "file": "zh-Hant/ipad/ipad-01.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 1
+  },
+  {
+    "key": "zh-Hant-ipad-02",
+    "file": "zh-Hant/ipad/ipad-02.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 2
+  },
+  {
+    "key": "zh-Hant-ipad-03",
+    "file": "zh-Hant/ipad/ipad-03.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 3
+  },
+  {
+    "key": "zh-Hant-ipad-04",
+    "file": "zh-Hant/ipad/ipad-04.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 4
+  },
+  {
+    "key": "zh-Hant-ipad-05",
+    "file": "zh-Hant/ipad/ipad-05.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 5
+  },
+  {
+    "key": "zh-Hant-ipad-06",
+    "file": "zh-Hant/ipad/ipad-06.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 6
+  },
+  {
+    "key": "zh-Hant-duo-01",
+    "file": "zh-Hant/duo/duo-01.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 1
+  },
+  {
+    "key": "zh-Hant-duo-02",
+    "file": "zh-Hant/duo/duo-02.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 2
+  },
+  {
+    "key": "zh-Hant-duo-03",
+    "file": "zh-Hant/duo/duo-03.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 3
+  },
+  {
+    "key": "zh-Hant-duo-04",
+    "file": "zh-Hant/duo/duo-04.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 4
+  },
+  {
+    "key": "zh-Hant-duo-05",
+    "file": "zh-Hant/duo/duo-05.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 5
+  },
+  {
+    "key": "zh-Hant-duo-06",
+    "file": "zh-Hant/duo/duo-06.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 6
+  },
+  {
+    "key": "en-US-iphone-01",
+    "file": "en-US/iphone/iphone-01.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-01-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 1
+  },
+  {
+    "key": "en-US-iphone-02",
+    "file": "en-US/iphone/iphone-02.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-02-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 2
+  },
+  {
+    "key": "en-US-iphone-03",
+    "file": "en-US/iphone/iphone-03.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-03-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 3
+  },
+  {
+    "key": "en-US-iphone-04",
+    "file": "en-US/iphone/iphone-04.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-04-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 4
+  },
+  {
+    "key": "en-US-iphone-05",
+    "file": "en-US/iphone/iphone-05.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-05-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 5
+  },
+  {
+    "key": "en-US-iphone-06",
+    "file": "en-US/iphone/iphone-06.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-06-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 6
+  },
+  {
+    "key": "en-US-ipad-01",
+    "file": "en-US/ipad/ipad-01.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-01-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 1
+  },
+  {
+    "key": "en-US-ipad-02",
+    "file": "en-US/ipad/ipad-02.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-02-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 2
+  },
+  {
+    "key": "en-US-ipad-03",
+    "file": "en-US/ipad/ipad-03.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-03-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 3
+  },
+  {
+    "key": "en-US-ipad-04",
+    "file": "en-US/ipad/ipad-04.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-04-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 4
+  },
+  {
+    "key": "en-US-ipad-05",
+    "file": "en-US/ipad/ipad-05.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-05-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 5
+  },
+  {
+    "key": "en-US-ipad-06",
+    "file": "en-US/ipad/ipad-06.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-06-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 6
+  },
+  {
+    "key": "en-US-duo-01",
+    "file": "en-US/duo/duo-01.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-01-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 1
+  },
+  {
+    "key": "en-US-duo-02",
+    "file": "en-US/duo/duo-02.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-02-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 2
+  },
+  {
+    "key": "en-US-duo-03",
+    "file": "en-US/duo/duo-03.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-03-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 3
+  },
+  {
+    "key": "en-US-duo-04",
+    "file": "en-US/duo/duo-04.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-04-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 4
+  },
+  {
+    "key": "en-US-duo-05",
+    "file": "en-US/duo/duo-05.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-05-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 5
+  },
+  {
+    "key": "en-US-duo-06",
+    "file": "en-US/duo/duo-06.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-06-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 6
+  }
+]

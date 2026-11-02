@@ -1,0 +1,80 @@
+[
+  {
+    "key": "zh-Hans-iphone-03",
+    "prompt": "Only correct bottom mode segment: 视频 is white and selected with coral underline; 拍照 is grey unselected. Red round record button stays. EVERYTHING ELSE unchanged, same image size, text, split and device.",
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-108c1d49-e822-4180-9a28-22d9e4ded6be.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-e85f930a-1a5d-4170-a043-8730d06e7a5c.png"
+  },
+  {
+    "key": "zh-Hans-ipad-02",
+    "prompt": "Only correct bottom mode segment: 视频 is white and selected with coral underline; 拍照 is grey unselected. Red round record button stays. EVERYTHING ELSE unchanged, same image size, text, split and device.",
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-1ec3de4a-0ef7-48e3-9684-76eb0dc6acdd.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-312d2cfd-84cb-4e85-b728-e5fa44d60011.png"
+  },
+  {
+    "key": "zh-Hans-ipad-03",
+    "prompt": "Only correct bottom mode segment: 视频 is white and selected with coral underline; 拍照 is grey unselected. Red round record button stays. EVERYTHING ELSE unchanged, same image size, text, split and device.",
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-32c3eb81-1472-4a93-b8f9-88824b205ebd.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-c7e4ebb5-4eeb-483c-baf3-62db49693399.png"
+  },
+  {
+    "key": "zh-Hans-ipad-01",
+    "prompt": "Only correct upper-left picture-in-picture outline/clip geometry: it must be a PERFECT CIRCLE in final pixels, width exactly equals height, NOT a vertical oval. Use diameter about 25% of screen width, show the same man's head and shoulders with normal perspective, keep natural scene background inside circle. Preserve ALL existing text/language, entire poster, device, scenery, menu, controls unchanged. No other changes.",
+    "source": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-02.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-1e51db94-81d8-4207-a73d-3122275d7581.png"
+  },
+  {
+    "key": "zh-Hans-duo-03",
+    "prompt": "Only correct bottom mode segment: 视频 is white and selected with coral underline; 拍照 is grey unselected. Red round record button stays. EVERYTHING ELSE unchanged, same image size, text, split and device.",
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-99844daa-5aec-4f0b-8dc4-18e3359201f7.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-eddd71a6-6344-4c32-a503-f070234684d5.png"
+  },
+  {
+    "key": "zh-Hans-duo-01",
+    "prompt": "Only correct upper-left picture-in-picture outline/clip geometry: it must be a PERFECT CIRCLE in final pixels, width exactly equals height, NOT a vertical oval. Use diameter about 25% of screen width, show the same man's head and shoulders with normal perspective, keep natural scene background inside circle. Preserve ALL existing text/language, entire poster, device, scenery, menu, controls unchanged. No other changes.",
+    "source": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-02.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-9b54b2dc-e584-4622-9ba6-e2b3e6485075.png"
+  },
+  {
+    "key": "zh-Hans-duo-04",
+    "prompt": "Only change upper left front-camera inset from circle to a tall ROUNDED RECTANGLE, width28% screen width,height22% screen height, white thin roundcornerborder and portrait inside. Preserve woman, sceniccoast, background, all simplified Chinese text, menu and controlpositions, image shape. Headline 前后同录，精彩同框. This FOURTH poster must feature ROUNDED RECTANGULAR PiP, NOT a circle. All other details unchanged.",
+    "source": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-01.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-19ceee92-d07b-49f2-ba88-03ba7454048c.png"
+  },
+  {
+    "key": "zh-Hant-ipad-01",
+    "prompt": "Only correct upper-left picture-in-picture outline/clip geometry: it must be a PERFECT CIRCLE in final pixels, width exactly equals height, NOT a vertical oval. Use diameter about 25% of screen width, show the same man's head and shoulders with normal perspective, keep natural scene background inside circle. Preserve ALL existing text/language, entire poster, device, scenery, menu, controls unchanged. No other changes.",
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-bff36292-43ac-4c65-96ce-4265889ce111.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-b9ac3bba-5e56-4b12-861f-1865b1f11c32.png"
+  },
+  {
+    "key": "zh-Hant-duo-04",
+    "prompt": "Only correct the upper-left inset and capture mode. This FOURTH poster must show a ROUNDED RECTANGULAR portrait inset, not a circle: white thin rounded-corner border, width28% of screen,height24% of screen. Same fully clothed adultwoman and coastal scenery. Video mode must be selected, RED CIRCLE record button darkbacking, Photo grey unselected. Exact existing language text stays completely unchanged; retain all other composition, device, sizes, menu, background.",
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-d6a96483-2de1-45e0-8d8e-e99b7a3d2f85.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-eb17042a-840c-4239-a060-d8aae6e66fc3.png"
+  },
+  {
+    "key": "en-US-duo-04",
+    "prompt": "Only correct the upper-left inset and capture mode. This FOURTH poster must show a ROUNDED RECTANGULAR portrait inset, not a circle: white thin rounded-corner border, width28% of screen,height24% of screen. Same fully clothed adultwoman and coastal scenery. Video mode must be selected, RED CIRCLE record button darkbacking, Photo grey unselected. Exact existing language text stays completely unchanged; retain all other composition, device, sizes, menu, background.",
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-8aea46f3-7792-43d6-8674-4fb669f4c17e.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-3764d9ad-2293-4b31-99d2-39ccf0b5cb7f.png"
+  },
+  {
+    "key": "zh-Hant-duo-01",
+    "prompt": "Only correct upper-left picture-in-picture outline/clip geometry: it must be a PERFECT CIRCLE in final pixels, width exactly equals height, NOT a vertical oval. Use diameter about 25% of screen width, show the same man's head and shoulders with normal perspective, keep natural scene background inside circle. Preserve ALL existing text/language, entire poster, device, scenery, menu, controls unchanged. No other changes.",
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-8ec3706e-4de3-4d06-adc8-8046c436250d.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-fa14c968-85c5-4c84-942f-6ab00d4aba71.png"
+  },
+  {
+    "key": "en-US-ipad-01",
+    "prompt": "Only correct upper-left picture-in-picture outline/clip geometry: it must be a PERFECT CIRCLE in final pixels, width exactly equals height, NOT a vertical oval. Use diameter about 25% of screen width, show the same man's head and shoulders with normal perspective, keep natural scene background inside circle. Preserve ALL existing text/language, entire poster, device, scenery, menu, controls unchanged. No other changes.",
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-02ce5bb9-dd93-4cfa-a3d5-7118c421f136.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-600eefca-0ad7-4be6-a936-0733fcb13709.png"
+  },
+  {
+    "key": "en-US-duo-01",
+    "prompt": "Only correct upper-left picture-in-picture outline/clip geometry: it must be a PERFECT CIRCLE in final pixels, width exactly equals height, NOT a vertical oval. Use diameter about 25% of screen width, show the same man's head and shoulders with normal perspective, keep natural scene background inside circle. Preserve ALL existing text/language, entire poster, device, scenery, menu, controls unchanged. No other changes.",
+    "source": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-190c98c1-2099-4f2b-bc27-abc16ec177cf.png",
+    "final": "C:\\Users\\Administrator\\.codex\\generated_images\\019f73b4-d01e-7a52-a986-c497518103bc\\exec-08428de5-03cf-48af-a853-114b18aefcdd.png"
+  }
+]

@@ -1,0 +1,920 @@
+[
+  {
+    "key": "zh-Hans-iphone-01",
+    "file": "zh-Hans/iphone/iphone-01.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-01-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 1,
+    "title": "小小画面，自由安排",
+    "subtitle": "拖动位置，切换形状，调整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-02.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-iphone-02",
+    "file": "zh-Hans/iphone/iphone-02.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 2,
+    "title": "左右分屏，并肩记录",
+    "subtitle": "两个视角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hans-iphone-03",
+    "file": "zh-Hans/iphone/iphone-03.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 3,
+    "title": "上下分屏，双面精彩",
+    "subtitle": "风景与自己，同时入镜",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hans-iphone-04",
+    "file": "zh-Hans/iphone/iphone-04.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-04-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 4,
+    "title": "前后同录，精彩同框",
+    "subtitle": "记录眼前风景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-01.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-iphone-05",
+    "file": "zh-Hans/iphone/iphone-05.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-05-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 5,
+    "title": "按下快门，双面定格",
+    "subtitle": "风景与自己，一张照片同时留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-04.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-iphone-06",
+    "file": "zh-Hans/iphone/iphone-06.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-iphone-06-功能示意",
+    "locale": "zh-Hans",
+    "device": "iphone",
+    "order": 6,
+    "title": "边录边合成，停下即保存",
+    "subtitle": "自动存入相册，回看这一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-05.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-ipad-01",
+    "file": "zh-Hans/ipad/ipad-01.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-01-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 1,
+    "title": "小小画面，自由安排",
+    "subtitle": "拖动位置，切换形状，调整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-02.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-ipad-02",
+    "file": "zh-Hans/ipad/ipad-02.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 2,
+    "title": "左右分屏，并肩记录",
+    "subtitle": "两个视角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hans-ipad-03",
+    "file": "zh-Hans/ipad/ipad-03.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 3,
+    "title": "上下分屏，双面精彩",
+    "subtitle": "风景与自己，同时入镜",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hans-ipad-04",
+    "file": "zh-Hans/ipad/ipad-04.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-04-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 4,
+    "title": "前后同录，精彩同框",
+    "subtitle": "记录眼前风景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-01.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-ipad-05",
+    "file": "zh-Hans/ipad/ipad-05.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-05-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 5,
+    "title": "按下快门，双面定格",
+    "subtitle": "风景与自己，一张照片同时留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-04.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-ipad-06",
+    "file": "zh-Hans/ipad/ipad-06.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-ipad-06-功能示意",
+    "locale": "zh-Hans",
+    "device": "ipad",
+    "order": 6,
+    "title": "边录边合成，停下即保存",
+    "subtitle": "自动存入相册，回看这一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-05.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-duo-01",
+    "file": "zh-Hans/duo/duo-01.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-01-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 1,
+    "title": "小小画面，自由安排",
+    "subtitle": "拖动位置，切换形状，调整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-02.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-duo-02",
+    "file": "zh-Hans/duo/duo-02.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-02-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 2,
+    "title": "左右分屏，并肩记录",
+    "subtitle": "两个视角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hans-duo-03",
+    "file": "zh-Hans/duo/duo-03.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-03-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 3,
+    "title": "上下分屏，双面精彩",
+    "subtitle": "风景与自己，同时入镜",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hans-duo-04",
+    "file": "zh-Hans/duo/duo-04.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-04-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 4,
+    "title": "前后同录，精彩同框",
+    "subtitle": "记录眼前风景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-01.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-duo-05",
+    "file": "zh-Hans/duo/duo-05.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-05-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 5,
+    "title": "按下快门，双面定格",
+    "subtitle": "风景与自己，一张照片同时留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-04.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hans-duo-06",
+    "file": "zh-Hans/duo/duo-06.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hans-duo-06-功能示意",
+    "locale": "zh-Hans",
+    "device": "duo",
+    "order": 6,
+    "title": "边录边合成，停下即保存",
+    "subtitle": "自动存入相册，回看这一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-05.png",
+    "reuse": true
+  },
+  {
+    "key": "zh-Hant-iphone-01",
+    "file": "zh-Hant/iphone/iphone-01.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 1,
+    "title": "小小畫面，自由安排",
+    "subtitle": "拖曳位置，切換形狀，調整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-02.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-iphone-02",
+    "file": "zh-Hant/iphone/iphone-02.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 2,
+    "title": "左右分割，並肩記錄",
+    "subtitle": "兩個視角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-iphone-03",
+    "file": "zh-Hant/iphone/iphone-03.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 3,
+    "title": "上下分割，雙面精彩",
+    "subtitle": "風景與自己，同時入鏡",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-iphone-04",
+    "file": "zh-Hant/iphone/iphone-04.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 4,
+    "title": "前後同錄，精彩同框",
+    "subtitle": "記錄眼前風景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-01.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-iphone-05",
+    "file": "zh-Hant/iphone/iphone-05.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 5,
+    "title": "按下快門，雙面定格",
+    "subtitle": "風景與自己，一張照片同時留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-04.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-iphone-06",
+    "file": "zh-Hant/iphone/iphone-06.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-iphone-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "iphone",
+    "order": 6,
+    "title": "邊錄邊合成，停止即儲存",
+    "subtitle": "自動存入相簿，回看這一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-05.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-ipad-01",
+    "file": "zh-Hant/ipad/ipad-01.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 1,
+    "title": "小小畫面，自由安排",
+    "subtitle": "拖曳位置，切換形狀，調整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-02.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-ipad-02",
+    "file": "zh-Hant/ipad/ipad-02.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 2,
+    "title": "左右分割，並肩記錄",
+    "subtitle": "兩個視角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-ipad-03",
+    "file": "zh-Hant/ipad/ipad-03.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 3,
+    "title": "上下分割，雙面精彩",
+    "subtitle": "風景與自己，同時入鏡",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-ipad-04",
+    "file": "zh-Hant/ipad/ipad-04.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 4,
+    "title": "前後同錄，精彩同框",
+    "subtitle": "記錄眼前風景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-01.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-ipad-05",
+    "file": "zh-Hant/ipad/ipad-05.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 5,
+    "title": "按下快門，雙面定格",
+    "subtitle": "風景與自己，一張照片同時留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-04.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-ipad-06",
+    "file": "zh-Hant/ipad/ipad-06.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-ipad-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "ipad",
+    "order": 6,
+    "title": "邊錄邊合成，停止即儲存",
+    "subtitle": "自動存入相簿，回看這一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-05.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-duo-01",
+    "file": "zh-Hant/duo/duo-01.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-01-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 1,
+    "title": "小小畫面，自由安排",
+    "subtitle": "拖曳位置，切換形狀，調整大小",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-02.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-duo-02",
+    "file": "zh-Hant/duo/duo-02.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-02-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 2,
+    "title": "左右分割，並肩記錄",
+    "subtitle": "兩個視角，各占一半",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-duo-03",
+    "file": "zh-Hant/duo/duo-03.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-03-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 3,
+    "title": "上下分割，雙面精彩",
+    "subtitle": "風景與自己，同時入鏡",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-03.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-duo-04",
+    "file": "zh-Hant/duo/duo-04.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-04-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 4,
+    "title": "前後同錄，精彩同框",
+    "subtitle": "記錄眼前風景，也留下此刻的你",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-01.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-duo-05",
+    "file": "zh-Hant/duo/duo-05.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-05-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 5,
+    "title": "按下快門，雙面定格",
+    "subtitle": "風景與自己，一張照片同時留下",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-04.png",
+    "reuse": false
+  },
+  {
+    "key": "zh-Hant-duo-06",
+    "file": "zh-Hant/duo/duo-06.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-zh-Hant-duo-06-功能示意",
+    "locale": "zh-Hant",
+    "device": "duo",
+    "order": 6,
+    "title": "邊錄邊合成，停止即儲存",
+    "subtitle": "自動存入相簿，回看這一刻",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-05.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-iphone-01",
+    "file": "en-US/iphone/iphone-01.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-01-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 1,
+    "title": "A small view. More possibilities.",
+    "subtitle": "Drag, resize and choose your shape",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-02.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-iphone-02",
+    "file": "en-US/iphone/iphone-02.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-02-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 2,
+    "title": "Two views. Side by side.",
+    "subtitle": "Two perspectives, equal space",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-iphone-03",
+    "file": "en-US/iphone/iphone-03.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-03-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 3,
+    "title": "One moment. Top and bottom.",
+    "subtitle": "The view and you, together",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-03.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-iphone-04",
+    "file": "en-US/iphone/iphone-04.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-04-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 4,
+    "title": "Both cameras. One story.",
+    "subtitle": "Capture the scenery and yourself",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-01.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-iphone-05",
+    "file": "en-US/iphone/iphone-05.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-05-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 5,
+    "title": "One photo. Both sides.",
+    "subtitle": "Keep the view and yourself in one shot",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-04.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-iphone-06",
+    "file": "en-US/iphone/iphone-06.png",
+    "size": [
+      1206,
+      2622
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-iphone-06-功能示意",
+    "locale": "en-US",
+    "device": "iphone",
+    "order": 6,
+    "title": "Compose as you record.",
+    "subtitle": "Automatically saved to Photos",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/iphone/iphone-05.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-ipad-01",
+    "file": "en-US/ipad/ipad-01.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-01-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 1,
+    "title": "A small view. More possibilities.",
+    "subtitle": "Drag, resize and choose your shape",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-02.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-ipad-02",
+    "file": "en-US/ipad/ipad-02.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-02-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 2,
+    "title": "Two views. Side by side.",
+    "subtitle": "Two perspectives, equal space",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-03.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-ipad-03",
+    "file": "en-US/ipad/ipad-03.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-03-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 3,
+    "title": "One moment. Top and bottom.",
+    "subtitle": "The view and you, together",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-03.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-ipad-04",
+    "file": "en-US/ipad/ipad-04.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-04-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 4,
+    "title": "Both cameras. One story.",
+    "subtitle": "Capture the scenery and yourself",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-01.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-ipad-05",
+    "file": "en-US/ipad/ipad-05.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-05-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 5,
+    "title": "One photo. Both sides.",
+    "subtitle": "Keep the view and yourself in one shot",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-04.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-ipad-06",
+    "file": "en-US/ipad/ipad-06.png",
+    "size": [
+      2064,
+      2752
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-ipad-06-功能示意",
+    "locale": "en-US",
+    "device": "ipad",
+    "order": 6,
+    "title": "Compose as you record.",
+    "subtitle": "Automatically saved to Photos",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/ipad/ipad-05.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-duo-01",
+    "file": "en-US/duo/duo-01.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-01-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 1,
+    "title": "A small view. More possibilities.",
+    "subtitle": "Drag, resize and choose your shape",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-02.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-duo-02",
+    "file": "en-US/duo/duo-02.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-02-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 2,
+    "title": "Two views. Side by side.",
+    "subtitle": "Two perspectives, equal space",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-03.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-duo-03",
+    "file": "en-US/duo/duo-03.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-03-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 3,
+    "title": "One moment. Top and bottom.",
+    "subtitle": "The view and you, together",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-03.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-duo-04",
+    "file": "en-US/duo/duo-04.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-04-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 4,
+    "title": "Both cameras. One story.",
+    "subtitle": "Capture the scenery and yourself",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-01.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-duo-05",
+    "file": "en-US/duo/duo-05.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-05-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 5,
+    "title": "One photo. Both sides.",
+    "subtitle": "Keep the view and yourself in one shot",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-04.png",
+    "reuse": false
+  },
+  {
+    "key": "en-US-duo-06",
+    "file": "en-US/duo/duo-06.png",
+    "size": [
+      2007,
+      2853
+    ],
+    "category": "APP_SCREENSHOTS_AND_PREVIEWS",
+    "referenceName": "同框之外-20261102-en-US-duo-06-功能示意",
+    "locale": "en-US",
+    "device": "duo",
+    "order": 6,
+    "title": "Compose as you record.",
+    "subtitle": "Automatically saved to Photos",
+    "reference": "E:/workspace/iphone-Front-and-Back-Camera-Recording/.worktrees/realtime-recording/store-assets/2026-10-27/duo/duo-05.png",
+    "reuse": false
+  }
+]

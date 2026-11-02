@@ -1,0 +1,30 @@
+[
+  [
+    "zh-Hans-iphone-03",
+    "Only correct bottom mode segment: 视频 is white and selected with coral underline; 拍照 is grey unselected. Red round record button stays. EVERYTHING ELSE unchanged, same image size, text, split and device."
+  ],
+  [
+    "zh-Hans-ipad-02",
+    "Only correct bottom mode segment: 视频 is white and selected with coral underline; 拍照 is grey unselected. Red round record button stays. EVERYTHING ELSE unchanged, same image size, text, split and device."
+  ],
+  [
+    "zh-Hans-ipad-03",
+    "Only correct bottom mode segment: 视频 is white and selected with coral underline; 拍照 is grey unselected. Red round record button stays. EVERYTHING ELSE unchanged, same image size, text, split and device."
+  ],
+  [
+    "zh-Hans-duo-03",
+    "Only correct bottom mode segment: 视频 is white and selected with coral underline; 拍照 is grey unselected. Red round record button stays. EVERYTHING ELSE unchanged, same image size, text, split and device."
+  ],
+  [
+    "zh-Hans-duo-04",
+    "Only change upper left front-camera inset from circle to a tall ROUNDED RECTANGLE, width28% screen width,height22% screen height, white thin roundcornerborder and portrait inside. Preserve woman, sceniccoast, background, all simplified Chinese text, menu and controlpositions, image shape. Headline 前后同录，精彩同框. This FOURTH poster must feature ROUNDED RECTANGULAR PiP, NOT a circle. All other details unchanged."
+  ],
+  [
+    "zh-Hant-duo-04",
+    "Only correct the upper-left inset and capture mode. This FOURTH poster must show a ROUNDED RECTANGULAR portrait inset, not a circle: white thin rounded-corner border, width28% of screen,height24% of screen. Same fully clothed adultwoman and coastal scenery. Video mode must be selected, RED CIRCLE record button darkbacking, Photo grey unselected. Exact existing language text stays completely unchanged; retain all other composition, device, sizes, menu, background."
+  ],
+  [
+    "en-US-duo-04",
+    "Only correct the upper-left inset and capture mode. This FOURTH poster must show a ROUNDED RECTANGULAR portrait inset, not a circle: white thin rounded-corner border, width28% of screen,height24% of screen. Same fully clothed adultwoman and coastal scenery. Video mode must be selected, RED CIRCLE record button darkbacking, Photo grey unselected. Exact existing language text stays completely unchanged; retain all other composition, device, sizes, menu, background."
+  ]
+]
