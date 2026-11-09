@@ -1,0 +1,14 @@
+{
+  "version": "1.0.15",
+  "localizations": {
+    "zh-Hans": {
+      "whatsNew": "更新了英文 App Store 产品页的 iPhone 截图，展示如何用前后摄像头同时拍摄旅行 Vlog、反应视频和采访。"
+    },
+    "zh-Hant": {
+      "whatsNew": "更新了英文 App Store 產品頁面的 iPhone 截圖，展示如何用前後鏡頭同步拍攝旅行 Vlog、反應影片和訪談。"
+    },
+    "en-US": {
+      "whatsNew": "Refreshed the English iPhone screenshots to show how to record travel vlogs, reaction videos, and interviews with the front and rear cameras at the same time."
+    }
+  }
+}

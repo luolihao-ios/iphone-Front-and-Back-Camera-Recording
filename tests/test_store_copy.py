@@ -42,13 +42,13 @@ class MetadataBoundary:
 
 
 class StoreCopyTests(unittest.TestCase):
-    def run_update(self, client, content=None):
+    def run_update(self, client, content=None, **options):
         report = {'versions': [{'id': 'version-id', 'attributes': {
             'versionString': '1.0.13', 'platform': 'IOS'}}]}
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'copy.json'
             path.write_text(json.dumps(content or sample_copy(), ensure_ascii=False), encoding='utf-8')
-            store_assets.update_metadata(client, report, path, lambda: None)
+            store_assets.update_metadata(client, report, path, lambda: None, **options)
         return report
 
     def test_updates_both_fields_in_all_three_locales_without_touching_other_metadata(self):
@@ -62,6 +62,23 @@ class StoreCopyTests(unittest.TestCase):
             self.assertEqual(actual['supportUrl'], 'https://example.com/keep')
         self.assertEqual(set(result['metadataVerified']), {'zh-Hans', 'zh-Hant', 'en-US'})
         self.assertTrue(result['metadataComplete'])
+
+    def test_notes_only_updates_three_notes_and_preserves_existing_descriptions(self):
+        client = MetadataBoundary()
+        payload = sample_copy()
+        for fields in payload['localizations'].values():
+            del fields['description']
+        result = self.run_update(client, payload, notes_only=True)
+        for code, fields in payload['localizations'].items():
+            self.assertEqual(client.locales[code]['attributes']['whatsNew'], fields['whatsNew'])
+            self.assertEqual(client.locales[code]['attributes']['description'], 'old description')
+        self.assertTrue(result['metadataComplete'])
+
+    def test_notes_only_rejects_descriptions_before_any_write(self):
+        client = MetadataBoundary()
+        with self.assertRaises(ValueError):
+            self.run_update(client, notes_only=True)
+        self.assertEqual(client.locales['zh-Hans']['attributes']['whatsNew'], 'old notes')
 
     def test_published_version_is_never_changed(self):
         client = MetadataBoundary(state='READY_FOR_SALE')

@@ -415,7 +415,7 @@ def upload(client, report, manifest_path, create_draft, checkpoint):
           f'{len(report["processingPending"])} 张仍在 Apple 处理中；未提交审核、未发布。')
 
 
-def update_metadata(client, report, copy_path, checkpoint):
+def update_metadata(client, report, copy_path, checkpoint, *, notes_only=False):
     content = json.loads(Path(copy_path).read_text(encoding='utf-8'))
     target_version = report.get('requestedVersion', '1.0.13')
     if set(content) != {'version', 'localizations'} or content['version'] != target_version:
@@ -423,9 +423,10 @@ def update_metadata(client, report, copy_path, checkpoint):
     desired = content['localizations']
     if set(desired) != {'zh-Hans', 'zh-Hant', 'en-US'}:
         raise ValueError('本次文案必须完整包含简体、繁体和英文')
+    allowed_fields = {'whatsNew'} if notes_only else {'description', 'whatsNew'}
     for locale, fields in desired.items():
-        if set(fields) != {'description', 'whatsNew'}:
-            raise ValueError(f'不允许修改描述、更新说明之外的字段：{locale}')
+        if not isinstance(fields, dict) or set(fields) != allowed_fields:
+            raise ValueError(f'文案字段超出本次更新范围：{locale}')
         for value in fields.values():
             if not isinstance(value, str) or not value.strip() or len(value) > 4000:
                 raise ValueError(f'文案为空或超过 4000 字符：{locale}')
@@ -452,12 +453,14 @@ def update_metadata(client, report, copy_path, checkpoint):
         client.api('PATCH', '/v1/appStoreVersionLocalizations/' + locale_id, {'data': {
             'type': 'appStoreVersionLocalizations', 'id': locale_id, 'attributes': fields}})
         actual = client.api('GET', '/v1/appStoreVersionLocalizations/' + locale_id)['data']['attributes']
-        if any(actual.get(field) != value for field, value in fields.items()):
+        expected = {**localized[locale]['attributes'], **fields}
+        if actual != expected:
             raise ValueError(f'写入后重新读取的文案不一致：{locale}')
         report['metadataVerified'][locale] = {'id': locale_id, 'description': actual['description'],
                                              'whatsNew': actual['whatsNew']}
         checkpoint()
-        print(f'{locale}：描述和此版本新增内容已保存并重新读取核对。', flush=True)
+        label = '此版本新增内容' if notes_only else '描述和此版本新增内容'
+        print(f'{locale}：{label}已保存并重新读取核对。', flush=True)
     report['metadataComplete'] = True
     checkpoint()
 
@@ -469,6 +472,7 @@ def main():
     action = parser.add_mutually_exclusive_group()
     action.add_argument('--manifest')
     action.add_argument('--metadata')
+    action.add_argument('--release-notes')
     parser.add_argument('--create-draft', action='store_true')
     args = parser.parse_args()
     destination = Path(args.report)
@@ -486,6 +490,9 @@ def main():
             return
         if args.metadata:
             update_metadata(client, report, args.metadata, checkpoint)
+            return
+        if args.release_notes:
+            update_metadata(client, report, args.release_notes, checkpoint, notes_only=True)
             return
         print('素材库、参考规格和版本状态读取成功；本步骤未写入 Apple 后台。')
     except Exception as error:
