@@ -13,7 +13,7 @@ on:
         required: true
         default: build
         type: choice
-        options: [build, inspect-assets, upload-assets, update-metadata]
+        options: [build, inspect-assets, upload-assets, update-metadata, replace-english-iphone]
 
 jobs:
   upload:
@@ -75,6 +75,9 @@ jobs:
           plist="$RUNNER_TEMP/DualCapture.xcarchive/Products/Applications/DualCapture.app/Info.plist"
           test "$(/usr/libexec/PlistBuddy -c 'Print :UIFileSharingEnabled' "$plist")" = true
           test "$(/usr/libexec/PlistBuddy -c 'Print :LSSupportsOpeningDocumentsInPlace' "$plist")" = true
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$plist")" = com.luolihao.dualcapture
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$plist")" = 1.0.15
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$plist")" = 2
           python3 tools/verify_app_metadata.py "$plist"
       - name: Export App Store IPA
         run: |
@@ -150,3 +153,32 @@ jobs:
           path: .artifacts/store-asset-inspection*.json
           include-hidden-files: true
           if-no-files-found: error
+  replace-english-iphone:
+    if: inputs.confirm_upload == true && inputs.operation == 'replace-english-iphone'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify scoped replacement logic
+        run: python -m unittest discover -s tests -v
+      - name: Create draft and replace only the first three English iPhone screenshots
+        env:
+          ASC_KEY_ID: ${{ secrets.APP_STORE_CONNECT_API_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          ASC_KEY_BASE64: ${{ secrets.APP_STORE_CONNECT_API_KEY_BASE64 }}
+          DRAFT_IMAGE_TRANSFER_KEY: ${{ secrets.DUALCAPTURE_1015_DRAFT_TRANSFER_KEY }}
+        run: |
+          python -m pip install 'PyJWT[crypto]==2.10.1'
+          python -m tools.release_1_0_15_screenshots --bundle store-assets/release-1.0.15/english-iphone.fernet --report .artifacts/release-1.0.15-screenshots.json
+      - name: Preserve Apple readback
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-1.0.15-screenshots
+          path: .artifacts/release-1.0.15-screenshots.json
+          include-hidden-files: true
+          if-no-files-found: warn
