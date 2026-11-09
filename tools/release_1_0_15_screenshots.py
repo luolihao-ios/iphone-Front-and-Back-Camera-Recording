@@ -72,6 +72,12 @@ def verify_final(baseline, current, new_images):
         raise ValueError('产品页目标组数量或顺序不符')
 
 
+def placements_ready(states):
+    if len(states) != 3 or any(state not in ('ACTIVE', 'ASSET_PROCESSING', 'PENDING') for state in states):
+        raise ValueError(f'新截图关联状态异常，保留所有旧截图：{states}')
+    return all(state == 'ACTIVE' for state in states)
+
+
 def load_bundle(bundle, folder):
     from cryptography.fernet import Fernet
 
@@ -171,10 +177,8 @@ def release(client, folder, checkpoint, report):
         states = [by_image[image]['attributes']['state'] for image in new_images]
         report['placementStates'] = states
         checkpoint()
-        if all(state == 'ACTIVE' for state in states):
+        if placements_ready(states):
             break
-        if any(state not in ('ACTIVE', 'ASSET_PROCESSING') for state in states):
-            raise ValueError(f'新截图关联状态异常，保留所有旧截图：{states}')
         time.sleep(3)
         actual = store.all_placements(client, locale_id, KIND, GROUP)
         by_image = {row['relationships']['image']['data']['id']: row for row in actual}

@@ -20,6 +20,12 @@ def baseline():
 
 
 class ScopedScreenshotReleaseTests(unittest.TestCase):
+    def test_pending_association_preserves_old_screenshots_until_active(self):
+        self.assertFalse(release.placements_ready(['PENDING', 'ACTIVE', 'ACTIVE']))
+        self.assertTrue(release.placements_ready(['ACTIVE', 'ACTIVE', 'ACTIVE']))
+        with self.assertRaisesRegex(ValueError, '保留所有旧截图'):
+            release.placements_ready(['FAILED', 'ACTIVE', 'ACTIVE'])
+
     def test_keeps_last_three_and_moves_only_replaced_associations_to_end(self):
         before = baseline()
         after = baseline()
